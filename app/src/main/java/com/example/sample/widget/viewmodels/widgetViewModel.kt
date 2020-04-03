@@ -1,13 +1,12 @@
-package com.example.sample.viewmodels
+package com.example.sample.widget.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.livelike.engagementsdk.BuildConfig
 import com.livelike.engagementsdk.EngagementSDK
 import com.livelike.engagementsdk.LiveLikeContentSession
 
 
-public class EngagementViewModel constructor(
+public class widgetViewModel constructor(
     application: Application
 ) : AndroidViewModel(application) {
 
@@ -33,9 +32,6 @@ public class EngagementViewModel constructor(
         contentSession.close()
     }
 
-    fun setChatNickName(name: String) {
-        engagementSDK.updateChatNickname(name)
-    }
 
 
 }

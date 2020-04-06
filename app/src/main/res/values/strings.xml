@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">LiveLike sample app</string>
+    <string name="win_animation">winAnimation</string>
+    <string name="lose_animation">loseAnimation</string>
 </resources>

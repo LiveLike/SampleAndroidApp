@@ -1,12 +1,10 @@
-package com.example.sample
+package com.livelike.engagementsdksample
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.sample.chat.ChatActivity
-import com.example.sample.widget.WidgetActivity
-import com.livelike.engagementsdk.EngagementSDK
-import com.livelike.engagementsdk.utils.LogLevel
+import com.livelike.engagementsdksample.chat.ChatActivity
+import com.livelike.engagementsdksample.widget.WidgetActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 

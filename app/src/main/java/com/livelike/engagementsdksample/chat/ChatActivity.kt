@@ -1,6 +1,6 @@
-package com.example.sample.chat
+package com.livelike.engagementsdksample.chat
 
-import com.example.sample.R
+import com.livelike.engagementsdksample.R
 
 
 import android.app.AlertDialog
@@ -9,8 +9,8 @@ import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.sample.chat.viewmodel.ChatViewModel
-import com.example.sample.chat.viewmodel.ChatViewModelFactory
+import com.livelike.engagementsdksample.chat.viewmodel.ChatViewModel
+import com.livelike.engagementsdksample.chat.viewmodel.ChatViewModelFactory
 import kotlinx.android.synthetic.main.activity_chat.*
 
 
@@ -44,10 +44,10 @@ class ChatActivity : AppCompatActivity() {
                     finish()
 
                     mainViewModel?.getSession()
-                        ?.enterChatRoom(com.example.sample.BuildConfig.CHATROOM_KEY)
+                        ?.enterChatRoom(com.livelike.engagementsdksample.BuildConfig.CHATROOM_KEY)
 
                     mainViewModel?.getSession()
-                        ?.joinChatRoom(com.example.sample.BuildConfig.CHATROOM_KEY)
+                        ?.joinChatRoom(com.livelike.engagementsdksample.BuildConfig.CHATROOM_KEY)
                     chat_view.setSession(mainViewModel?.getSession()!!)
 
 
@@ -55,7 +55,7 @@ class ChatActivity : AppCompatActivity() {
                 // negative button text and action
                 .setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, id ->
                     dialog.cancel()
-                    chat_view.setSession(mainViewModel!!.getSession())
+                    mainViewModel!!.getSession()?.let { chat_view.setSession(it) }
 
                 })
 

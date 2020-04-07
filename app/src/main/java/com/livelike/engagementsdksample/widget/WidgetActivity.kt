@@ -1,14 +1,14 @@
-package com.example.sample.widget
+package com.livelike.engagementsdksample.widget
 
-import com.example.sample.R
+import com.livelike.engagementsdksample.R
 
 import android.app.AlertDialog
 import android.app.Application
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.sample.widget.viewmodels.widgetViewModel
-import com.example.sample.widget.viewmodels.EngagementViewModelFactory
+import com.livelike.engagementsdksample.widget.viewmodels.widgetViewModel
+import com.livelike.engagementsdksample.widget.viewmodels.EngagementViewModelFactory
 import com.livelike.engagementsdk.services.messaging.proxies.WidgetInterceptor
 import kotlinx.android.synthetic.main.activity_widget.*
 
@@ -30,7 +30,7 @@ class WidgetActivity : AppCompatActivity() {
         ).get(widgetViewModel::class.java)
         // Check whether chat or widget is selected
 
-            widget_view.setSession(mainViewModel!!.getSession())
+        mainViewModel!!.getSession()?.let { widget_view.setSession(it) }
 
             // Example of Widget Interceptor showing a dialog
             val interceptor = object : WidgetInterceptor() {

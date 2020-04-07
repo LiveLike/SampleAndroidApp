@@ -1,4 +1,4 @@
-package com.example.sample
+package com.livelike.engagementsdksample
 
 import org.junit.Test
 

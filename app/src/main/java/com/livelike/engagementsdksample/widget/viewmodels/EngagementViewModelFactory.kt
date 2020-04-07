@@ -1,8 +1,9 @@
-package com.example.sample.widget.viewmodels
+package com.livelike.engagementsdksample.widget.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.livelike.engagementsdksample.LiveLikeApplication
 
 class EngagementViewModelFactory(
     private val application: Application
@@ -11,7 +12,7 @@ class EngagementViewModelFactory(
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         require(modelClass == widgetViewModel::class.java) { "Unknown ViewModel class" }
         return widgetViewModel(
-            application
+            application as LiveLikeApplication
         ) as T
     }
 }

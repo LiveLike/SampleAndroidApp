@@ -14,27 +14,25 @@ class LiveLikeApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-      engagementSDK =
+        engagementSDK =
             EngagementSDK(BuildConfig.CLIENT_ID, this)
 
-     contentSession =
+        contentSession =
             engagementSDK.createContentSession(com.livelike.engagementsdksample.BuildConfig.PROGRAM_ID)
         // Required initialization logic here!
     }
 
-
-    fun getContentSession(): LiveLikeContentSession?
-    {
+    fun getContentSession(): LiveLikeContentSession? {
         return contentSession
     }
 
-    fun getEngagementSdk(): EngagementSDK{
+    fun getEngagementSdk(): EngagementSDK {
         return engagementSDK
     }
 
     // Called by the system when the device configuration changes while your component is running.
     // Overriding this method is totally optional!
-    override fun onConfigurationChanged ( newConfig : Configuration) {
+    override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
     }
 

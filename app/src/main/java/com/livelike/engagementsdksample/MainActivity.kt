@@ -1,16 +1,13 @@
 package com.livelike.engagementsdksample
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.livelike.engagementsdksample.chat.ChatActivity
 import com.livelike.engagementsdksample.widget.WidgetActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
-
 class MainActivity : AppCompatActivity() {
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,14 +23,5 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, WidgetActivity::class.java)
             startActivity(intent)
         }
-
-
-
-
-
-
-
     }
-
-
 }

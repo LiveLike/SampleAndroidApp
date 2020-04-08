@@ -1,17 +1,16 @@
 package com.livelike.engagementsdksample.chat.viewmodel
 
 import androidx.lifecycle.AndroidViewModel
-import com.livelike.engagementsdksample.LiveLikeApplication
 import com.livelike.engagementsdk.LiveLikeContentSession
+import com.livelike.engagementsdksample.LiveLikeApplication
 
- class ChatViewModel constructor(
+class ChatViewModel constructor(
     application: LiveLikeApplication
 ) : AndroidViewModel(application) {
 
+    val engagementSDK = application.getEngagementSdk()
 
-     val engagementSDK =application.getEngagementSdk()
-
-     val contentSession =application.getContentSession()
+    val contentSession = application.getContentSession()
 
     fun getSession(): LiveLikeContentSession? {
         return contentSession
@@ -32,6 +31,4 @@ import com.livelike.engagementsdk.LiveLikeContentSession
     fun setChatNickName(name: String) {
         engagementSDK.updateChatNickname(name)
     }
-
-
 }

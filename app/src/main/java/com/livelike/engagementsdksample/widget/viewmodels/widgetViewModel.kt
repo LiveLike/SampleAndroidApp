@@ -1,17 +1,16 @@
 package com.livelike.engagementsdksample.widget.viewmodels
 
 import androidx.lifecycle.AndroidViewModel
-import com.livelike.engagementsdksample.LiveLikeApplication
 import com.livelike.engagementsdk.LiveLikeContentSession
-
+import com.livelike.engagementsdksample.LiveLikeApplication
 
 public class widgetViewModel constructor(
     application: LiveLikeApplication
 ) : AndroidViewModel(application) {
 
-    val engagementSDK =application.getEngagementSdk()
+    val engagementSDK = application.getEngagementSdk()
 
-    val contentSession =application.getContentSession()
+    val contentSession = application.getContentSession()
 
     fun getSession(): LiveLikeContentSession? {
         return contentSession
@@ -28,7 +27,4 @@ public class widgetViewModel constructor(
     fun closeSession() {
         contentSession?.close()
     }
-
-
-
 }

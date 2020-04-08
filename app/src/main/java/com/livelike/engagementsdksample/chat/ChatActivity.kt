@@ -1,18 +1,15 @@
 package com.livelike.engagementsdksample.chat
 
-import com.livelike.engagementsdksample.R
-
-
 import android.app.AlertDialog
 import android.app.Application
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.livelike.engagementsdksample.R
 import com.livelike.engagementsdksample.chat.viewmodel.ChatViewModel
 import com.livelike.engagementsdksample.chat.viewmodel.ChatViewModelFactory
 import kotlinx.android.synthetic.main.activity_chat.*
-
 
 class ChatActivity : AppCompatActivity() {
 
@@ -22,15 +19,13 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
-
-        //This will create an instance of Engagement viewmodel which can be used for creating session and initialization
+        // This will create an instance of Engagement viewmodel which can be used for creating session and initialization
         mainViewModel = ViewModelProvider(
             this,
             ChatViewModelFactory(this.applicationContext as Application)
         ).get(ChatViewModel::class.java)
         // Check whether chat or widget is selected
             mainViewModel?.setChatNickName("Kanav")
-
 
             // build alert dialog
             val dialogBuilder = AlertDialog.Builder(this)
@@ -49,14 +44,11 @@ class ChatActivity : AppCompatActivity() {
                     mainViewModel?.getSession()
                         ?.joinChatRoom(com.livelike.engagementsdksample.BuildConfig.CHATROOM_KEY)
                     chat_view.setSession(mainViewModel?.getSession()!!)
-
-
                 })
                 // negative button text and action
                 .setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, id ->
                     dialog.cancel()
                     mainViewModel!!.getSession()?.let { chat_view.setSession(it) }
-
                 })
 
             // create dialog box
@@ -65,9 +57,6 @@ class ChatActivity : AppCompatActivity() {
             alert.setTitle("Select an option")
             // show alert dialog
             alert.show()
-
-
-
     }
 
     override fun onPause() {
@@ -84,6 +73,4 @@ class ChatActivity : AppCompatActivity() {
         super.onDestroy()
         mainViewModel?.closeSession()
     }
-
-
 }

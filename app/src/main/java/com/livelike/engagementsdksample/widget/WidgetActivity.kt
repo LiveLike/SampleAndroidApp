@@ -1,17 +1,15 @@
 package com.livelike.engagementsdksample.widget
 
-import com.livelike.engagementsdksample.R
-
 import android.app.AlertDialog
 import android.app.Application
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.livelike.engagementsdksample.widget.viewmodels.widgetViewModel
-import com.livelike.engagementsdksample.widget.viewmodels.EngagementViewModelFactory
 import com.livelike.engagementsdk.services.messaging.proxies.WidgetInterceptor
+import com.livelike.engagementsdksample.R
+import com.livelike.engagementsdksample.widget.viewmodels.EngagementViewModelFactory
+import com.livelike.engagementsdksample.widget.viewmodels.widgetViewModel
 import kotlinx.android.synthetic.main.activity_widget.*
-
 
 class WidgetActivity : AppCompatActivity() {
 
@@ -23,7 +21,7 @@ class WidgetActivity : AppCompatActivity() {
 
         // to get intent received from MainActivity
 
-        //This will create an instance of Engagement viewmodel which can be used to creating session and initialization
+        // This will create an instance of Engagement viewmodel which can be used to creating session and initialization
         mainViewModel = ViewModelProvider(
             this,
             EngagementViewModelFactory(this.applicationContext as Application)
@@ -50,8 +48,6 @@ class WidgetActivity : AppCompatActivity() {
 
             // You just need to add it on your session instance
             mainViewModel?.getSession()?.widgetInterceptor = interceptor
-
-
     }
 
     override fun onPause() {
@@ -68,6 +64,4 @@ class WidgetActivity : AppCompatActivity() {
         super.onDestroy()
         mainViewModel?.closeSession()
     }
-
-
 }

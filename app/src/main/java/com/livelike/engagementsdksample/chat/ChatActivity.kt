@@ -36,7 +36,6 @@ class ChatActivity : AppCompatActivity() {
                 .setCancelable(false)
                 // positive button text and action
                 .setPositiveButton("Proceed", DialogInterface.OnClickListener { dialog, id ->
-                    finish()
 
                     mainViewModel?.getSession()
                         ?.enterChatRoom(com.livelike.engagementsdksample.BuildConfig.CHATROOM_KEY)

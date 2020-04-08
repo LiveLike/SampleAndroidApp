@@ -11,15 +11,24 @@ class LiveLikeApplication : Application() {
 
     private var contentSession: LiveLikeContentSession? = null
     lateinit var engagementSDK: EngagementSDK
+    var programId: String? = null
 
     override fun onCreate() {
         super.onCreate()
+        // Required initialization logic here!
+        setContentSession()
+    }
+
+    fun setProgramCode(id: String) {
+        programId = id
+    }
+
+    fun setContentSession() {
         engagementSDK =
             EngagementSDK(BuildConfig.CLIENT_ID, this)
 
         contentSession =
             engagementSDK.createContentSession(com.livelike.engagementsdksample.BuildConfig.PROGRAM_ID)
-        // Required initialization logic here!
     }
 
     fun getContentSession(): LiveLikeContentSession? {

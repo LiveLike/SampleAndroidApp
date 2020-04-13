@@ -1,8 +1,6 @@
 package com.livelike.engagementsdksample.chat
 
-import android.app.AlertDialog
 import android.app.Application
-import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -25,37 +23,41 @@ class ChatActivity : AppCompatActivity() {
             ChatViewModelFactory(this.applicationContext as Application)
         ).get(ChatViewModel::class.java)
         // Check whether chat or widget is selected
-            mainViewModel?.setChatNickName("Kanav")
+        mainViewModel?.setChatNickName("Kanav")
 
-            // build alert dialog
-            val dialogBuilder = AlertDialog.Builder(this)
-
-            // set message of alert dialog
-            dialogBuilder.setMessage("Do you want to open private chat ?")
-                // if the dialog is cancelable
-                .setCancelable(false)
-                // positive button text and action
-                .setPositiveButton("Proceed", DialogInterface.OnClickListener { dialog, id ->
-
-                    mainViewModel?.getSession()
-                        ?.enterChatRoom(com.livelike.engagementsdksample.BuildConfig.CHATROOM_KEY)
-
-                    mainViewModel?.getSession()
-                        ?.joinChatRoom(com.livelike.engagementsdksample.BuildConfig.CHATROOM_KEY)
-                    chat_view.setSession(mainViewModel?.getSession()!!)
-                })
-                // negative button text and action
-                .setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, id ->
-                    dialog.cancel()
-                    mainViewModel!!.getSession()?.let { chat_view.setSession(it) }
-                })
-
-            // create dialog box
-            val alert = dialogBuilder.create()
-            // set title for alert dialog box
-            alert.setTitle("Select an option")
-            // show alert dialog
-            alert.show()
+//            // build alert dialog
+//            val dialogBuilder = AlertDialog.Builder(this)
+//
+//            // set message of alert dialog
+//            dialogBuilder.setMessage("Do you want to open private chat ?")
+//                // if the dialog is cancelable
+//                .setCancelable(false)
+//                // positive button text and action
+//                .setPositiveButton("Proceed", DialogInterface.OnClickListener { dialog, id ->
+//
+//                    mainViewModel?.getSession()
+//                        ?.enterChatRoom(com.livelike.engagementsdksample.BuildConfig.CHATROOM_KEY)
+//
+//                    mainViewModel?.getSession()
+//                        ?.joinChatRoom(com.livelike.engagementsdksample.BuildConfig.CHATROOM_KEY)
+//                    chat_view.setSession(mainViewModel?.getSession()!!)
+//                })
+//                // negative button text and action
+//                .setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, id ->
+//                    dialog.cancel()
+//                    mainViewModel!!.getSession()?.let { chat_view.setSession(it) }
+//                })
+//
+//            // create dialog box
+//            val alert = dialogBuilder.create()
+//            // set title for alert dialog box
+//            alert.setTitle("Select an option")
+//            // show alert dialog
+//            alert.show()
+        mainViewModel!!.getSession()?.let {
+            chat_view.setSession(it)
+            chat_view
+        }
     }
 
     override fun onPause() {

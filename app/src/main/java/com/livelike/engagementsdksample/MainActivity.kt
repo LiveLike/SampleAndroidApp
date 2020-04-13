@@ -2,6 +2,7 @@ package com.livelike.engagementsdksample
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.livelike.engagementsdksample.chat.ChatActivity
 import com.livelike.engagementsdksample.widget.WidgetActivity
@@ -15,15 +16,41 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         llTextView.text = "LL SDK [ ${BuildConfig.VERSION_CODE} ]"
 
+        saveClientButton.setOnClickListener {
+            if (!clientTextFiled.text.isNullOrEmpty()) {
+                (application as LiveLikeApplication).setId(clientTextFiled.text.toString())
+                saveClientButton.text = "Saved"
+            } else {
+                Toast.makeText(this, "Client id cannot be blank", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        saveProgramButton.setOnClickListener {
+            if (!outlinedTextField.text.isNullOrEmpty()) {
+                (application as LiveLikeApplication).setProgramCode(outlinedTextField.text.toString())
+                saveProgramButton.text = "Saved"
+            } else {
+                Toast.makeText(this, "Program id cannot be blank", Toast.LENGTH_LONG).show()
+            }
+        }
+
         // when user clicks on Chat option
         chatLayout.setOnClickListener {
-            val intent = Intent(this, ChatActivity::class.java)
-            startActivity(intent)
+            if (!outlinedTextField.text.isNullOrEmpty()) {
+                (application as LiveLikeApplication).setProgramCode(outlinedTextField.text.toString())
+                val intent = Intent(this, ChatActivity::class.java)
+                startActivity(intent)
+            } else { Toast.makeText(this, "Program id cannot be blank", Toast.LENGTH_LONG).show()
+            }
         }
         // when user clicks on Widget option
         widgetLayout.setOnClickListener {
-            val intent = Intent(this, WidgetActivity::class.java)
-            startActivity(intent)
+            if (!outlinedTextField.text.isNullOrEmpty()) {
+                val intent = Intent(this, WidgetActivity::class.java)
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Program id cannot be blank", Toast.LENGTH_LONG).show()
+            }
         }
     }
 }

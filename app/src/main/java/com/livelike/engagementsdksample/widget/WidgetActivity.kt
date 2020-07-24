@@ -5,7 +5,8 @@ import android.app.Application
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.livelike.engagementsdk.services.messaging.proxies.WidgetInterceptor
+import com.livelike.engagementsdk.core.services.messaging.proxies.LiveLikeWidgetEntity
+import com.livelike.engagementsdk.core.services.messaging.proxies.WidgetInterceptor
 import com.livelike.engagementsdksample.R
 import com.livelike.engagementsdksample.widget.viewmodels.EngagementViewModelFactory
 import com.livelike.engagementsdksample.widget.viewmodels.widgetViewModel
@@ -30,24 +31,28 @@ class WidgetActivity : AppCompatActivity() {
 
         mainViewModel!!.getSession()?.let { widget_view.setSession(it) }
 
-            // Example of Widget Interceptor showing a dialog
-            val interceptor = object : WidgetInterceptor() {
-                override fun widgetWantsToShow() {
-                    AlertDialog.Builder(this@WidgetActivity).apply {
-                        setMessage("You received a Widget, what do you want to do?")
-                        setPositiveButton("Show") { _, _ ->
-                            showWidget() // Releases the widget
-                        }
-                        setNegativeButton("Dismiss") { _, _ ->
-                            dismissWidget() // Discards the widget
-                        }
-                        create()
-                    }.show()
-                }
+        // Example of Widget Interceptor showing a dialog
+        val interceptor = object : WidgetInterceptor() {
+            fun widgetWantsToShow() {
+                AlertDialog.Builder(this@WidgetActivity).apply {
+                    setMessage("You received a Widget, what do you want to do?")
+                    setPositiveButton("Show") { _, _ ->
+                        showWidget() // Releases the widget
+                    }
+                    setNegativeButton("Dismiss") { _, _ ->
+                        dismissWidget() // Discards the widget
+                    }
+                    create()
+                }.show()
             }
 
-            // You just need to add it on your session instance
-            mainViewModel?.getSession()?.widgetInterceptor = interceptor
+            override fun widgetWantsToShow(widgetData: LiveLikeWidgetEntity) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+        }
+
+        // You just need to add it on your session instance
+        mainViewModel?.getSession()?.widgetInterceptor = interceptor
     }
 
     override fun onPause() {

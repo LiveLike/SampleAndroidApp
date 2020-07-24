@@ -12,9 +12,11 @@ class ChatViewModel constructor(
 
     val contentSession = application.getContentSession()
 
+
     fun getSession(): LiveLikeContentSession? {
         return contentSession
     }
+
 
     fun pauseSession() {
         contentSession?.pause()

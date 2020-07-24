@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.livelike.engagementsdksample.chat.ChatActivity
 import com.livelike.engagementsdksample.widget.WidgetActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,6 +14,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         llTextView.text = "LL SDK [ ${BuildConfig.VERSION_CODE} ]"
+
+        clientTextFiled.setText("mOBYul18quffrBDuq2IACKtVuLbUzXIPye5S3bq5")
+        outlinedTextField.setText("b4dd284b-45bf-45c7-ba95-10416e370cea")
+
 
         saveClientButton.setOnClickListener {
             if (!clientTextFiled.text.isNullOrEmpty()) {
@@ -40,7 +43,8 @@ class MainActivity : AppCompatActivity() {
                 (application as LiveLikeApplication).setProgramCode(outlinedTextField.text.toString())
                 val intent = Intent(this, ChatActivity::class.java)
                 startActivity(intent)
-            } else { Toast.makeText(this, "Program id cannot be blank", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "Program id cannot be blank", Toast.LENGTH_LONG).show()
             }
         }
         // when user clicks on Widget option

@@ -1,219 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-    xmlns:android="http://schemas.android.com/apk/res/android" />
-<LinearLayout
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-
-    <TextView
-        android:id="@+id/llTextView"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:textSize="20sp"
-        android:text="LL SDK [VERSION]" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/clientLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="50dp"
-        app:cardCornerRadius="2dp"
-        app:contentPadding="10dp"
-        app:layout_constraintTop_toTopOf="@+id/programLayout">
+    android:layout_height="match_parent">
+    xmlns:android="http://schemas.android.com/apk/res/android" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        >
+        tools:context=".MainActivity">
+
+
+        <TextView
+            android:id="@+id/llTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:text="LL SDK [VERSION]"
+            android:textSize="20sp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/clientLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="50dp"
+            app:cardCornerRadius="2dp"
+            app:contentPadding="10dp"
+            app:layout_constraintTop_toTopOf="@+id/programLayout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Step 1" />
+
+
+                <EditText
+                    android:id="@+id/clientTextFiled"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Client id"
+                    android:textIsSelectable="true">
+
+                </EditText>
+
+                <Button
+                    android:id="@+id/saveClientButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Save Client id ">
+
+                </Button>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/programLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="2dp"
+            app:contentPadding="10dp"
+            app:layout_constraintTop_toTopOf="@+id/chatLayout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Step 2" />
+
+
+                <EditText
+                    android:id="@+id/outlinedTextField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Program id">
+
+                </EditText>
+
+                <Button
+                    android:id="@+id/saveProgramButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Save program id "
+                    android:textIsSelectable="true">
+
+                </Button>
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Step 1"
-            />
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:text="Kindly click on Chat or widget after entering client id and program id."
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/chatLayout"
 
-        <EditText
-            android:id="@+id/clientTextFiled"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textIsSelectable="true"
-            android:hint="Enter Client id"
-            >
+            android:layout_gravity="center"
+            android:layout_margin="50dp"
+            app:cardCornerRadius="2dp"
+            app:contentPadding="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/divider_1"
+            app:layout_constraintTop_toTopOf="@+id/stat_2">
 
-        </EditText>
-        <Button
-            android:id="@+id/saveClientButton"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Save Client id "
-            android:layout_height="wrap_content">
-
-        </Button>
-    </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-
-
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/programLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="10dp"
-        app:cardCornerRadius="2dp"
-        app:contentPadding="10dp"
-        app:layout_constraintTop_toTopOf="@+id/chatLayout">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
             <TextView
+                android:id="@+id/stat_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Step 2"
-                />
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="Chat"
+                android:textColor="#777"
+                android:textSize="22sp" />
+
+        </androidx.cardview.widget.CardView>
 
 
-        <EditText
-            android:id="@+id/outlinedTextField"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/widgetLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Program id"
-           >
+            android:layout_gravity="center"
+            android:layout_margin="50dp"
+            app:cardCornerRadius="2dp"
+            app:contentPadding="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/divider_1"
+            app:layout_constraintTop_toTopOf="@+id/stat_2">
 
-        </EditText>
-        <Button
-            android:id="@+id/saveProgramButton"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:textIsSelectable="true"
-            android:text="Save program id "
-            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/stat_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="Widget"
+                android:textColor="#777"
+                android:textSize="22sp" />
 
-        </Button>
-
-        </LinearLayout>
-
-
-
-
-
+        </androidx.cardview.widget.CardView>
 
 
+        <!--    <TextView-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:text="Hello World!"-->
+        <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--        app:layout_constraintRight_toRightOf="parent"-->
+        <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-    </androidx.cardview.widget.CardView>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:layout_marginEnd="50dp"
-        android:text="Kindly click on Chat or widget after entering client id and program id."/>
+        <!--    <com.livelike.engagementsdk.chat.ChatView-->
+        <!--        android:id="@+id/chat_view"-->
+        <!--        android:layout_width="0dp"-->
+        <!--        android:layout_height="0dp"-->
+        <!--        app:displayUserProfile="true"-->
+        <!--        app:layout_constraintTop_toTopOf="parent"-->
+        <!--        app:layout_constraintStart_toStartOf="parent"-->
+        <!--        app:layout_constraintEnd_toEndOf="parent"-->
+        <!--        app:layout_constraintBottom_toBottomOf="parent"/>-->
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/chatLayout"
+        <!--    <com.livelike.engagementsdk.widget.view.WidgetView-->
+        <!--        android:id="@+id/widget_view"-->
+        <!--        android:layout_width="0dp"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        app:layout_constraintTop_toTopOf="parent"-->
+        <!--        app:layout_constraintStart_toStartOf="parent"-->
+        <!--        app:layout_constraintEnd_toEndOf="parent"/>-->
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="50dp"
-        app:cardCornerRadius="2dp"
-        app:contentPadding="10dp"
-        app:layout_constraintEnd_toStartOf="@+id/divider_1"
-        app:layout_constraintTop_toTopOf="@+id/stat_2">
-
-        <TextView
-            android:id="@+id/stat_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:gravity="center"
-            android:maxLines="1"
-            android:text="Chat"
-            android:textColor="#777"
-            android:textSize="22sp" />
-
-    </androidx.cardview.widget.CardView>
-
-
-
-
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/widgetLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="50dp"
-        app:cardCornerRadius="2dp"
-        app:contentPadding="10dp"
-        app:layout_constraintEnd_toStartOf="@+id/divider_1"
-        app:layout_constraintTop_toTopOf="@+id/stat_2">
-
-    <TextView
-        android:id="@+id/stat_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:maxLines="1"
-        android:text="Widget"
-        android:textColor="#777"
-        android:textSize="22sp"
-       />
-
-    </androidx.cardview.widget.CardView>
-
-
-
-
-
-    <!--    <TextView-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="Hello World!"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
-    <!--        app:layout_constraintRight_toRightOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--    <com.livelike.engagementsdk.chat.ChatView-->
-    <!--        android:id="@+id/chat_view"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        app:displayUserProfile="true"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"/>-->
-
-    <!--    <com.livelike.engagementsdk.widget.view.WidgetView-->
-    <!--        android:id="@+id/widget_view"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"/>-->
-
-</LinearLayout>
+    </LinearLayout>
 </ScrollView>

@@ -47,7 +47,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
     implementation "androidx.cardview:cardview:1.0.0"
-    implementation 'com.livelike.android-engagement-sdk:engagementsdk:1.5.1'
+    implementation 'com.livelike.android-engagement-sdk:engagementsdk:2.3'
     implementation 'com.livelike.android-engagement-sdk:pluginexoplayer:1.5.1'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     testImplementation 'junit:junit:4.12'

@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         llTextView.text = "LL SDK [ ${BuildConfig.VERSION_CODE} ]"
 
         clientTextFiled.setText("mOBYul18quffrBDuq2IACKtVuLbUzXIPye5S3bq5")
-        outlinedTextField.setText("b4dd284b-45bf-45c7-ba95-10416e370cea")
+        outlinedTextField.setText("09d93835-ee52-4757-976c-ea09d6a5798c")
 
 
         saveClientButton.setOnClickListener {

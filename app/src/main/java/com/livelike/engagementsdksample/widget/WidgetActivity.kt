@@ -3,6 +3,7 @@ package com.livelike.engagementsdksample.widget
 import android.app.AlertDialog
 import android.app.Application
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.livelike.engagementsdk.core.services.messaging.proxies.LiveLikeWidgetEntity
@@ -33,7 +34,7 @@ class WidgetActivity : AppCompatActivity() {
 
         // Example of Widget Interceptor showing a dialog
         val interceptor = object : WidgetInterceptor() {
-            fun widgetWantsToShow() {
+            override fun widgetWantsToShow(widgetData: LiveLikeWidgetEntity) {
                 AlertDialog.Builder(this@WidgetActivity).apply {
                     setMessage("You received a Widget, what do you want to do?")
                     setPositiveButton("Show") { _, _ ->
@@ -45,14 +46,14 @@ class WidgetActivity : AppCompatActivity() {
                     create()
                 }.show()
             }
-
-            override fun widgetWantsToShow(widgetData: LiveLikeWidgetEntity) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
         }
 
         // You just need to add it on your session instance
         mainViewModel?.getSession()?.widgetInterceptor = interceptor
+
+        mainViewModel?.getSession()?.analyticService?.setEventObserver { eventKey, eventJson ->
+           Log.d("Sample_Events",eventKey)
+        }
     }
 
     override fun onPause() {

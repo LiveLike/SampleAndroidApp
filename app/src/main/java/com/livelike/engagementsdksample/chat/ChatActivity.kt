@@ -2,6 +2,7 @@ package com.livelike.engagementsdksample.chat
 
 import android.app.Application
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.livelike.engagementsdksample.R
@@ -27,6 +28,9 @@ class ChatActivity : AppCompatActivity() {
         mainViewModel!!.getSession()?.let {
             chat_view.setSession(it.chatSession)
             chat_view
+        }
+        mainViewModel?.getSession()?.analyticService?.setEventObserver { eventKey, eventJson ->
+            Log.d("Sample_Events",eventKey)
         }
     }
 

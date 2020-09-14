@@ -32,6 +32,7 @@ class ChatActivity : AppCompatActivity() {
         mainViewModel?.getSession()?.analyticService?.setEventObserver { eventKey, eventJson ->
             Log.d("Sample_Events",eventKey)
         }
+
     }
 
     override fun onPause() {

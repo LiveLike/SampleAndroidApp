@@ -4,6 +4,8 @@ import android.app.Application
 import android.content.res.Configuration
 import com.livelike.engagementsdk.EngagementSDK
 import com.livelike.engagementsdk.LiveLikeContentSession
+import com.livelike.engagementsdk.core.utils.LogLevel
+import com.livelike.engagementsdk.core.utils.minimumLogLevel
 
 class LiveLikeApplication : Application() {
     // Called when the application is starting, before any other application objects have been created.
@@ -18,6 +20,7 @@ class LiveLikeApplication : Application() {
         super.onCreate()
         // Required initialization logic here!
         // setUpEngagementSDK()
+        minimumLogLevel= LogLevel.Verbose
     }
 
     fun setProgramCode(id: String) {

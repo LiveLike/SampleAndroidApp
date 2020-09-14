@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "165318883275",
+    "firebase_url": "https://sample-app-ec90e.firebaseio.com",
+    "project_id": "sample-app-ec90e",
+    "storage_bucket": "sample-app-ec90e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:165318883275:android:a46933ba320312769de84e",
+        "android_client_info": {
+          "package_name": "com.livelike.engagementsdksample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "165318883275-hoob1mk0dvmsomf2seke3r0q81r5iaqh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.livelike.engagementsdksample",
+            "certificate_hash": "64c04c8324c51911a3bae67dfdaf79d072975a57"
+          }
+        },
+        {
+          "client_id": "165318883275-9dfsdlrvna4uqcbnjdmpld6sajgskknr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqX_Mv37DDWkgQisjijf8hYY8PluoywmQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "165318883275-9dfsdlrvna4uqcbnjdmpld6sajgskknr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

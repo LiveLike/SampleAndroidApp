@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme.Base">
-        <activity android:name=".WidgetActivity" />
+        <activity android:name="com.livelike.engagementsdksample.widget.WidgetActivity" />
         <activity android:name="com.livelike.engagementsdksample.chat.ChatActivity"
             android:configChanges="keyboardHidden|orientation"/>
         <activity android:name="com.livelike.engagementsdksample.MainActivity">

@@ -4,11 +4,11 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-tools:context=".WidgetActivity">
+tools:context=".widget.WidgetActivity">
 
 
 <com.livelike.engagementsdk.widget.view.WidgetView
-    android:id="@+id/widget_view"
+    android:id="@+id/widget_view_container"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:theme="@style/CustomChatTheme"

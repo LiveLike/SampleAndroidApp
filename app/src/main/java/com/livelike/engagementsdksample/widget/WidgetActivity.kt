@@ -1,17 +1,19 @@
 package com.livelike.engagementsdksample.widget
 
-import android.app.AlertDialog
-import android.app.Application
-import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import com.livelike.engagementsdk.core.services.messaging.proxies.LiveLikeWidgetEntity
-import com.livelike.engagementsdk.core.services.messaging.proxies.WidgetInterceptor
-import com.livelike.engagementsdksample.R
-import com.livelike.engagementsdksample.widget.viewmodels.EngagementViewModelFactory
-import com.livelike.engagementsdksample.widget.viewmodels.widgetViewModel
-import kotlinx.android.synthetic.main.activity_widget.*
+ import android.app.AlertDialog
+ import android.app.Application
+ import android.os.Bundle
+ import android.view.View
+ import androidx.appcompat.app.AppCompatActivity
+ import androidx.lifecycle.ViewModelProvider
+ import com.livelike.engagementsdk.core.services.messaging.proxies.LiveLikeWidgetEntity
+ import com.livelike.engagementsdk.core.services.messaging.proxies.WidgetInterceptor
+ import com.livelike.engagementsdk.widget.LiveLikeWidgetViewFactory
+ import com.livelike.engagementsdk.widget.widgetModel.*
+ import com.livelike.engagementsdksample.R
+ import com.livelike.engagementsdksample.widget.viewmodels.EngagementViewModelFactory
+ import com.livelike.engagementsdksample.widget.viewmodels.widgetViewModel
+ import kotlinx.android.synthetic.main.activity_widget.*
 
 class WidgetActivity : AppCompatActivity() {
 
@@ -30,7 +32,49 @@ class WidgetActivity : AppCompatActivity() {
         ).get(widgetViewModel::class.java)
         // Check whether chat or widget is selected
 
-        mainViewModel!!.getSession()?.let { widget_view.setSession(it) }
+        mainViewModel!!.getSession()?.let { widget_view_container.setSession(it) }
+        widget_view_container.widgetViewFactory = object : LiveLikeWidgetViewFactory{
+            override fun createAlertWidgetView(alertWidgetModel: AlertWidgetModel): View? {
+                return null
+            }
+
+            override fun createCheerMeterView(cheerMeterWidgetModel: CheerMeterWidgetmodel): View? {
+                return null
+            }
+
+            override fun createImageSliderWidgetView(imageSliderWidgetModel: ImageSliderWidgetModel): View? {
+                return null
+            }
+
+            override fun createPollWidgetView(
+                pollWidgetModel: PollWidgetModel,
+                isImage: Boolean
+            ): View? {
+                return null
+            }
+
+            override fun createPredictionFollowupWidgetView(
+                followUpWidgetViewModel: FollowUpWidgetViewModel,
+                isImage: Boolean
+            ): View? {
+                return null
+            }
+
+            override fun createPredictionWidgetView(
+                predictionViewModel: PredictionWidgetViewModel,
+                isImage: Boolean
+            ): View? {
+                return null
+            }
+
+            override fun createQuizWidgetView(
+                quizWidgetModel: QuizWidgetModel,
+                isImage: Boolean
+            ): View? {
+                return null
+            }
+
+        }
 
         // Example of Widget Interceptor showing a dialog
         val interceptor = object : WidgetInterceptor() {
@@ -51,9 +95,9 @@ class WidgetActivity : AppCompatActivity() {
         // You just need to add it on your session instance
         mainViewModel?.getSession()?.widgetInterceptor = interceptor
 
-        mainViewModel?.getSession()?.analyticService?.setEventObserver { eventKey, eventJson ->
-           Log.d("Sample_Events",eventKey)
-        }
+//        mainViewModel?.engagementSDK?.analyticService?.setEventObserver { eventKey, eventJson ->
+//           Log.d("Sample_Events",eventKey)
+//        }
     }
 
     override fun onPause() {

@@ -11,6 +11,7 @@ package com.livelike.engagementsdksample.widget
  import com.livelike.engagementsdk.widget.LiveLikeWidgetViewFactory
  import com.livelike.engagementsdk.widget.widgetModel.*
  import com.livelike.engagementsdksample.R
+ import com.livelike.engagementsdksample.customwidgets.CustomImageQuizView
  import com.livelike.engagementsdksample.widget.viewmodels.EngagementViewModelFactory
  import com.livelike.engagementsdksample.widget.viewmodels.widgetViewModel
  import kotlinx.android.synthetic.main.activity_widget.*
@@ -32,7 +33,6 @@ class WidgetActivity : AppCompatActivity() {
         ).get(widgetViewModel::class.java)
         // Check whether chat or widget is selected
 
-        mainViewModel!!.getSession()?.let { widget_view_container.setSession(it) }
         widget_view_container.widgetViewFactory = object : LiveLikeWidgetViewFactory{
             override fun createAlertWidgetView(alertWidgetModel: AlertWidgetModel): View? {
                 return null
@@ -71,11 +71,11 @@ class WidgetActivity : AppCompatActivity() {
                 quizWidgetModel: QuizWidgetModel,
                 isImage: Boolean
             ): View? {
-                return null
+                return CustomImageQuizView(this@WidgetActivity, quizWidgetModel)
             }
 
         }
-
+        mainViewModel!!.getSession()?.let { widget_view_container.setSession(it) }
         // Example of Widget Interceptor showing a dialog
         val interceptor = object : WidgetInterceptor() {
             override fun widgetWantsToShow(widgetData: LiveLikeWidgetEntity) {

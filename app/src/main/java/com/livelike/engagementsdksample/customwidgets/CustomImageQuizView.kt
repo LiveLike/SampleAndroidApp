@@ -1,7 +1,6 @@
 package com.livelike.engagementsdksample.customwidgets
 
 import android.content.Context
-import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -14,35 +13,18 @@ import kotlinx.android.synthetic.main.custom_quiz_widget.view.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 
-class CustomImageQuizView :  FrameLayout {
+class CustomImageQuizView(context: Context, var quizWidgetModel: QuizWidgetModel? = null) :  FrameLayout(context) {
 
     private lateinit var adapter: QuizViewAdapter
-    var quizWidgetModel: QuizWidgetModel? = null
 
-
-    constructor(context: Context) : super(context) {
-        init(null, 0)
-    }
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        init(attrs, 0)
-    }
-
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
-    context,
-    attrs,
-    defStyle
-    ) {
-        init(attrs, defStyle)
-    }
-
-    private fun init(attrs: AttributeSet?, defStyle: Int) {
+   init {
         inflate(context, R.layout.custom_quiz_widget, this)
         quizWidgetModel?.widgetData?.let { liveLikeWidget ->
             // TODO  change sdk api for duration, it should passes duration in millis, parsing should be done at sdk side.
             val timeMillis = liveLikeWidget.timeout?.parseDuration() ?: 5000
-
             time_bar.startTimer(timeMillis)
+            quiz_title.text = liveLikeWidget.question
+
             (context as AppCompatActivity).lifecycleScope.async {
                 delay(timeMillis)
                 adapter.selectedOptionItem?.let {

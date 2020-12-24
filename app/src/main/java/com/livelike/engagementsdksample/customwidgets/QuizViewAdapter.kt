@@ -27,7 +27,8 @@ RecyclerView.Adapter<QuizViewAdapter.QuizListItemViewHolder>() {
         return QuizListItemViewHolder(
             LayoutInflater.from(context).inflate(
                 R.layout.image_quiz_list_item,
-                parent
+                parent,
+                false
             )
         )
     }

@@ -27,23 +27,26 @@ class CustomImageQuizView(context: Context, var quizWidgetModel: QuizWidgetModel
 
             (context as AppCompatActivity).lifecycleScope.async {
                 delay(timeMillis)
+                adapter.isResultState = true
+                adapter.notifyDataSetChanged()
                 adapter.selectedOptionItem?.let {
-                // TODO change sdk apis to have non-nullable option item ids
-                quizWidgetModel?.lockInAnswer(it.id ?: "")
-                delay(3000)
+                delay(2000)
                 }
              quizWidgetModel?.finish()
             }
 
             liveLikeWidget.choices?.let {
                  adapter =
-                    QuizViewAdapter(context, ArrayList(it.map { item -> LiveLikeQuizOption(item?.id!!,item?.description?:"",false,item.imageUrl,item.answerCount) }))
+                    QuizViewAdapter(context, ArrayList(it.map { item -> LiveLikeQuizOption(item?.id!!,item?.description?:"",false,item.imageUrl,item.answerCount) })
+                    ) { option->
+                        // TODO change sdk apis to have non-nullable option item ids
+                        // TODO add debounce to optimize api calls
+                        quizWidgetModel?.lockInAnswer(option.id ?: "")
+                    }
                 quiz_rv.layoutManager = GridLayoutManager(context,2)
                 quiz_rv.adapter = adapter
                 }
             }
-
-
         }
 
 
@@ -55,9 +58,9 @@ class CustomImageQuizView(context: Context, var quizWidgetModel: QuizWidgetModel
     private fun subscribeToVoteResults() {
         quizWidgetModel?.voteResults?.subscribe(this) { result ->
 
-            result?.choices?.let { options ->
-                adapter.isResultState = true
-                adapter.list = ArrayList(options.map { item -> LiveLikeQuizOption(item?.id!!,item?.description?:"",item.is_correct,item.image_url,item.percentage)})
+            result?.choices?.zip(adapter.list)?.let { options ->
+                adapter.isResultAvailable = true
+                adapter.list = ArrayList(options.map { item -> LiveLikeQuizOption(item?.second.id!!,item?.second?.description?:"",item?.first.is_correct,item?.second.imageUrl,item?.first.percentage)})
                 adapter.notifyDataSetChanged()
             }
         }

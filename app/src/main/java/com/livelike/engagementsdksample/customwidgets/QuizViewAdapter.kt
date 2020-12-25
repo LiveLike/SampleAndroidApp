@@ -11,12 +11,15 @@ import com.livelike.engagementsdksample.widget.model.LiveLikeQuizOption
 import kotlinx.android.synthetic.main.image_quiz_list_item.view.*
 
 class QuizViewAdapter (  private val context: Context,
-var list: ArrayList<LiveLikeQuizOption>
+var list: ArrayList<LiveLikeQuizOption>,
+val optionSelectListener : (LiveLikeQuizOption)->Unit
 ) :
 RecyclerView.Adapter<QuizViewAdapter.QuizListItemViewHolder>() {
 
 
     var isResultState: Boolean = false
+    var isResultAvailable: Boolean = false
+
     var selectedOptionItem : LiveLikeQuizOption?=null
     var currentlySelectedViewHolder : QuizListItemViewHolder ? =null
 
@@ -42,13 +45,20 @@ RecyclerView.Adapter<QuizViewAdapter.QuizListItemViewHolder>() {
         holder.view.option_tv.text = liveLikeQuizOption.description
            Glide.with(context).load(liveLikeQuizOption.imageUrl).into(holder.view.option_iv)
 
-        if(isResultState){
+        if(isResultState && isResultAvailable){
             holder.view.result_bar.visibility = View.VISIBLE
             holder.view.result_tv.visibility = View.VISIBLE
             holder.view.setOnClickListener(null)
             holder.view.result_tv.text = "${liveLikeQuizOption.percentage}%"
             holder.view.result_bar.pivotX = 0f
             holder.view.result_bar.scaleX = (liveLikeQuizOption.percentage?.toFloat()?:0f) / 100f
+            if(selectedOptionItem?.id == liveLikeQuizOption.id && !liveLikeQuizOption.isCorrect ){
+                holder.view.result_bar.setBackgroundColor(context.getColor(R.color.quiz_incorrect_result_bar_color))
+            }else if(liveLikeQuizOption.isCorrect){
+                holder.view.result_bar.setBackgroundColor(context.getColor(R.color.quiz_correct_result_bar_color))
+            }else{
+                holder.view.result_bar.setBackgroundColor(context.getColor(R.color.quiz_default_result_bar_color))
+            }
         }else{
             holder.view.result_bar.visibility = View.GONE
             holder.view.result_tv.visibility = View.GONE
@@ -57,6 +67,7 @@ RecyclerView.Adapter<QuizViewAdapter.QuizListItemViewHolder>() {
                 currentlySelectedViewHolder = holder
                 holder.selectOption()
                 selectedOptionItem = liveLikeQuizOption
+                optionSelectListener.invoke(liveLikeQuizOption)
             }
         }
 

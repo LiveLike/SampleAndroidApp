@@ -9,6 +9,8 @@ import com.bumptech.glide.Glide
 import com.livelike.engagementsdksample.R
 import com.livelike.engagementsdksample.widget.model.LiveLikeQuizOption
 import kotlinx.android.synthetic.main.image_quiz_list_item.view.*
+import kotlin.math.max
+import kotlin.math.min
 
 class QuizViewAdapter (  private val context: Context,
 var list: ArrayList<LiveLikeQuizOption>,
@@ -51,7 +53,7 @@ RecyclerView.Adapter<QuizViewAdapter.QuizListItemViewHolder>() {
             holder.view.setOnClickListener(null)
             holder.view.result_tv.text = "${liveLikeQuizOption.percentage}%"
             holder.view.result_bar.pivotX = 0f
-            holder.view.result_bar.scaleX = (liveLikeQuizOption.percentage?.toFloat()?:0f) / 100f
+            holder.view.result_bar.scaleX = max(((liveLikeQuizOption.percentage?:0) / 100f), 0.1f)
             if(selectedOptionItem?.id == liveLikeQuizOption.id && !liveLikeQuizOption.isCorrect ){
                 holder.view.result_bar.setBackgroundColor(context.getColor(R.color.quiz_incorrect_result_bar_color))
             }else if(liveLikeQuizOption.isCorrect){

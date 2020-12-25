@@ -10,12 +10,15 @@ import com.livelike.engagementsdksample.R
 import com.livelike.engagementsdksample.parseDuration
 import com.livelike.engagementsdksample.widget.model.LiveLikeQuizOption
 import kotlinx.android.synthetic.main.custom_quiz_widget.view.*
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class CustomImageQuizView(context: Context, var quizWidgetModel: QuizWidgetModel? = null) :  FrameLayout(context) {
 
     private lateinit var adapter: QuizViewAdapter
+    private var quizAnswerJob: Job? = null
 
    init {
         inflate(context, R.layout.custom_quiz_widget, this)
@@ -40,8 +43,12 @@ class CustomImageQuizView(context: Context, var quizWidgetModel: QuizWidgetModel
                     QuizViewAdapter(context, ArrayList(it.map { item -> LiveLikeQuizOption(item?.id!!,item?.description?:"",false,item.imageUrl,item.answerCount) })
                     ) { option->
                         // TODO change sdk apis to have non-nullable option item ids
-                        // TODO add debounce to optimize api calls
-                        quizWidgetModel?.lockInAnswer(option.id ?: "")
+                        // 1000ms debounce added, TODO To discuss whether sdk should have inbuilt debounce to optimize sdk api calls
+                        quizAnswerJob?.cancel()
+                        quizAnswerJob =  context.lifecycleScope.launch {
+                            delay(1000)
+                            quizWidgetModel?.lockInAnswer(option.id ?: "")
+                        }
                     }
                 quiz_rv.layoutManager = GridLayoutManager(context,2)
                 quiz_rv.adapter = adapter
@@ -57,10 +64,11 @@ class CustomImageQuizView(context: Context, var quizWidgetModel: QuizWidgetModel
 
     private fun subscribeToVoteResults() {
         quizWidgetModel?.voteResults?.subscribe(this) { result ->
-
+              val totalVotes  = result?.choices?.sumBy { it?.answer_count?:0 }?:0
             result?.choices?.zip(adapter.list)?.let { options ->
                 adapter.isResultAvailable = true
-                adapter.list = ArrayList(options.map { item -> LiveLikeQuizOption(item?.second.id!!,item?.second?.description?:"",item?.first.is_correct,item?.second.imageUrl,item?.first.percentage)})
+                adapter.list = ArrayList(options.map { item -> LiveLikeQuizOption(item?.second.id!!,item?.second?.description?:"",item?.first.is_correct,item?.second.imageUrl,
+                    (((item.first.answer_count?:0)*100)/ totalVotes))})
                 adapter.notifyDataSetChanged()
             }
         }

@@ -57,7 +57,7 @@
         <item name="chatReactionElevation">6dp</item>
         <item name="chatReactionRadius">20dp</item>
         <item name="chatReactionDisplayCountColor">@android:color/black</item>
-        <item name="showChatAvatarLogo">true</item>
+<!--        <item name="showChatAvatarLogo">true</item>-->
         <item name="chatAvatarCircle">false</item>
         <item name="chatAvatarHeight">36dp</item>
         <item name="chatAvatarWidth">32dp</item>
@@ -73,7 +73,7 @@
         <item name="chatSendButtonPaddingRight">2dp</item>
         <item name="chatSendButtonPaddingTop">0dp</item>
         <item name="chatSendButtonPaddingBottom">0dp</item>
-        <item name="userPicDrawable">@drawable/ic_user_pic</item>
+<!--        <item name="userPicDrawable">@drawable/ic_user_pic</item>-->
         <item name="chatBubblePaddingLeft">8dp</item>
         <item name="chatBubblePaddingRight">8dp</item>
         <item name="chatBubblePaddingTop">8dp</item>

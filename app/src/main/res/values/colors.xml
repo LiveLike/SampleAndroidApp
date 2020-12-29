@@ -4,4 +4,8 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="livelike_default_text_color" tools:ignore="PrivateResource">#FFFFFF</color>
+    <color name="quiz_incorrect_result_bar_color">#FF3C3C</color>
+    <color name="quiz_correct_result_bar_color">#00FF78</color>
+    <color name="quiz_default_result_bar_color">#E6E6E6</color>
+
 </resources>

@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="7dp"
     android:layout_marginTop="10dp"
-    android:background="@drawable/option_item_background"
+    android:background="@drawable/image_option_background_stroke_drawable"
     android:orientation="horizontal">
 
     <TextView

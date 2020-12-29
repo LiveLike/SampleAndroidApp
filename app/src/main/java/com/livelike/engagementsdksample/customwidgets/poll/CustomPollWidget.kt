@@ -100,9 +100,6 @@ class PollListAdapter(
     RecyclerView.Adapter<PollListAdapter.PollListItemViewHolder>() {
     var selectedIndex = -1
     val optionIdCount: HashMap<String, Int> = hashMapOf()
-
-    var isFollowUp = false
-
     var pollListener: PollListener? = null
 
     interface PollListener {
@@ -141,7 +138,7 @@ class PollListAdapter(
             }
             holder.itemView.textView.text = "${item.description}"
             if (selectedIndex == index) {
-                holder.itemView.lay_poll_img_option.setBackgroundResource(R.drawable.option_item_background_selected)
+                holder.itemView.lay_poll_img_option.setBackgroundResource(R.drawable.image_option_background_selected_drawable)
                 holder.itemView.progressBar.progressDrawable = ContextCompat.getDrawable(
                     context,
                     R.drawable.custom_progress_color_options_selected
@@ -149,7 +146,7 @@ class PollListAdapter(
                 holder.itemView.textView2.setTextColor(Color.WHITE)
                 holder.itemView.textView.setTextColor(Color.WHITE)
             } else {
-                holder.itemView.lay_poll_img_option.setBackgroundResource(R.drawable.option_item_background)
+                holder.itemView.lay_poll_img_option.setBackgroundResource(R.drawable.image_option_background_stroke_drawable)
                 holder.itemView.progressBar.progressDrawable = ContextCompat.getDrawable(
                     context,
                     R.drawable.custom_progress_color_options_selected
@@ -176,7 +173,7 @@ class PollListAdapter(
             }
             holder.itemView.text_poll_item.text = "${item.description}"
             if (selectedIndex == index) {
-                holder.itemView.lay_poll_text_option.setBackgroundResource(R.drawable.option_item_background_selected)
+                holder.itemView.lay_poll_text_option.setBackgroundResource(R.drawable.image_option_background_selected_drawable)
                 holder.itemView.text_poll_item.setTextColor(Color.WHITE)
                 holder.itemView.txt_percent.setTextColor(Color.WHITE)
                 holder.itemView.progressBar_text.progressDrawable = ContextCompat.getDrawable(
@@ -184,7 +181,7 @@ class PollListAdapter(
                     R.drawable.custom_progress_color_options_selected
                 )
             } else {
-                holder.itemView.lay_poll_text_option.setBackgroundResource(R.drawable.option_item_background)
+                holder.itemView.lay_poll_text_option.setBackgroundResource(R.drawable.image_option_background_stroke_drawable)
                 holder.itemView.text_poll_item.setTextColor(Color.BLACK)
                 holder.itemView.txt_percent.setTextColor(Color.BLACK)
                 holder.itemView.progressBar_text.progressDrawable = ContextCompat.getDrawable(
@@ -193,11 +190,9 @@ class PollListAdapter(
                 )
             }
             holder.itemView.lay_poll_text_option.setOnClickListener {
-                if (!isFollowUp) {
-                    selectedIndex = holder.adapterPosition
-                    pollListener?.onSelectOption(item.id!!)
-                    notifyDataSetChanged()
-                }
+                selectedIndex = holder.adapterPosition
+                pollListener?.onSelectOption(item.id!!)
+                notifyDataSetChanged()
             }
         }
 

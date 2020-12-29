@@ -7,7 +7,7 @@
     android:layout_height="80dp"
     android:layout_margin="10dp"
     android:animateLayoutChanges="true"
-    android:background="@drawable/option_item_background">
+    android:background="@drawable/image_option_background_stroke_drawable">
 
     <ImageView
         android:id="@+id/imageView"

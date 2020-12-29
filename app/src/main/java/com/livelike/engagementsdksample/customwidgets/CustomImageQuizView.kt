@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.livelike.engagementsdk.widget.widgetModel.QuizWidgetModel
 import com.livelike.engagementsdksample.R
 import com.livelike.engagementsdksample.parseDuration
-import com.livelike.engagementsdksample.widget.model.LiveLikeQuizOption
+import com.livelike.engagementsdksample.widget.model.LiveLikeWidgetOption
 import kotlinx.android.synthetic.main.custom_quiz_widget.view.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class CustomImageQuizView(context: Context, var quizWidgetModel: QuizWidgetModel? = null) :  FrameLayout(context) {
 
-    private lateinit var adapter: QuizViewAdapter
+    private lateinit var adapter: ImageOptionsWidgetAdapter
     private var quizAnswerJob: Job? = null
 
    init {
@@ -40,7 +40,7 @@ class CustomImageQuizView(context: Context, var quizWidgetModel: QuizWidgetModel
 
             liveLikeWidget.choices?.let {
                  adapter =
-                    QuizViewAdapter(context, ArrayList(it.map { item -> LiveLikeQuizOption(item?.id!!,item?.description?:"",false,item.imageUrl,item.answerCount) })
+                    ImageOptionsWidgetAdapter(context, ArrayList(it.map { item -> LiveLikeWidgetOption(item?.id!!,item?.description?:"",false,item.imageUrl,item.answerCount) })
                     ) { option->
                         // TODO change sdk apis to have non-nullable option item ids
                         // 1000ms debounce added, TODO To discuss whether sdk should have inbuilt debounce to optimize sdk api calls
@@ -67,7 +67,7 @@ class CustomImageQuizView(context: Context, var quizWidgetModel: QuizWidgetModel
               val totalVotes  = result?.choices?.sumBy { it?.answer_count?:0 }?:0
             result?.choices?.zip(adapter.list)?.let { options ->
                 adapter.isResultAvailable = true
-                adapter.list = ArrayList(options.map { item -> LiveLikeQuizOption(item?.second.id!!,item?.second?.description?:"",item?.first.is_correct,item?.second.imageUrl,
+                adapter.list = ArrayList(options.map { item -> LiveLikeWidgetOption(item?.second.id!!,item?.second?.description?:"",item?.first.is_correct,item?.second.imageUrl,
                     (((item.first.answer_count?:0)*100)/ totalVotes))})
                 adapter.notifyDataSetChanged()
             }

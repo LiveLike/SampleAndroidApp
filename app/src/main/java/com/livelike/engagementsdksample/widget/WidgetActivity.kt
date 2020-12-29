@@ -12,6 +12,7 @@ package com.livelike.engagementsdksample.widget
  import com.livelike.engagementsdk.widget.widgetModel.*
  import com.livelike.engagementsdksample.R
  import com.livelike.engagementsdksample.customwidgets.CustomImageQuizView
+ import com.livelike.engagementsdksample.customwidgets.CustomPredictionWidget
  import com.livelike.engagementsdksample.widget.viewmodels.EngagementViewModelFactory
  import com.livelike.engagementsdksample.widget.viewmodels.widgetViewModel
  import kotlinx.android.synthetic.main.activity_widget.*
@@ -64,14 +65,22 @@ class WidgetActivity : AppCompatActivity() {
                 predictionViewModel: PredictionWidgetViewModel,
                 isImage: Boolean
             ): View? {
-                return null
+                if(isImage) {
+                    return CustomPredictionWidget(this@WidgetActivity, predictionViewModel)
+                }else{
+                    return null
+                }
             }
 
             override fun createQuizWidgetView(
                 quizWidgetModel: QuizWidgetModel,
                 isImage: Boolean
             ): View? {
-                return CustomImageQuizView(this@WidgetActivity, quizWidgetModel)
+                if(isImage) {
+                    return CustomImageQuizView(this@WidgetActivity, quizWidgetModel)
+                }else{
+                    return null
+                }
             }
 
         }

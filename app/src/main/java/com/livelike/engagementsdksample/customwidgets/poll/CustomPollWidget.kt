@@ -133,12 +133,11 @@ class PollListAdapter(
                 holder.itemView.textView2.visibility = View.VISIBLE
                 val total = optionIdCount.values.reduce { acc, i -> acc + i }
                 val percent = (optionIdCount[item.id!!]!!.toFloat() / total.toFloat()) * 100
-                println("PollListAdapter.onBindViewHolder->$total ->$percent ->${(optionIdCount[item.id!!]!!)}")
                 holder.itemView.progressBar.progress = percent.toInt()
                 holder.itemView.textView2.text = "$percent %"
             } else {
                 holder.itemView.progressBar.visibility = View.INVISIBLE
-                holder.itemView.textView2.visibility = View.INVISIBLE
+                holder.itemView.textView2.visibility = View.GONE
             }
             holder.itemView.textView.text = "${item.description}"
             if (selectedIndex == index) {
@@ -169,7 +168,6 @@ class PollListAdapter(
                 holder.itemView.progressBar_text.visibility = View.VISIBLE
                 val total = optionIdCount.values.reduce { acc, i -> acc + i }
                 val percent = (optionIdCount[item.id!!]!!.toFloat() / total.toFloat()) * 100
-                println("PollListAdapter.onBindViewHolder->$total ->$percent ->${(optionIdCount[item.id!!]!!)}")
                 holder.itemView.txt_percent.text = "$percent %"
                 holder.itemView.progressBar_text.progress = percent.toInt()
             } else {

@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:layout_margin="10dp"
+    android:animateLayoutChanges="true"
     android:background="@drawable/option_item_background">
 
     <ImageView
@@ -26,6 +27,7 @@
         android:layout_marginStart="2dp"
         android:textColor="@android:color/black"
         android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toStartOf="@+id/imageView"
         app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="parent"

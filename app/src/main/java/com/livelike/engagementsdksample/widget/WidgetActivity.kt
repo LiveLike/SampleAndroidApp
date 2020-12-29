@@ -1,20 +1,21 @@
 package com.livelike.engagementsdksample.widget
 
- import android.app.AlertDialog
- import android.app.Application
- import android.os.Bundle
- import android.view.View
- import androidx.appcompat.app.AppCompatActivity
- import androidx.lifecycle.ViewModelProvider
- import com.livelike.engagementsdk.core.services.messaging.proxies.LiveLikeWidgetEntity
- import com.livelike.engagementsdk.core.services.messaging.proxies.WidgetInterceptor
- import com.livelike.engagementsdk.widget.LiveLikeWidgetViewFactory
- import com.livelike.engagementsdk.widget.widgetModel.*
- import com.livelike.engagementsdksample.R
- import com.livelike.engagementsdksample.customwidgets.CustomImageQuizView
- import com.livelike.engagementsdksample.widget.viewmodels.EngagementViewModelFactory
- import com.livelike.engagementsdksample.widget.viewmodels.widgetViewModel
- import kotlinx.android.synthetic.main.activity_widget.*
+import android.app.AlertDialog
+import android.app.Application
+import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import com.livelike.engagementsdk.core.services.messaging.proxies.LiveLikeWidgetEntity
+import com.livelike.engagementsdk.core.services.messaging.proxies.WidgetInterceptor
+import com.livelike.engagementsdk.widget.LiveLikeWidgetViewFactory
+import com.livelike.engagementsdk.widget.widgetModel.*
+import com.livelike.engagementsdksample.R
+import com.livelike.engagementsdksample.customwidgets.CustomEmojiSlider
+import com.livelike.engagementsdksample.customwidgets.CustomImageQuizView
+import com.livelike.engagementsdksample.widget.viewmodels.EngagementViewModelFactory
+import com.livelike.engagementsdksample.widget.viewmodels.widgetViewModel
+import kotlinx.android.synthetic.main.activity_widget.*
 
 class WidgetActivity : AppCompatActivity() {
 
@@ -33,7 +34,7 @@ class WidgetActivity : AppCompatActivity() {
         ).get(widgetViewModel::class.java)
         // Check whether chat or widget is selected
 
-        widget_view_container.widgetViewFactory = object : LiveLikeWidgetViewFactory{
+        widget_view_container.widgetViewFactory = object : LiveLikeWidgetViewFactory {
             override fun createAlertWidgetView(alertWidgetModel: AlertWidgetModel): View? {
                 return null
             }
@@ -43,7 +44,9 @@ class WidgetActivity : AppCompatActivity() {
             }
 
             override fun createImageSliderWidgetView(imageSliderWidgetModel: ImageSliderWidgetModel): View? {
-                return null
+                return CustomEmojiSlider(this@WidgetActivity).apply {
+                    this.imageSliderWidgetModel = imageSliderWidgetModel
+                }
             }
 
             override fun createPollWidgetView(

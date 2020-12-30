@@ -16,16 +16,17 @@
 
 
     <TextView
+        android:id="@+id/widget_type_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="IMAGE QUIZ"
+        android:text="Prediction"
         android:layout_marginTop="21dp"
         android:layout_gravity="center"
         android:textSize="@dimen/widget_type_label_size"/>
 
 
     <TextView
-        android:id="@+id/quiz_title"
+        android:id="@+id/widget_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Who was graduated from UCLA?"
@@ -37,7 +38,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/quiz_rv"
+        android:id="@+id/widget_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

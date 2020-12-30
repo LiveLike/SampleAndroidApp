@@ -1,6 +1,6 @@
 package com.livelike.engagementsdksample.widget.model
 
-data class LiveLikeQuizOption(
+data class LiveLikeWidgetOption(
     val id: String,
     val description: String = "",
     val isCorrect: Boolean = false,

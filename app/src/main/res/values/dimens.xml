@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="widget_time_bar_height">5dp</dimen>
+    <dimen name="widget_type_label_size">11sp</dimen>
+    <dimen name="widget_title_size">15sp</dimen>
+</resources>

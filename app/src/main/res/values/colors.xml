@@ -7,5 +7,6 @@
     <color name="quiz_incorrect_result_bar_color">#FF3C3C</color>
     <color name="quiz_correct_result_bar_color">#00FF78</color>
     <color name="quiz_default_result_bar_color">#E6E6E6</color>
+    <color name="widget_time_bar_color">#FFC500</color>
 
 </resources>

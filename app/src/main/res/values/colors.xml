@@ -7,6 +7,11 @@
     <color name="quiz_incorrect_result_bar_color">#FF3C3C</color>
     <color name="quiz_correct_result_bar_color">#00FF78</color>
     <color name="quiz_default_result_bar_color">#E6E6E6</color>
+    <color name="image_slider_widget_result_center_color">#D10D0D</color>
+    <color name="image_slider_widget_result_end_color">#0650C3</color>
+    <color name="image_slider_gradient_start">#140099</color>
+    <color name="image_slider_gradient_end">#256eff</color>
+    <color name="image_slider_bg">#e6e6e6</color>
     <color name="widget_time_bar_color">#FFC500</color>
 
 </resources>

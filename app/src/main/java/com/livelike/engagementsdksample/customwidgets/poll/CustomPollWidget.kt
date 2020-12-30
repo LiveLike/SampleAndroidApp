@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.livelike.engagementsdk.OptionsItem
@@ -54,8 +55,11 @@ class CustomPollWidget : ConstraintLayout {
         pollWidgetModel?.widgetData?.let { liveLikeWidget ->
             txt_title.text = liveLikeWidget.question
             liveLikeWidget.options?.let {
-                if (it.size > 2) {
+                if (isImage) {
                     rcyl_poll_list.layoutManager = GridLayoutManager(context, 2)
+                } else {
+                    rcyl_poll_list.layoutManager =
+                        LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                 }
                 val adapter =
                     PollListAdapter(context, isImage, ArrayList(it.map { item -> item!! }))
@@ -70,6 +74,7 @@ class CustomPollWidget : ConstraintLayout {
                         options.forEach { op ->
                             adapter.optionIdCount[op.id] = op.vote_count ?: 0
                         }
+                        adapter.notifyDataSetChanged()
                     }
                 }
                 val timeMillis = liveLikeWidget.timeout?.parseDuration() ?: 5000
@@ -77,8 +82,6 @@ class CustomPollWidget : ConstraintLayout {
 
                 (context as AppCompatActivity).lifecycleScope.async {
                     delay(timeMillis)
-                    adapter.notifyDataSetChanged()
-                    delay(2000)
                     pollWidgetModel?.finish()
                 }
             }

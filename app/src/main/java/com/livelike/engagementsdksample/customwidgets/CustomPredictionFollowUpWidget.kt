@@ -32,8 +32,10 @@ class CustomPredictionFollowUpWidget(context : Context, val followUpWidgetViewMo
             }
             followUpWidgetViewModel.claimRewards()
             liveLikeWidget.options?.let {
+                val totalVotes  = it?.sumBy { it?.voteCount?:0 }?:0
                 imageOptionsWidgetAdapter =
-                    ImageOptionsWidgetAdapter(context, ArrayList(it.map { item -> LiveLikeWidgetOption(item?.id!!,item?.description?:"",item.isCorrect?:false,item.imageUrl,item.answerCount) })
+                    ImageOptionsWidgetAdapter(context, ArrayList(it.map { item -> LiveLikeWidgetOption(item?.id!!,item?.description?:"",item.isCorrect?:false,item.imageUrl,
+                        (((item.voteCount?:0)*100)/ totalVotes))})
                     ) {}
                 widget_rv.layoutManager = GridLayoutManager(context,2)
                 imageOptionsWidgetAdapter.isResultState = true
@@ -51,10 +53,10 @@ class CustomPredictionFollowUpWidget(context : Context, val followUpWidgetViewMo
 
     private fun subscribeToVoteResults() {
         followUpWidgetViewModel?.voteResults?.subscribe(this) { result ->
-            val totalVotes  = result?.choices?.sumBy { it?.answer_count?:0 }?:0
+            val totalVotes  = result?.choices?.sumBy { it?.vote_count?:0 }?:0
             result?.choices?.zip(imageOptionsWidgetAdapter.list)?.let { options ->
                 imageOptionsWidgetAdapter.list = ArrayList(options.map { item -> LiveLikeWidgetOption(item?.second.id!!,item?.second?.description?:"",item?.first.is_correct,item?.second.imageUrl,
-                    (((item.first.answer_count?:0)*100)/ totalVotes))})
+                    (((item.first.vote_count?:0)*100)/ totalVotes))})
                 imageOptionsWidgetAdapter.notifyDataSetChanged()
             }
         }

@@ -1,6 +1,7 @@
 package com.livelike.engagementsdksample.customwidgets
 
 import android.content.Context
+import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -42,6 +43,19 @@ class CustomPredictionFollowUpWidget(context : Context, val followUpWidgetViewMo
                 imageOptionsWidgetAdapter.isResultAvailable = true
                 imageOptionsWidgetAdapter.selectedOptionItem = imageOptionsWidgetAdapter.list.find { it.id == followUpWidgetViewModel.getPredictionVoteId() }
                 widget_rv.adapter = imageOptionsWidgetAdapter
+            }
+            followupAnimation?.apply {
+                if(imageOptionsWidgetAdapter.selectedOptionItem?.isCorrect == false){
+                    setAnimation(
+                        "loseAnimation/lose.json"
+                    )
+                } else {
+                    setAnimation(
+                        "winAnimation/win.json"
+                    )
+                }
+                playAnimation()
+                visibility = View.VISIBLE
             }
         }
     }

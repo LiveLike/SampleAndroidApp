@@ -56,13 +56,10 @@
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/followupAnimation"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:adjustViewBounds="false"
-        android:cropToPadding="false"
-        android:padding="0dp"
+        android:layout_height="match_parent"
         android:scaleType="fitCenter"
         android:visibility="gone"
-        android:layout_gravity="bottom"
-        tools:visibility="invisible" />
+        android:layout_gravity="center"
+        tools:visibility="visible" />
 
 </FrameLayout>

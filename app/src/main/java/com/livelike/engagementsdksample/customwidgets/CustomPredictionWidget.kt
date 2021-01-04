@@ -1,6 +1,7 @@
 package com.livelike.engagementsdksample.customwidgets
 
 import android.content.Context
+import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -28,6 +29,16 @@ class CustomPredictionWidget(context : Context, val predictionWidgetViewModel: P
 
             (context as AppCompatActivity).lifecycleScope.async {
                 delay(timeMillis)
+                imageOptionsWidgetAdapter.isResultState = true
+                imageOptionsWidgetAdapter.notifyDataSetChanged()
+                lottie_animation_view?.apply {
+                        setAnimation(
+                            "stay_tuned.json"
+                        )
+                    playAnimation()
+                    visibility = View.VISIBLE
+                }
+                delay(2000)
                 predictionWidgetViewModel?.finish()
             }
 
@@ -42,6 +53,30 @@ class CustomPredictionWidget(context : Context, val predictionWidgetViewModel: P
             }
         }
     }
+
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        subscribeToVoteResults()
+    }
+
+    private fun subscribeToVoteResults() {
+        predictionWidgetViewModel?.voteResults?.subscribe(this) { result ->
+            imageOptionsWidgetAdapter.isResultAvailable = true
+            val totalVotes  = result?.choices?.sumBy { it?.vote_count?:0 }?:0
+            result?.choices?.zip(imageOptionsWidgetAdapter.list)?.let { options ->
+                imageOptionsWidgetAdapter.list = ArrayList(options.map { item -> LiveLikeWidgetOption(item?.second.id!!,item?.second?.description?:"",item?.first.is_correct,item?.second.imageUrl,
+                    (((item.first.vote_count?:0)*100)/ totalVotes))})
+                imageOptionsWidgetAdapter.notifyDataSetChanged()
+            }
+        }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        predictionWidgetViewModel?.voteResults?.unsubscribe(this)
+    }
+
 
 
 }

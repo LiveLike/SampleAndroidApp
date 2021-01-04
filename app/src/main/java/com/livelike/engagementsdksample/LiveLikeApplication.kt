@@ -44,6 +44,7 @@ class LiveLikeApplication : Application() {
 
         contentSession =
             programId?.let { engagementSDK.createContentSession(it) }
+        println("LiveLikeApplication.setContentSession>>>$contentSession")
     }
 
     fun getContentSession(): LiveLikeContentSession? {

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.livelike.engagementsdk.OptionsItem
 import com.livelike.engagementsdk.widget.widgetModel.PollWidgetModel
 import com.livelike.engagementsdksample.R
@@ -54,6 +55,10 @@ class CustomPollWidget : ConstraintLayout {
         super.onAttachedToWindow()
         pollWidgetModel?.widgetData?.let { liveLikeWidget ->
             txt_title.text = liveLikeWidget.question
+            poll_title.text = when (isImage) {
+                true -> "IMAGE POLL"
+                else -> "TEXT POLL"
+            }
             liveLikeWidget.options?.let {
                 if (isImage) {
                     rcyl_poll_list.layoutManager = GridLayoutManager(context, 2)
@@ -127,6 +132,7 @@ class PollListAdapter(
         if (isImage) {
             Glide.with(context)
                 .load(item.imageUrl)
+                .transform(RoundedCorners(holder.itemView.resources.getDimensionPixelSize(R.dimen.rounded_corner_box_radius)))
                 .into(holder.itemView.imageView)
             if (optionIdCount.containsKey(item.id)) {
                 holder.itemView.progressBar.visibility = View.VISIBLE

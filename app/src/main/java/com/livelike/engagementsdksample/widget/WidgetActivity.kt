@@ -13,11 +13,13 @@ import com.livelike.engagementsdk.widget.widgetModel.*
 import com.livelike.engagementsdksample.R
 import com.livelike.engagementsdksample.customwidgets.CustomEmojiSlider
 import com.livelike.engagementsdksample.customwidgets.CustomImageQuizView
+import com.livelike.engagementsdksample.customwidgets.CustomPredictionFollowUpWidget
 import com.livelike.engagementsdksample.customwidgets.CustomPredictionWidget
 import com.livelike.engagementsdksample.customwidgets.poll.CustomPollWidget
 import com.livelike.engagementsdksample.widget.viewmodels.EngagementViewModelFactory
 import com.livelike.engagementsdksample.widget.viewmodels.widgetViewModel
 import kotlinx.android.synthetic.main.activity_widget.*
+
 
 class WidgetActivity : AppCompatActivity() {
 
@@ -65,7 +67,11 @@ class WidgetActivity : AppCompatActivity() {
                 followUpWidgetViewModel: FollowUpWidgetViewModel,
                 isImage: Boolean
             ): View? {
-                return null
+                if(isImage) {
+                    return CustomPredictionFollowUpWidget(this@WidgetActivity, followUpWidgetViewModel)
+                }else{
+                    return null
+                }
             }
 
             override fun createPredictionWidgetView(

@@ -60,6 +60,12 @@ RecyclerView.Adapter<ImageOptionsWidgetAdapter.ImageOptionsListItemViewHolder>()
             }else{
                 holder.view.result_bar.setBackgroundColor(context.getColor(R.color.quiz_default_result_bar_color))
             }
+            if(selectedOptionItem?.id == liveLikeWidgetOption.id){
+                holder.selectOption()
+            }else{
+                holder.unSelectOption()
+            }
+            holder.view.setOnClickListener(null)
         }else{
             holder.view.result_bar.visibility = View.GONE
             holder.view.result_tv.visibility = View.GONE

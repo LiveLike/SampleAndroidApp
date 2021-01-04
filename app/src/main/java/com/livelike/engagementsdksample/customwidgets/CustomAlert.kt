@@ -18,24 +18,9 @@ import kotlinx.android.synthetic.main.custom_sponser_alert.view.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 
-class CustomSponserAlert : ConstraintLayout {
+class CustomAlert(val isSponsor: Boolean, context: Context) : ConstraintLayout(context) {
     lateinit var alertModel: AlertWidgetModel
 
-    constructor(context: Context) : super(context) {
-        init(null, 0)
-    }
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        init(attrs, 0)
-    }
-
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
-        context,
-        attrs,
-        defStyle
-    ) {
-        init(attrs, defStyle)
-    }
 
     private fun init(attrs: AttributeSet?, defStyle: Int) {
         inflate(context, R.layout.custom_sponser_alert, this)
@@ -46,6 +31,10 @@ class CustomSponserAlert : ConstraintLayout {
         alertModel.widgetData.let { likeWidget ->
             val timeMillis = likeWidget.timeout?.parseDuration() ?: 5000
             time_bar.startTimer(timeMillis)
+
+            if (!isSponsor){
+                sponsor_container.visibility = View.GONE
+            }
 
             txt_title.text = likeWidget.title
             txt_description.text = likeWidget.text

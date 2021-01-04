@@ -50,7 +50,7 @@
         android:max="100"
         android:progressDrawable="@drawable/custom_progress_color_options"
         app:layout_constraintBottom_toBottomOf="@+id/text_poll_item"
-        app:layout_constraintEnd_toEndOf="@+id/text_poll_item"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_poll_item"
         tools:progress="50" />

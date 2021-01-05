@@ -129,7 +129,7 @@ class WidgetActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-//        mainViewModel?.resumeSession()
+        mainViewModel?.resumeSession()
     }
 
     override fun onDestroy() {

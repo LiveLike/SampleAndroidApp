@@ -2,6 +2,8 @@ package com.livelike.engagementsdksample
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.livelike.engagementsdk.BuildConfig
@@ -34,6 +36,10 @@ class MainActivity : AppCompatActivity() {
             if (!outlinedTextField.text.isNullOrEmpty()) {
                 (application as LiveLikeApplication).setProgramCode(outlinedTextField.text.toString())
                 saveProgramButton.text = "Saved"
+                Handler().postDelayed({
+                    chatLayout.visibility = View.VISIBLE
+                    widgetLayout.visibility = View.VISIBLE
+                }, 2000)
             } else {
                 Toast.makeText(this, "Program id cannot be blank", Toast.LENGTH_LONG).show()
             }

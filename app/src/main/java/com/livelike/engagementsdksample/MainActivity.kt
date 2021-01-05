@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() {
         // when user clicks on Chat option
         chatLayout.setOnClickListener {
             if (!outlinedTextField.text.isNullOrEmpty()) {
-                (application as LiveLikeApplication).setProgramCode(outlinedTextField.text.toString())
                 val intent = Intent(this, ChatActivity::class.java)
                 startActivity(intent)
             } else {

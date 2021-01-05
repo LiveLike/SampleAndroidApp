@@ -83,9 +83,6 @@ class CustomEmojiSlider : ConstraintLayout {
             }
             val timeMillis = widget.timeout?.parseDuration() ?: 5000
             time_bar.startTimer(timeMillis)
-            image_slider.positionListener = {
-                println("nim->$it")
-            }
             (context as AppCompatActivity).lifecycleScope.async {
                 delay(timeMillis)
                 imageSliderWidgetModel.lockInVote(image_slider.progress.toDouble())

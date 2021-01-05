@@ -48,6 +48,7 @@ class CustomPredictionWidget(context : Context, val predictionWidgetViewModel: P
                     ) { option ->
                         predictionWidgetViewModel?.lockInVote(option.id ?: "")
                     }
+                imageOptionsWidgetAdapter.indicateRightAnswer = false
                 widget_rv.layoutManager = GridLayoutManager(context,2)
                 widget_rv.adapter = imageOptionsWidgetAdapter
             }

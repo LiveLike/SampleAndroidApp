@@ -21,6 +21,12 @@ RecyclerView.Adapter<ImageOptionsWidgetAdapter.ImageOptionsListItemViewHolder>()
     var isResultState: Boolean = false
     var isResultAvailable: Boolean = false
 
+ /**
+  * flag to tell whether to use red-green bar color to indicate right and wrong answers
+  *  or otherwise just blue - grey to indicate selected and unselected answer
+  */
+    var indicateRightAnswer : Boolean = true
+
     var selectedOptionItem : LiveLikeWidgetOption?=null
     var currentlySelectedViewHolder : ImageOptionsListItemViewHolder ? =null
 
@@ -53,12 +59,21 @@ RecyclerView.Adapter<ImageOptionsWidgetAdapter.ImageOptionsListItemViewHolder>()
             holder.view.result_tv.text = "${liveLikeWidgetOption.percentage}%"
             holder.view.result_bar.pivotX = 0f
             holder.view.result_bar.scaleX = max(((liveLikeWidgetOption.percentage?:0) / 100f), 0.1f)
-            if(selectedOptionItem?.id == liveLikeWidgetOption.id && !liveLikeWidgetOption.isCorrect ){
-                holder.view.result_bar.setBackgroundColor(context.getColor(R.color.quiz_incorrect_result_bar_color))
-            }else if(liveLikeWidgetOption.isCorrect){
-                holder.view.result_bar.setBackgroundColor(context.getColor(R.color.quiz_correct_result_bar_color))
-            }else{
-                holder.view.result_bar.setBackgroundColor(context.getColor(R.color.quiz_default_result_bar_color))
+
+            if (!indicateRightAnswer) {
+                if (selectedOptionItem?.id == liveLikeWidgetOption.id) {
+                    holder.view.result_bar.setBackgroundColor(context.getColor(R.color.selected_result_bar_color))
+                } else {
+                    holder.view.result_bar.setBackgroundColor(context.getColor(R.color.default_result_bar_color))
+                }
+            } else {
+                if(selectedOptionItem?.id == liveLikeWidgetOption.id && !liveLikeWidgetOption.isCorrect ){
+                    holder.view.result_bar.setBackgroundColor(context.getColor(R.color.incorrect_result_bar_color))
+                }else if(liveLikeWidgetOption.isCorrect){
+                    holder.view.result_bar.setBackgroundColor(context.getColor(R.color.correct_result_bar_color))
+                }else{
+                    holder.view.result_bar.setBackgroundColor(context.getColor(R.color.default_result_bar_color))
+                }
             }
             if(selectedOptionItem?.id == liveLikeWidgetOption.id){
                 holder.selectOption()

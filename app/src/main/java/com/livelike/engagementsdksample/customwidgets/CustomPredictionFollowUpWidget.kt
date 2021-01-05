@@ -44,7 +44,7 @@ class CustomPredictionFollowUpWidget(context : Context, val followUpWidgetViewMo
                 imageOptionsWidgetAdapter.selectedOptionItem = imageOptionsWidgetAdapter.list.find { it.id == followUpWidgetViewModel.getPredictionVoteId() }
                 widget_rv.adapter = imageOptionsWidgetAdapter
             }
-            followupAnimation?.apply {
+            lottie_animation_view?.apply {
                 if(imageOptionsWidgetAdapter.selectedOptionItem?.isCorrect == false){
                     setAnimation(
                         "loseAnimation/lose.json"

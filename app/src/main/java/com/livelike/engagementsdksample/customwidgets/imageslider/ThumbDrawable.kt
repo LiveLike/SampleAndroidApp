@@ -16,7 +16,7 @@ internal class ThumbDrawable(
             field = value
             if (drawableList.isNotEmpty()) {
                 drawable = getDrawable(progress, drawableList.size)
-                drawable.scale = getScale(progress)
+                drawable.scale = 1.0f
             }
         }
 

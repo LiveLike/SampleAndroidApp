@@ -20,7 +20,7 @@ class LiveLikeApplication : Application() {
         super.onCreate()
         // Required initialization logic here!
         // setUpEngagementSDK()
-        minimumLogLevel= LogLevel.Verbose
+        minimumLogLevel = LogLevel.Verbose
     }
 
     fun setProgramCode(id: String) {
@@ -33,17 +33,15 @@ class LiveLikeApplication : Application() {
         setUpEngagementSDK()
     }
 
-    fun setUpEngagementSDK() {
+    private fun setUpEngagementSDK() {
         engagementSDK =
             clientId?.let { EngagementSDK(it, this) }!!
     }
 
-    fun setContentSession() {
-        engagementSDK =
-            EngagementSDK(clientId!!, this)
-
+    private fun setContentSession() {
         contentSession =
             programId?.let { engagementSDK.createContentSession(it) }
+        println("LiveLikeApplication.setContentSession>>>$contentSession")
     }
 
     fun getContentSession(): LiveLikeContentSession? {

@@ -141,6 +141,7 @@ internal class ImageSlider @JvmOverloads constructor(
             field = value
             thumbDrawable?.callback = this
             visibility = VISIBLE
+            invalidateAll()
         }
 
     /**

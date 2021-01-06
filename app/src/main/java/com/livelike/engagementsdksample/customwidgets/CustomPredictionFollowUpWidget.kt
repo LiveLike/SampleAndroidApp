@@ -47,11 +47,11 @@ class CustomPredictionFollowUpWidget(context : Context, val followUpWidgetViewMo
             lottie_animation_view?.apply {
                 if(imageOptionsWidgetAdapter.selectedOptionItem?.isCorrect == false){
                     setAnimation(
-                        "loseAnimation/lose.json"
+                        "GSW_incorrect.json"
                     )
                 } else {
                     setAnimation(
-                        "winAnimation/win.json"
+                        "GSW_correct.json"
                     )
                 }
                 playAnimation()

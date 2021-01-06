@@ -1,6 +1,7 @@
 package com.livelike.engagementsdksample.customwidgets
 
 import android.content.Context
+import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -33,6 +34,7 @@ class CustomImageQuizView(context: Context, var quizWidgetModel: QuizWidgetModel
                 adapter.isResultState = true
                 adapter.notifyDataSetChanged()
                 adapter.selectedOptionItem?.let {
+                    showResultAnimation()
                 delay(2000)
                 }
              quizWidgetModel?.finish()
@@ -40,7 +42,7 @@ class CustomImageQuizView(context: Context, var quizWidgetModel: QuizWidgetModel
 
             liveLikeWidget.choices?.let {
                  adapter =
-                    ImageOptionsWidgetAdapter(context, ArrayList(it.map { item -> LiveLikeWidgetOption(item?.id!!,item?.description?:"",false,item.imageUrl,item.answerCount) })
+                    ImageOptionsWidgetAdapter(context, ArrayList(it.map { item -> LiveLikeWidgetOption(item?.id!!,item?.description?:"",item.isCorrect?:false,item.imageUrl,item.answerCount) })
                     ) { option->
                         // TODO change sdk apis to have non-nullable option item ids
                         // 1000ms debounce added, TODO To discuss whether sdk should have inbuilt debounce to optimize sdk api calls
@@ -52,9 +54,26 @@ class CustomImageQuizView(context: Context, var quizWidgetModel: QuizWidgetModel
                     }
                 quiz_rv.layoutManager = GridLayoutManager(context,2)
                 quiz_rv.adapter = adapter
-                }
             }
+
         }
+   }
+
+    private fun showResultAnimation() {
+        lottie_animation_view?.apply {
+            if (adapter.selectedOptionItem?.isCorrect == false) {
+                setAnimation(
+                    "GSW_incorrect.json"
+                )
+            } else {
+                setAnimation(
+                    "GSW_correct.json"
+                )
+            }
+            playAnimation()
+            visibility = View.VISIBLE
+        }
+    }
 
 
     override fun onAttachedToWindow() {

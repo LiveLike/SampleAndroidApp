@@ -11,11 +11,7 @@ import com.livelike.engagementsdk.core.services.messaging.proxies.WidgetIntercep
 import com.livelike.engagementsdk.widget.LiveLikeWidgetViewFactory
 import com.livelike.engagementsdk.widget.widgetModel.*
 import com.livelike.engagementsdksample.R
-import com.livelike.engagementsdksample.customwidgets.CustomEmojiSlider
-import com.livelike.engagementsdksample.customwidgets.CustomImageQuizView
-import com.livelike.engagementsdksample.customwidgets.CustomPredictionFollowUpWidget
-import com.livelike.engagementsdksample.customwidgets.CustomPredictionWidget
-import com.livelike.engagementsdksample.customwidgets.CustomAlert
+import com.livelike.engagementsdksample.customwidgets.*
 import com.livelike.engagementsdksample.customwidgets.poll.CustomPollWidget
 import com.livelike.engagementsdksample.widget.viewmodels.EngagementViewModelFactory
 import com.livelike.engagementsdksample.widget.viewmodels.widgetViewModel
@@ -41,8 +37,9 @@ class WidgetActivity : AppCompatActivity() {
 
         widget_view_container.widgetViewFactory = object : LiveLikeWidgetViewFactory {
             override fun createAlertWidgetView(alertWidgetModel: AlertWidgetModel): View? {
-                return CustomAlert(true, this@WidgetActivity).apply {
+                return CustomAlert(this@WidgetActivity).apply {
                     this.alertModel = alertWidgetModel
+                    this.isSponsor = true
                 }
             }
 
@@ -70,9 +67,12 @@ class WidgetActivity : AppCompatActivity() {
                 followUpWidgetViewModel: FollowUpWidgetViewModel,
                 isImage: Boolean
             ): View? {
-                if(isImage) {
-                    return CustomPredictionFollowUpWidget(this@WidgetActivity, followUpWidgetViewModel)
-                }else{
+                if (isImage) {
+                    return CustomPredictionFollowUpWidget(
+                        this@WidgetActivity,
+                        followUpWidgetViewModel
+                    )
+                } else {
                     return null
                 }
             }

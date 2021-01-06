@@ -49,7 +49,9 @@ class CustomAlert : ConstraintLayout {
             val timeMillis = likeWidget.timeout?.parseDuration() ?: 5000
             time_bar.startTimer(timeMillis)
 
-            if (!isSponsor) {
+            if (isSponsor) {
+                sponsor_container.visibility = View.VISIBLE
+            } else {
                 sponsor_container.visibility = View.GONE
             }
 

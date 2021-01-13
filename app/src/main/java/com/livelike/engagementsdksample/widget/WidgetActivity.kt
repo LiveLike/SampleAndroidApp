@@ -44,7 +44,9 @@ class WidgetActivity : AppCompatActivity() {
             }
 
             override fun createCheerMeterView(cheerMeterWidgetModel: CheerMeterWidgetmodel): View? {
-                return null
+                return CustomCheerMeter(this@WidgetActivity).apply {
+                    this.cheerMeterWidgetmodel = cheerMeterWidgetModel
+                }
             }
 
             override fun createImageSliderWidgetView(imageSliderWidgetModel: ImageSliderWidgetModel): View? {

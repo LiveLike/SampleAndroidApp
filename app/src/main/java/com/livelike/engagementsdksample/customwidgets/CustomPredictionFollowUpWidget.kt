@@ -14,38 +14,57 @@ import kotlinx.android.synthetic.main.custom_prediction_widget.view.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 
-class CustomPredictionFollowUpWidget(context : Context, val followUpWidgetViewModel: FollowUpWidgetViewModel): FrameLayout(context)  {
+class CustomPredictionFollowUpWidget(
+    context: Context,
+    val followUpWidgetViewModel: FollowUpWidgetViewModel,
+    var isTimeLine: Boolean
+) : FrameLayout(context) {
 
     private lateinit var imageOptionsWidgetAdapter: ImageOptionsWidgetAdapter
+
 
     init {
         inflate(context, R.layout.custom_prediction_widget, this)
 
         widget_type_label.text = context.getString(R.string.prediction_follow_up)
-        followUpWidgetViewModel?.widgetData?.let { liveLikeWidget ->
-            val timeMillis = liveLikeWidget.timeout?.parseDuration() ?: DEFAULT_INTERACTION_TIME
-            time_bar.startTimer(timeMillis)
+        followUpWidgetViewModel.widgetData.let { liveLikeWidget ->
             widget_title.text = liveLikeWidget.question
-
-            (context as AppCompatActivity).lifecycleScope.async {
-                delay(timeMillis)
-                followUpWidgetViewModel?.finish()
+            if (isTimeLine) {
+                time_bar.visibility = View.INVISIBLE
+            } else {
+                val timeMillis = liveLikeWidget.timeout?.parseDuration() ?: DEFAULT_INTERACTION_TIME
+                time_bar.startTimer(timeMillis)
+                (context as AppCompatActivity).lifecycleScope.async {
+                    delay(timeMillis)
+                    followUpWidgetViewModel.finish()
+                }
             }
+
+
             followUpWidgetViewModel.claimRewards()
             liveLikeWidget.options?.let {
-                val totalVotes  = it?.sumBy { it?.voteCount?:0 }?:0
+                val totalVotes = it?.sumBy { it?.voteCount ?: 0 } ?: 0
                 imageOptionsWidgetAdapter =
-                    ImageOptionsWidgetAdapter(context, ArrayList(it.map { item -> LiveLikeWidgetOption(item?.id!!,item?.description?:"",item.isCorrect?:false,item.imageUrl,
-                        (((item.voteCount?:0)*100)/ totalVotes))})
+                    ImageOptionsWidgetAdapter(
+                        context, ArrayList(it.map { item ->
+                            LiveLikeWidgetOption(
+                                item?.id!!,
+                                item?.description ?: "",
+                                item.isCorrect ?: false,
+                                item.imageUrl,
+                                (((item.voteCount ?: 0) * 100) / totalVotes)
+                            )
+                        })
                     ) {}
-                widget_rv.layoutManager = GridLayoutManager(context,2)
+                widget_rv.layoutManager = GridLayoutManager(context, 2)
                 imageOptionsWidgetAdapter.isResultState = true
                 imageOptionsWidgetAdapter.isResultAvailable = true
-                imageOptionsWidgetAdapter.selectedOptionItem = imageOptionsWidgetAdapter.list.find { it.id == followUpWidgetViewModel.getPredictionVoteId() }
+                imageOptionsWidgetAdapter.selectedOptionItem =
+                    imageOptionsWidgetAdapter.list.find { it.id == followUpWidgetViewModel.getPredictionVoteId() }
                 widget_rv.adapter = imageOptionsWidgetAdapter
             }
             lottie_animation_view?.apply {
-                if(imageOptionsWidgetAdapter.selectedOptionItem?.isCorrect == false){
+                if (imageOptionsWidgetAdapter.selectedOptionItem?.isCorrect == false) {
                     setAnimation(
                         "GSW_incorrect.json"
                     )
@@ -66,11 +85,18 @@ class CustomPredictionFollowUpWidget(context : Context, val followUpWidgetViewMo
     }
 
     private fun subscribeToVoteResults() {
-        followUpWidgetViewModel?.voteResults?.subscribe(this) { result ->
-            val totalVotes  = result?.choices?.sumBy { it?.vote_count?:0 }?:0
+        followUpWidgetViewModel.voteResults.subscribe(this) { result ->
+            val totalVotes = result?.choices?.sumBy { it.vote_count ?: 0 } ?: 0
             result?.choices?.zip(imageOptionsWidgetAdapter.list)?.let { options ->
-                imageOptionsWidgetAdapter.list = ArrayList(options.map { item -> LiveLikeWidgetOption(item?.second.id!!,item?.second?.description?:"",item?.first.is_correct,item?.second.imageUrl,
-                    (((item.first.vote_count?:0)*100)/ totalVotes))})
+                imageOptionsWidgetAdapter.list = ArrayList(options.map { item ->
+                    LiveLikeWidgetOption(
+                        item.second.id,
+                        item.second.description,
+                        item.first.is_correct,
+                        item.second.imageUrl,
+                        (((item.first.vote_count ?: 0) * 100) / totalVotes)
+                    )
+                })
                 imageOptionsWidgetAdapter.notifyDataSetChanged()
             }
         }
@@ -78,7 +104,7 @@ class CustomPredictionFollowUpWidget(context : Context, val followUpWidgetViewMo
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        followUpWidgetViewModel?.voteResults?.unsubscribe(this)
+        followUpWidgetViewModel.voteResults?.unsubscribe(this)
     }
 
 

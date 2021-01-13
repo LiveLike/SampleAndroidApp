@@ -59,7 +59,8 @@ class CustomPollWidget : ConstraintLayout {
                 true -> "IMAGE POLL"
                 else -> "TEXT POLL"
             }
-            liveLikeWidget.options?.let {
+
+            liveLikeWidget.options?.let { list ->
                 if (isImage) {
                     rcyl_poll_list.layoutManager = GridLayoutManager(context, 2)
                 } else {
@@ -67,27 +68,38 @@ class CustomPollWidget : ConstraintLayout {
                         LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                 }
                 val adapter =
-                    PollListAdapter(context, isImage, ArrayList(it.map { item -> item!! }))
+                    PollListAdapter(context, isImage, ArrayList(list.map { item -> item!! }))
                 rcyl_poll_list.adapter = adapter
-                adapter.pollListener = object : PollListAdapter.PollListener {
-                    override fun onSelectOption(id: String) {
-                        pollWidgetModel?.submitVote(id)
-                    }
-                }
-                pollWidgetModel?.voteResults?.subscribe(this) { result ->
-                    result?.choices?.let { options ->
-                        options.forEach { op ->
-                            adapter.optionIdCount[op.id] = op.vote_count ?: 0
-                        }
-                        adapter.notifyDataSetChanged()
-                    }
-                }
-                val timeMillis = liveLikeWidget.timeout?.parseDuration() ?: 5000
-                time_bar.startTimer(timeMillis)
 
-                (context as AppCompatActivity).lifecycleScope.async {
-                    delay(timeMillis)
-                    pollWidgetModel?.finish()
+                if (list.any { it?.voteCount ?: 0 > 0 }) {
+                    list.forEach { op ->
+                        op?.let {
+                            adapter.optionIdCount[op.id!!] = op.voteCount ?: 0
+                        }
+                    }
+                    adapter.notifyDataSetChanged()
+                    time_bar.visibility = View.INVISIBLE
+                } else {
+                    adapter.pollListener = object : PollListAdapter.PollListener {
+                        override fun onSelectOption(id: String) {
+                            pollWidgetModel?.submitVote(id)
+                        }
+                    }
+                    pollWidgetModel?.voteResults?.subscribe(this) { result ->
+                        result?.choices?.let { options ->
+                            options.forEach { op ->
+                                adapter.optionIdCount[op.id] = op.vote_count ?: 0
+                            }
+                            adapter.notifyDataSetChanged()
+                        }
+                    }
+                    val timeMillis = liveLikeWidget.timeout?.parseDuration() ?: 5000
+                    time_bar.startTimer(timeMillis)
+
+                    (context as AppCompatActivity).lifecycleScope.async {
+                        delay(timeMillis)
+                        pollWidgetModel?.finish()
+                    }
                 }
             }
         }

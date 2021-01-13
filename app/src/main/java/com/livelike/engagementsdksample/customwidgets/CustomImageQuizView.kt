@@ -16,48 +16,76 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class CustomImageQuizView(context: Context, var quizWidgetModel: QuizWidgetModel? = null) :  FrameLayout(context) {
+class CustomImageQuizView(context: Context, var quizWidgetModel: QuizWidgetModel? = null) :
+    FrameLayout(context) {
 
     private lateinit var adapter: ImageOptionsWidgetAdapter
     private var quizAnswerJob: Job? = null
 
-   init {
+    init {
         inflate(context, R.layout.custom_quiz_widget, this)
         quizWidgetModel?.widgetData?.let { liveLikeWidget ->
-            // TODO  change sdk api for duration, it should passes duration in millis, parsing should be done at sdk side.
-            val timeMillis = liveLikeWidget.timeout?.parseDuration() ?: 5000
-            time_bar.startTimer(timeMillis)
-            quiz_title.text = liveLikeWidget.question
-
-            (context as AppCompatActivity).lifecycleScope.async {
-                delay(timeMillis)
-                adapter.isResultState = true
-                adapter.notifyDataSetChanged()
-                adapter.selectedOptionItem?.let {
-                    showResultAnimation()
-                delay(2000)
-                }
-             quizWidgetModel?.finish()
-            }
-
             liveLikeWidget.choices?.let {
-                 adapter =
-                    ImageOptionsWidgetAdapter(context, ArrayList(it.map { item -> LiveLikeWidgetOption(item?.id!!,item?.description?:"",item.isCorrect?:false,item.imageUrl,item.answerCount) })
-                    ) { option->
+                adapter =
+                    ImageOptionsWidgetAdapter(
+                        context,
+                        ArrayList(it.map { item ->
+                            LiveLikeWidgetOption(
+                                item?.id!!,
+                                item?.description ?: "",
+                                item.isCorrect ?: false,
+                                item.imageUrl,
+                                item.answerCount
+                            )
+                        })
+                    ) { option ->
                         // TODO change sdk apis to have non-nullable option item ids
                         // 1000ms debounce added, TODO To discuss whether sdk should have inbuilt debounce to optimize sdk api calls
                         quizAnswerJob?.cancel()
-                        quizAnswerJob =  context.lifecycleScope.launch {
+                        quizAnswerJob = (context as AppCompatActivity).lifecycleScope.launch {
                             delay(1000)
                             quizWidgetModel?.lockInAnswer(option.id ?: "")
                         }
                     }
-                quiz_rv.layoutManager = GridLayoutManager(context,2)
+                quiz_rv.layoutManager = GridLayoutManager(context, 2)
                 quiz_rv.adapter = adapter
             }
+            // TODO  change sdk api for duration, it should passes duration in millis, parsing should be done at sdk side.
+            if (liveLikeWidget.choices?.any { it?.answerCount ?: 0 > 0 } == true) {
+                time_bar.visibility = View.INVISIBLE
+                val totalVotes = liveLikeWidget.choices?.sumBy { it?.answerCount ?: 0 } ?: 0
+                liveLikeWidget.choices?.zip(adapter.list)?.let { options ->
+                    adapter.isResultState = true
+                    adapter.isResultAvailable = true
+                    adapter.list = ArrayList(options.map { item ->
+                        LiveLikeWidgetOption(
+                            item.second.id,
+                            item.second.description,
+                            item.first?.isCorrect ?: false,
+                            item.second.imageUrl,
+                            (((item.first?.answerCount ?: 0) * 100) / totalVotes)
+                        )
+                    })
+                    adapter.notifyDataSetChanged()
+                }
+            } else {
+                val timeMillis = liveLikeWidget.timeout?.parseDuration() ?: 5000
+                time_bar.startTimer(timeMillis)
+                quiz_title.text = liveLikeWidget.question
 
+                (context as AppCompatActivity).lifecycleScope.async {
+                    delay(timeMillis)
+                    adapter.isResultState = true
+                    adapter.notifyDataSetChanged()
+                    adapter.selectedOptionItem?.let {
+                        showResultAnimation()
+                        delay(2000)
+                    }
+                    quizWidgetModel?.finish()
+                }
+            }
         }
-   }
+    }
 
     private fun showResultAnimation() {
         lottie_animation_view?.apply {
@@ -83,11 +111,18 @@ class CustomImageQuizView(context: Context, var quizWidgetModel: QuizWidgetModel
 
     private fun subscribeToVoteResults() {
         quizWidgetModel?.voteResults?.subscribe(this) { result ->
-              val totalVotes  = result?.choices?.sumBy { it?.answer_count?:0 }?:0
+            val totalVotes = result?.choices?.sumBy { it.answer_count ?: 0 } ?: 0
             result?.choices?.zip(adapter.list)?.let { options ->
                 adapter.isResultAvailable = true
-                adapter.list = ArrayList(options.map { item -> LiveLikeWidgetOption(item?.second.id!!,item?.second?.description?:"",item?.first.is_correct,item?.second.imageUrl,
-                    (((item.first.answer_count?:0)*100)/ totalVotes))})
+                adapter.list = ArrayList(options.map { item ->
+                    LiveLikeWidgetOption(
+                        item.second.id,
+                        item.second.description ?: "",
+                        item.first.is_correct,
+                        item.second.imageUrl,
+                        (((item.first.answer_count ?: 0) * 100) / totalVotes)
+                    )
+                })
                 adapter.notifyDataSetChanged()
             }
         }
@@ -97,7 +132,6 @@ class CustomImageQuizView(context: Context, var quizWidgetModel: QuizWidgetModel
         super.onDetachedFromWindow()
         quizWidgetModel?.voteResults?.unsubscribe(this)
     }
-
 
 
 }

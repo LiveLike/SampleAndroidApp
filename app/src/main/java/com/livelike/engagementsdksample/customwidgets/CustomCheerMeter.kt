@@ -48,6 +48,8 @@ class CustomCheerMeter : ConstraintLayout {
             time_bar.startTimer(timeMillis)
 
             txt_title.text = likeWidget.question
+            vs_anim.setAnimation("vs-1-light.json")
+            vs_anim.playAnimation()
             likeWidget.options?.let { options ->
                 if (options.size == 2) {
                     options[0]?.let { op ->

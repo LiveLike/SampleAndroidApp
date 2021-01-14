@@ -112,7 +112,10 @@ class CustomPredictionFollowUpWidget : ConstraintLayout {
                         item.second.description,
                         item.first.is_correct,
                         item.second.imageUrl,
-                        (((item.first.vote_count ?: 0) * 100) / totalVotes)
+                        when (totalVotes > 0) {
+                            true -> (((item.first.vote_count ?: 0) * 100) / totalVotes)
+                            else -> 0
+                        }
                     )
                 })
                 imageOptionsWidgetAdapter.notifyDataSetChanged()

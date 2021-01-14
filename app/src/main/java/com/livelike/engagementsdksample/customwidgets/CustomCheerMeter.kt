@@ -86,7 +86,7 @@ class CustomCheerMeter : ConstraintLayout {
                         Glide.with(context)
                             .load(op.imageUrl)
                             .into(img_cheer_team_1)
-                        img_cheer_team_1.setOnClickListener {
+                        frame_cheer_team_1.setOnClickListener {
                             cheerMeterWidgetmodel.submitVote(op.id!!)
                         }
                     }
@@ -94,7 +94,7 @@ class CustomCheerMeter : ConstraintLayout {
                         Glide.with(context)
                             .load(op.imageUrl)
                             .into(img_cheer_team_2)
-                        img_cheer_team_2.setOnClickListener {
+                        frame_cheer_team_2.setOnClickListener {
                             cheerMeterWidgetmodel.submitVote(op.id!!)
                         }
                     }

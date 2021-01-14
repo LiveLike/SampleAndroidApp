@@ -142,7 +142,9 @@ class WidgetActivity : AppCompatActivity() {
         widget_view_container.setOnHierarchyChangeListener(object :
             ViewGroup.OnHierarchyChangeListener {
             override fun onChildViewRemoved(parent: View?, child: View?) {
-
+                adapter.list.clear()
+                swipe_container.isRefreshing = true
+                loadData(LiveLikePagination.FIRST)
             }
 
             override fun onChildViewAdded(parent: View?, child: View?) {
@@ -161,32 +163,6 @@ class WidgetActivity : AppCompatActivity() {
             adapter.list.clear()
             loadData(LiveLikePagination.FIRST)
         }
-        widget_view_container.widgetLifeCycleEventsListener =
-            object : WidgetLifeCycleEventsListener() {
-                override fun onUserInteract(widgetData: LiveLikeWidgetEntity) {
-
-                }
-
-                override fun onWidgetDismissed(widgetData: LiveLikeWidgetEntity) {
-                    adapter.list.clear()
-                    loadData(LiveLikePagination.FIRST)
-                }
-
-                override fun onWidgetInteractionCompleted(widgetData: LiveLikeWidgetEntity) {
-
-                }
-
-                override fun onWidgetPresented(widgetData: LiveLikeWidgetEntity) {
-
-                }
-
-                override fun onWidgetStateChange(
-                    state: WidgetStates,
-                    widgetData: LiveLikeWidgetEntity
-                ) {
-
-                }
-            }
 
 
         rcyl_widgets.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -223,6 +199,7 @@ class WidgetActivity : AppCompatActivity() {
             object : LiveLikeCallback<List<LiveLikeWidget?>>() {
                 override fun onResponse(result: List<LiveLikeWidget?>?, error: String?) {
                     result?.let { list ->
+                        list.forEach { println("asd->${it?.kind}") }
                         adapter.list.addAll(list.map { it!! })
                         adapter.notifyDataSetChanged()
                         progress_bar.visibility = View.GONE
@@ -265,7 +242,7 @@ class TimeLineAdapter(private val context: Context, private val engagementSDK: E
     }
 
     override fun getItemViewType(position: Int): Int {
-        return position
+        return list[position].id?.hashCode() ?: position
     }
 
     override fun onBindViewHolder(viewHolder: TimeLineViewHolder, p1: Int) {

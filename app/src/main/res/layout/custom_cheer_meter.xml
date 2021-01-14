@@ -72,8 +72,8 @@
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/vs_anim"
                     android:layout_width="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp" />
 
                 <FrameLayout
                     android:layout_width="0dp"
@@ -105,9 +105,10 @@
     <FrameLayout
         android:id="@+id/cheer_result_team"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:visibility="gone">
+        android:background="@drawable/white_blur_background"
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/img_winner_team"

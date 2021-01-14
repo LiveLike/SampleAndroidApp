@@ -204,7 +204,9 @@ class TimeLineAdapter(private val context: Context, private val engagementSDK: E
             }
 
             override fun createCheerMeterView(cheerMeterWidgetModel: CheerMeterWidgetmodel): View? {
-                return null
+                return CustomCheerMeter(context).apply {
+                    this.cheerMeterWidgetmodel = cheerMeterWidgetModel
+                }
             }
 
             override fun createImageSliderWidgetView(imageSliderWidgetModel: ImageSliderWidgetModel): View? {

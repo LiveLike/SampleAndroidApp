@@ -16,7 +16,6 @@ import com.livelike.engagementsdk.LiveLikeWidget
 import com.livelike.engagementsdk.chat.data.remote.LiveLikePagination
 import com.livelike.engagementsdk.core.services.messaging.proxies.LiveLikeWidgetEntity
 import com.livelike.engagementsdk.core.services.messaging.proxies.WidgetInterceptor
-import com.livelike.engagementsdk.core.services.messaging.proxies.WidgetLifeCycleEventsListener
 import com.livelike.engagementsdk.publicapis.LiveLikeCallback
 import com.livelike.engagementsdk.widget.LiveLikeWidgetViewFactory
 import com.livelike.engagementsdk.widget.viewModel.WidgetStates
@@ -142,7 +141,6 @@ class WidgetActivity : AppCompatActivity() {
         widget_view_container.setOnHierarchyChangeListener(object :
             ViewGroup.OnHierarchyChangeListener {
             override fun onChildViewRemoved(parent: View?, child: View?) {
-                adapter.list.clear()
                 swipe_container.isRefreshing = true
                 loadData(LiveLikePagination.FIRST)
             }
@@ -160,7 +158,6 @@ class WidgetActivity : AppCompatActivity() {
 //        }
         rcyl_widgets.adapter = adapter
         swipe_container.setOnRefreshListener {
-            adapter.list.clear()
             loadData(LiveLikePagination.FIRST)
         }
 
@@ -199,7 +196,9 @@ class WidgetActivity : AppCompatActivity() {
             object : LiveLikeCallback<List<LiveLikeWidget?>>() {
                 override fun onResponse(result: List<LiveLikeWidget?>?, error: String?) {
                     result?.let { list ->
-                        list.forEach { println("asd->${it?.kind}") }
+                        if (liveLikePagination == LiveLikePagination.FIRST) {
+                            adapter.list.clear()
+                        }
                         adapter.list.addAll(list.map { it!! })
                         adapter.notifyDataSetChanged()
                         progress_bar.visibility = View.GONE

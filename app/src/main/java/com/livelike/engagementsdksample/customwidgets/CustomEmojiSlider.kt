@@ -86,7 +86,9 @@ class CustomEmojiSlider : ConstraintLayout {
             if (isTimeLine) {
                 image_slider.averageProgress = widget.averageMagnitude
                 time_bar.visibility = View.INVISIBLE
+                image_slider.isUserSeekable = false
             } else {
+                image_slider.isUserSeekable = true
                 val timeMillis = widget.timeout?.parseDuration() ?: 5000
                 time_bar.startTimer(timeMillis)
                 (context as AppCompatActivity).lifecycleScope.async {

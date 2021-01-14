@@ -62,16 +62,19 @@ class CustomPredictionFollowUpWidget : ConstraintLayout {
 
             followUpWidgetViewModel.claimRewards()
             liveLikeWidget.options?.let {
-                val totalVotes = it?.sumBy { it?.voteCount ?: 0 } ?: 0
+                val totalVotes = it.sumBy { it?.voteCount ?: 0 }
                 imageOptionsWidgetAdapter =
                     ImageOptionsWidgetAdapter(
                         context, ArrayList(it.map { item ->
                             LiveLikeWidgetOption(
                                 item?.id!!,
-                                item?.description ?: "",
+                                item.description ?: "",
                                 item.isCorrect ?: false,
                                 item.imageUrl,
-                                (((item.voteCount ?: 0) * 100) / totalVotes)
+                                when (totalVotes > 0) {
+                                    true -> (((item.voteCount ?: 0) * 100) / totalVotes)
+                                    else -> 0
+                                }
                             )
                         })
                     ) {}

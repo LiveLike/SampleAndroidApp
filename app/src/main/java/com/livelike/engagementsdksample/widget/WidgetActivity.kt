@@ -139,6 +139,17 @@ class WidgetActivity : AppCompatActivity() {
             }
         }
 
+        widget_view_container.setOnHierarchyChangeListener(object :
+            ViewGroup.OnHierarchyChangeListener {
+            override fun onChildViewRemoved(parent: View?, child: View?) {
+
+            }
+
+            override fun onChildViewAdded(parent: View?, child: View?) {
+
+            }
+        })
+
         // You just need to add it on your session instance
         mainViewModel?.getSession()?.widgetInterceptor = interceptor
         adapter = TimeLineAdapter(this, mainViewModel?.engagementSDK!!)
@@ -150,7 +161,7 @@ class WidgetActivity : AppCompatActivity() {
             adapter.list.clear()
             loadData(LiveLikePagination.FIRST)
         }
-        widget_view_container.widgetLifeCycleEventsListener=
+        widget_view_container.widgetLifeCycleEventsListener =
             object : WidgetLifeCycleEventsListener() {
                 override fun onUserInteract(widgetData: LiveLikeWidgetEntity) {
 

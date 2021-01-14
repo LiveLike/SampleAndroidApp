@@ -69,7 +69,12 @@ class CustomPollWidget : ConstraintLayout {
                         LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                 }
                 val adapter =
-                    PollListAdapter(context, isImage, ArrayList(list.map { item -> item!! }))
+                    PollListAdapter(
+                        context,
+                        isImage,
+                        ArrayList(list.map { item -> item!! }),
+                        isTimeLine
+                    )
                 rcyl_poll_list.adapter = adapter
 
                 if (isTimeLine) {
@@ -116,12 +121,14 @@ class CustomPollWidget : ConstraintLayout {
 class PollListAdapter(
     private val context: Context,
     private val isImage: Boolean,
-    private val list: ArrayList<OptionsItem>
+    private val list: ArrayList<OptionsItem>,
+    private val isTimeLine: Boolean
 ) :
     RecyclerView.Adapter<PollListAdapter.PollListItemViewHolder>() {
     var selectedIndex = -1
     val optionIdCount: HashMap<String, Int> = hashMapOf()
     var pollListener: PollListener? = null
+
 
     interface PollListener {
         fun onSelectOption(id: String)
@@ -174,16 +181,17 @@ class PollListAdapter(
                 holder.itemView.lay_poll_img_option.setBackgroundResource(R.drawable.image_option_background_stroke_drawable)
                 holder.itemView.progressBar.progressDrawable = ContextCompat.getDrawable(
                     context,
-                    R.drawable.custom_progress_color_options_selected
+                    R.drawable.custom_progress_color_options
                 )
                 holder.itemView.textView2.setTextColor(Color.BLACK)
                 holder.itemView.textView.setTextColor(Color.BLACK)
             }
-            holder.itemView.lay_poll_img_option.setOnClickListener {
-                selectedIndex = holder.adapterPosition
-                pollListener?.onSelectOption(item.id!!)
-                notifyDataSetChanged()
-            }
+            if (!isTimeLine)
+                holder.itemView.lay_poll_img_option.setOnClickListener {
+                    selectedIndex = holder.adapterPosition
+                    pollListener?.onSelectOption(item.id!!)
+                    notifyDataSetChanged()
+                }
         } else {
             if (optionIdCount.containsKey(item.id)) {
                 holder.itemView.txt_percent.visibility = View.VISIBLE
@@ -217,11 +225,12 @@ class PollListAdapter(
                     R.drawable.custom_progress_color_options
                 )
             }
-            holder.itemView.lay_poll_text_option.setOnClickListener {
-                selectedIndex = holder.adapterPosition
-                pollListener?.onSelectOption(item.id!!)
-                notifyDataSetChanged()
-            }
+            if (!isTimeLine)
+                holder.itemView.lay_poll_text_option.setOnClickListener {
+                    selectedIndex = holder.adapterPosition
+                    pollListener?.onSelectOption(item.id!!)
+                    notifyDataSetChanged()
+                }
         }
 
     }

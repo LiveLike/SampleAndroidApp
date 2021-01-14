@@ -9,12 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.livelike.engagementsdk.EngagementSDK
 import com.livelike.engagementsdk.LiveLikeWidget
 import com.livelike.engagementsdk.chat.data.remote.LiveLikePagination
 import com.livelike.engagementsdk.core.services.messaging.proxies.LiveLikeWidgetEntity
 import com.livelike.engagementsdk.core.services.messaging.proxies.WidgetInterceptor
+import com.livelike.engagementsdk.core.services.messaging.proxies.WidgetLifeCycleEventsListener
 import com.livelike.engagementsdk.publicapis.LiveLikeCallback
 import com.livelike.engagementsdk.widget.LiveLikeWidgetViewFactory
 import com.livelike.engagementsdk.widget.viewModel.WidgetStates
@@ -82,9 +84,11 @@ class WidgetActivity : AppCompatActivity() {
             ): View? {
                 if (isImage) {
                     return CustomPredictionFollowUpWidget(
-                        this@WidgetActivity,
-                        followUpWidgetViewModel, false
-                    )
+                        this@WidgetActivity
+                    ).apply {
+                        this.isTimeLine = false
+                        this.followUpWidgetViewModel = followUpWidgetViewModel
+                    }
                 } else {
                     return null
                 }
@@ -95,7 +99,10 @@ class WidgetActivity : AppCompatActivity() {
                 isImage: Boolean
             ): View? {
                 if (isImage) {
-                    return CustomPredictionWidget(this@WidgetActivity, predictionViewModel)
+                    return CustomPredictionWidget(this@WidgetActivity).apply {
+                        this.predictionWidgetViewModel = predictionViewModel
+                        this.isTimeLine = false
+                    }
                 } else {
                     return null
                 }
@@ -106,7 +113,9 @@ class WidgetActivity : AppCompatActivity() {
                 isImage: Boolean
             ): View? {
                 if (isImage) {
-                    return CustomImageQuizView(this@WidgetActivity, quizWidgetModel)
+                    return CustomImageQuizView(this@WidgetActivity).apply {
+                        this.quizWidgetModel = quizWidgetModel
+                    }
                 } else {
                     return null
                 }
@@ -137,6 +146,62 @@ class WidgetActivity : AppCompatActivity() {
 //           Log.d("Sample_Events",eventKey)
 //        }
         rcyl_widgets.adapter = adapter
+        swipe_container.setOnRefreshListener {
+            adapter.list.clear()
+            loadData(LiveLikePagination.FIRST)
+        }
+        widget_view_container.widgetLifeCycleEventsListener=
+            object : WidgetLifeCycleEventsListener() {
+                override fun onUserInteract(widgetData: LiveLikeWidgetEntity) {
+
+                }
+
+                override fun onWidgetDismissed(widgetData: LiveLikeWidgetEntity) {
+                    adapter.list.clear()
+                    loadData(LiveLikePagination.FIRST)
+                }
+
+                override fun onWidgetInteractionCompleted(widgetData: LiveLikeWidgetEntity) {
+
+                }
+
+                override fun onWidgetPresented(widgetData: LiveLikeWidgetEntity) {
+
+                }
+
+                override fun onWidgetStateChange(
+                    state: WidgetStates,
+                    widgetData: LiveLikeWidgetEntity
+                ) {
+
+                }
+            }
+
+
+        rcyl_widgets.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            private var loading: Boolean = false
+            var pastVisiblesItems = 0
+            var visibleItemCount: Int = 0
+            var totalItemCount: Int = 0
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0) { //check for scroll down
+                    visibleItemCount = rcyl_widgets.layoutManager!!.childCount
+                    totalItemCount = rcyl_widgets.layoutManager!!.itemCount
+                    pastVisiblesItems =
+                        (rcyl_widgets.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+
+                    if (loading) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            loading = false
+                            loadData(LiveLikePagination.NEXT)
+                            loading = true
+                        }
+                    }
+                }
+            }
+        })
+
         loadData(LiveLikePagination.FIRST)
     }
 
@@ -149,10 +214,12 @@ class WidgetActivity : AppCompatActivity() {
                     result?.let { list ->
                         adapter.list.addAll(list.map { it!! })
                         adapter.notifyDataSetChanged()
+                        progress_bar.visibility = View.GONE
+                        swipe_container.isRefreshing = false
                     }
                 }
             })
-        progress_bar.visibility = View.GONE
+
     }
 
     override fun onPause() {
@@ -206,12 +273,14 @@ class TimeLineAdapter(private val context: Context, private val engagementSDK: E
             override fun createCheerMeterView(cheerMeterWidgetModel: CheerMeterWidgetmodel): View? {
                 return CustomCheerMeter(context).apply {
                     this.cheerMeterWidgetmodel = cheerMeterWidgetModel
+                    this.isTimeLine = true
                 }
             }
 
             override fun createImageSliderWidgetView(imageSliderWidgetModel: ImageSliderWidgetModel): View? {
                 return CustomEmojiSlider(context).apply {
                     this.imageSliderWidgetModel = imageSliderWidgetModel
+                    this.isTimeLine = true
                 }
             }
 
@@ -222,6 +291,7 @@ class TimeLineAdapter(private val context: Context, private val engagementSDK: E
                 return CustomPollWidget(context).apply {
                     this.pollWidgetModel = pollWidgetModel
                     this.isImage = isImage
+                    this.isTimeLine = true
                 }
             }
 
@@ -230,11 +300,10 @@ class TimeLineAdapter(private val context: Context, private val engagementSDK: E
                 isImage: Boolean
             ): View? {
                 if (isImage) {
-                    return CustomPredictionFollowUpWidget(
-                        context,
-                        followUpWidgetViewModel,
-                        true
-                    )
+                    return CustomPredictionFollowUpWidget(context).apply {
+                        this.followUpWidgetViewModel = followUpWidgetViewModel
+                        this.isTimeLine = true
+                    }
                 } else {
                     return null
                 }
@@ -245,7 +314,10 @@ class TimeLineAdapter(private val context: Context, private val engagementSDK: E
                 isImage: Boolean
             ): View? {
                 if (isImage) {
-                    return CustomPredictionWidget(context, predictionViewModel)
+                    return CustomPredictionWidget(context).apply {
+                        this.predictionWidgetViewModel = predictionViewModel
+                        this.isTimeLine = true
+                    }
                 } else {
                     return null
                 }
@@ -256,7 +328,10 @@ class TimeLineAdapter(private val context: Context, private val engagementSDK: E
                 isImage: Boolean
             ): View? {
                 if (isImage) {
-                    return CustomImageQuizView(context, quizWidgetModel)
+                    return CustomImageQuizView(context).apply {
+                        this.quizWidgetModel = quizWidgetModel
+                        this.isTimeLine = true
+                    }
                 } else {
                     return null
                 }

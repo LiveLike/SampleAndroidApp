@@ -29,6 +29,7 @@ import kotlinx.coroutines.delay
 class CustomPollWidget : ConstraintLayout {
     var pollWidgetModel: PollWidgetModel? = null
     var isImage = false
+    var isTimeLine = false
 
     constructor(context: Context) : super(context) {
         init(null, 0)
@@ -71,7 +72,7 @@ class CustomPollWidget : ConstraintLayout {
                     PollListAdapter(context, isImage, ArrayList(list.map { item -> item!! }))
                 rcyl_poll_list.adapter = adapter
 
-                if (list.any { it?.voteCount ?: 0 > 0 }) {
+                if (isTimeLine) {
                     list.forEach { op ->
                         op?.let {
                             adapter.optionIdCount[op.id!!] = op.voteCount ?: 0
@@ -150,7 +151,10 @@ class PollListAdapter(
                 holder.itemView.progressBar.visibility = View.VISIBLE
                 holder.itemView.textView2.visibility = View.VISIBLE
                 val total = optionIdCount.values.reduce { acc, i -> acc + i }
-                val percent = (optionIdCount[item.id!!]!!.toFloat() / total.toFloat()) * 100
+                val percent = when (total > 0) {
+                    true -> (optionIdCount[item.id!!]!!.toFloat() / total.toFloat()) * 100
+                    else -> 0F
+                }
                 holder.itemView.progressBar.progress = percent.toInt()
                 holder.itemView.textView2.text = "$percent %"
             } else {
@@ -185,7 +189,10 @@ class PollListAdapter(
                 holder.itemView.txt_percent.visibility = View.VISIBLE
                 holder.itemView.progressBar_text.visibility = View.VISIBLE
                 val total = optionIdCount.values.reduce { acc, i -> acc + i }
-                val percent = (optionIdCount[item.id!!]!!.toFloat() / total.toFloat()) * 100
+                val percent = when (total > 0) {
+                    true -> (optionIdCount[item.id!!]!!.toFloat() / total.toFloat()) * 100
+                    else -> 0F
+                }
                 holder.itemView.txt_percent.text = "$percent %"
                 holder.itemView.progressBar_text.progress = percent.toInt()
             } else {

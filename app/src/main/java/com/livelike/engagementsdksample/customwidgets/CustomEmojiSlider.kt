@@ -20,6 +20,7 @@ import kotlinx.coroutines.*
 class CustomEmojiSlider : ConstraintLayout {
 
     lateinit var imageSliderWidgetModel: ImageSliderWidgetModel
+    var isTimeLine = false
 
     constructor(context: Context) : super(context) {
         init(null, 0)
@@ -82,7 +83,7 @@ class CustomEmojiSlider : ConstraintLayout {
                     }
                 }
             }
-            if (widget.averageMagnitude ?: 0F > 0) {
+            if (isTimeLine) {
                 image_slider.averageProgress = widget.averageMagnitude
                 time_bar.visibility = View.INVISIBLE
             } else {

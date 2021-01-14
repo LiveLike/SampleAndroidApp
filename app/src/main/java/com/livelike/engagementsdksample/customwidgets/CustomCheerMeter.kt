@@ -19,6 +19,7 @@ class CustomCheerMeter : ConstraintLayout {
 
     lateinit var cheerMeterWidgetmodel: CheerMeterWidgetmodel
     var winnerOptionItem: OptionsItem? = null
+    var isTimeLine = false
 
     constructor(context: Context) : super(context) {
         init(null, 0)
@@ -45,7 +46,7 @@ class CustomCheerMeter : ConstraintLayout {
         super.onAttachedToWindow()
         cheerMeterWidgetmodel.widgetData.let { likeWidget ->
 
-            if (likeWidget.options?.any { it?.voteCount ?: 0 > 0 } == true) {
+            if (isTimeLine) {
                 time_bar.visibility = View.INVISIBLE
                 val op1 = likeWidget.options?.get(0)
                 val op2 = likeWidget.options?.get(1)

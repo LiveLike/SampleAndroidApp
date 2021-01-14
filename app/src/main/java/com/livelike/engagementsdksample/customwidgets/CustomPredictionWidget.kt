@@ -1,9 +1,10 @@
 package com.livelike.engagementsdksample.customwidgets
 
 import android.content.Context
+import android.util.AttributeSet
 import android.view.View
-import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.livelike.engagementsdk.widget.widgetModel.PredictionWidgetViewModel
@@ -16,15 +17,34 @@ import kotlinx.coroutines.delay
 
 const val DEFAULT_INTERACTION_TIME = 5000L
 
-class CustomPredictionWidget(
-    context: Context,
-    val predictionWidgetViewModel: PredictionWidgetViewModel
-) : FrameLayout(context) {
+class CustomPredictionWidget : ConstraintLayout {
+    lateinit var predictionWidgetViewModel: PredictionWidgetViewModel
+
+    constructor(context: Context) : super(context) {
+        init(null, 0)
+    }
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+        init(attrs, 0)
+    }
+
+    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
+        context,
+        attrs,
+        defStyle
+    ) {
+        init(attrs, defStyle)
+    }
 
     private lateinit var imageOptionsWidgetAdapter: ImageOptionsWidgetAdapter
+    var isTimeLine = false
 
-    init {
+    private fun init(attrs: AttributeSet?, defStyle: Int) {
         inflate(context, R.layout.custom_prediction_widget, this)
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
         predictionWidgetViewModel.widgetData.let { liveLikeWidget ->
             widget_title.text = liveLikeWidget.question
             liveLikeWidget.options?.let {
@@ -34,7 +54,7 @@ class CustomPredictionWidget(
                         ArrayList(it.map { item ->
                             LiveLikeWidgetOption(
                                 item?.id!!,
-                                item?.description ?: "",
+                                item.description ?: "",
                                 false,
                                 item.imageUrl,
                                 item.answerCount
@@ -48,11 +68,12 @@ class CustomPredictionWidget(
                 widget_rv.adapter = imageOptionsWidgetAdapter
             }
 
-            if (liveLikeWidget.options?.any { it?.voteCount ?: 0 > 0 } == true) {
+            if (isTimeLine) {
                 time_bar.visibility = View.INVISIBLE
                 imageOptionsWidgetAdapter.isResultState = true
                 imageOptionsWidgetAdapter.isResultAvailable = true
                 val totalVotes = liveLikeWidget.options?.sumBy { it?.voteCount ?: 0 } ?: 0
+
                 liveLikeWidget.options?.zip(imageOptionsWidgetAdapter.list)?.let { options ->
                     imageOptionsWidgetAdapter.list = ArrayList(options.map { item ->
                         LiveLikeWidgetOption(
@@ -60,7 +81,10 @@ class CustomPredictionWidget(
                             item.second.description,
                             item.first?.isCorrect ?: false,
                             item.second.imageUrl,
-                            (((item.first?.voteCount ?: 0) * 100) / totalVotes)
+                            when (totalVotes > 0) {
+                                true -> (((item.first?.voteCount ?: 0) * 100) / totalVotes)
+                                else -> 0
+                            }
                         )
                     })
                     imageOptionsWidgetAdapter.notifyDataSetChanged()
@@ -85,25 +109,20 @@ class CustomPredictionWidget(
                 }
             }
         }
-    }
-
-
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
         subscribeToVoteResults()
     }
 
     private fun subscribeToVoteResults() {
-        predictionWidgetViewModel?.voteResults?.subscribe(this) { result ->
+        predictionWidgetViewModel.voteResults.subscribe(this) { result ->
             imageOptionsWidgetAdapter.isResultAvailable = true
-            val totalVotes = result?.choices?.sumBy { it?.vote_count ?: 0 } ?: 0
+            val totalVotes = result?.choices?.sumBy { it.vote_count ?: 0 } ?: 0
             result?.choices?.zip(imageOptionsWidgetAdapter.list)?.let { options ->
                 imageOptionsWidgetAdapter.list = ArrayList(options.map { item ->
                     LiveLikeWidgetOption(
-                        item?.second.id!!,
-                        item?.second?.description ?: "",
-                        item?.first.is_correct,
-                        item?.second.imageUrl,
+                        item.second.id,
+                        item.second.description,
+                        item.first.is_correct,
+                        item.second.imageUrl,
                         (((item.first.vote_count ?: 0) * 100) / totalVotes)
                     )
                 })
@@ -114,7 +133,7 @@ class CustomPredictionWidget(
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        predictionWidgetViewModel?.voteResults?.unsubscribe(this)
+        predictionWidgetViewModel.voteResults.unsubscribe(this)
     }
 
 

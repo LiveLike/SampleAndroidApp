@@ -179,7 +179,7 @@ class WidgetActivity : AppCompatActivity() {
 
 
         rcyl_widgets.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            private var loading: Boolean = false
+            private var loading: Boolean = true
             var pastVisiblesItems = 0
             var visibleItemCount: Int = 0
             var totalItemCount: Int = 0

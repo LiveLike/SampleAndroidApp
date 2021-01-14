@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                 Handler().postDelayed({
                     chatLayout.visibility = View.VISIBLE
                     widgetLayout.visibility = View.VISIBLE
-                }, 2000)
+                }, 4000)
             } else {
                 Toast.makeText(this, "Program id cannot be blank", Toast.LENGTH_LONG).show()
             }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.util.AttributeSet
 import android.util.TypedValue
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
@@ -19,6 +20,7 @@ import kotlinx.coroutines.*
 class CustomEmojiSlider : ConstraintLayout {
 
     lateinit var imageSliderWidgetModel: ImageSliderWidgetModel
+    var isTimeLine = false
 
     constructor(context: Context) : super(context) {
         init(null, 0)
@@ -81,21 +83,29 @@ class CustomEmojiSlider : ConstraintLayout {
                     }
                 }
             }
-            val timeMillis = widget.timeout?.parseDuration() ?: 5000
-            time_bar.startTimer(timeMillis)
-            (context as AppCompatActivity).lifecycleScope.async {
-                delay(timeMillis)
-                imageSliderWidgetModel.lockInVote(image_slider.progress.toDouble())
-                delay(5000)
-                imageSliderWidgetModel.finish()
+            if (isTimeLine) {
+                image_slider.averageProgress = widget.averageMagnitude
+                time_bar.visibility = View.INVISIBLE
+                image_slider.isUserSeekable = false
+            } else {
+                image_slider.isUserSeekable = true
+                val timeMillis = widget.timeout?.parseDuration() ?: 5000
+                time_bar.startTimer(timeMillis)
+                (context as AppCompatActivity).lifecycleScope.async {
+                    delay(timeMillis)
+                    imageSliderWidgetModel.lockInVote(image_slider.progress.toDouble())
+                    delay(5000)
+                    imageSliderWidgetModel.finish()
+                }
+                imageSliderWidgetModel.voteResults.subscribe(this) {
+                    it?.let {
+                        image_slider.averageProgress = it.averageMagnitude
+                    }
+                }
             }
         }
 
-        imageSliderWidgetModel.voteResults.subscribe(this) {
-            it?.let {
-                image_slider.averageProgress = it.averageMagnitude
-            }
-        }
+
     }
 
     override fun onDetachedFromWindow() {

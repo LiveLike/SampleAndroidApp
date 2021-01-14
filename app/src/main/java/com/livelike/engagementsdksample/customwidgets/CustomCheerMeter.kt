@@ -19,6 +19,7 @@ class CustomCheerMeter : ConstraintLayout {
 
     lateinit var cheerMeterWidgetmodel: CheerMeterWidgetmodel
     var winnerOptionItem: OptionsItem? = null
+    var isTimeLine = false
 
     constructor(context: Context) : super(context) {
         init(null, 0)
@@ -44,8 +45,37 @@ class CustomCheerMeter : ConstraintLayout {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         cheerMeterWidgetmodel.widgetData.let { likeWidget ->
-            val timeMillis = likeWidget.timeout?.parseDuration() ?: 5000
-            time_bar.startTimer(timeMillis)
+
+            if (isTimeLine) {
+                time_bar.visibility = View.INVISIBLE
+                val op1 = likeWidget.options?.get(0)
+                val op2 = likeWidget.options?.get(1)
+                val vt1 = op1?.voteCount ?: 0
+                val vt2 = op2?.voteCount ?: 0
+                val total = vt1 + vt2
+                if (total > 0) {
+                    val perVt1 = (vt1.toFloat() / total) * 100
+                    val perVt2 = (vt2.toFloat() / total) * 100
+                    prg_cheer_team_1.progress = perVt1.toInt()
+                    prg_cheer_team_2.progress = perVt2.toInt()
+                    winnerOptionItem = if (perVt1 > perVt2) {
+                        likeWidget.options?.get(0)
+                    } else {
+                        likeWidget.options?.get(1)
+                    }
+                    showWinnerAnimation()
+                }
+            } else {
+                val timeMillis = likeWidget.timeout?.parseDuration() ?: 5000
+                time_bar.startTimer(timeMillis)
+                (context as AppCompatActivity).lifecycleScope.async {
+                    delay(timeMillis)
+                    showWinnerAnimation()
+                    delay(5000)
+                    cheerMeterWidgetmodel.finish()
+                }
+            }
+
 
             txt_title.text = likeWidget.question
             vs_anim.setAnimation("vs-1-light.json")
@@ -56,7 +86,7 @@ class CustomCheerMeter : ConstraintLayout {
                         Glide.with(context)
                             .load(op.imageUrl)
                             .into(img_cheer_team_1)
-                        img_cheer_team_1.setOnClickListener {
+                        frame_cheer_team_1.setOnClickListener {
                             cheerMeterWidgetmodel.submitVote(op.id!!)
                         }
                     }
@@ -64,7 +94,7 @@ class CustomCheerMeter : ConstraintLayout {
                         Glide.with(context)
                             .load(op.imageUrl)
                             .into(img_cheer_team_2)
-                        img_cheer_team_2.setOnClickListener {
+                        frame_cheer_team_2.setOnClickListener {
                             cheerMeterWidgetmodel.submitVote(op.id!!)
                         }
                     }
@@ -90,19 +120,18 @@ class CustomCheerMeter : ConstraintLayout {
                     }
                 }
             }
-            (context as AppCompatActivity).lifecycleScope.async {
-                delay(timeMillis)
-                winnerOptionItem?.let { op ->
-                    cheer_result_team.visibility = View.VISIBLE
-                    Glide.with(this@CustomCheerMeter.context)
-                        .load(op.imageUrl)
-                        .into(img_winner_team)
-                    img_winner_anim.setAnimation("winner_animation.json")
-                    img_winner_anim.playAnimation()
-                    delay(5000)
-                }
-                cheerMeterWidgetmodel.finish()
-            }
+
+        }
+    }
+
+    private fun showWinnerAnimation() {
+        winnerOptionItem?.let { op ->
+            cheer_result_team.visibility = View.VISIBLE
+            Glide.with(this@CustomCheerMeter.context)
+                .load(op.imageUrl)
+                .into(img_winner_team)
+            img_winner_anim.setAnimation("winner_animation.json")
+            img_winner_anim.playAnimation()
         }
     }
 }

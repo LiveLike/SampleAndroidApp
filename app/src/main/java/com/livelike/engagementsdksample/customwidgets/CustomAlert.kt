@@ -21,6 +21,7 @@ import kotlinx.coroutines.delay
 class CustomAlert : ConstraintLayout {
     lateinit var alertModel: AlertWidgetModel
     var isSponsor = false
+    var isTimeLine = false
 
     constructor(context: Context) : super(context) {
         init(null, 0)
@@ -46,8 +47,7 @@ class CustomAlert : ConstraintLayout {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         alertModel.widgetData.let { likeWidget ->
-            val timeMillis = likeWidget.timeout?.parseDuration() ?: 5000
-            time_bar.startTimer(timeMillis)
+
 
             if (isSponsor) {
                 sponsor_container.visibility = View.VISIBLE
@@ -78,9 +78,16 @@ class CustomAlert : ConstraintLayout {
                     }
                 }
             }
-            (context as AppCompatActivity).lifecycleScope.async {
-                delay(timeMillis)
-                alertModel.finish()
+            if (isTimeLine) {
+                time_bar.visibility = View.INVISIBLE
+            } else {
+                val timeMillis = likeWidget.timeout?.parseDuration() ?: 5000
+                time_bar.visibility = View.VISIBLE
+                time_bar.startTimer(timeMillis)
+                (context as AppCompatActivity).lifecycleScope.async {
+                    delay(timeMillis)
+                    alertModel.finish()
+                }
             }
         }
     }

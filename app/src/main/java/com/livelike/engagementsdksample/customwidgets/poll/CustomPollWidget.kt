@@ -29,6 +29,7 @@ import kotlinx.coroutines.delay
 class CustomPollWidget : ConstraintLayout {
     var pollWidgetModel: PollWidgetModel? = null
     var isImage = false
+    var isTimeLine = false
 
     constructor(context: Context) : super(context) {
         init(null, 0)
@@ -59,7 +60,8 @@ class CustomPollWidget : ConstraintLayout {
                 true -> "IMAGE POLL"
                 else -> "TEXT POLL"
             }
-            liveLikeWidget.options?.let {
+
+            liveLikeWidget.options?.let { list ->
                 if (isImage) {
                     rcyl_poll_list.layoutManager = GridLayoutManager(context, 2)
                 } else {
@@ -67,27 +69,43 @@ class CustomPollWidget : ConstraintLayout {
                         LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                 }
                 val adapter =
-                    PollListAdapter(context, isImage, ArrayList(it.map { item -> item!! }))
+                    PollListAdapter(
+                        context,
+                        isImage,
+                        ArrayList(list.map { item -> item!! }),
+                        isTimeLine
+                    )
                 rcyl_poll_list.adapter = adapter
-                adapter.pollListener = object : PollListAdapter.PollListener {
-                    override fun onSelectOption(id: String) {
-                        pollWidgetModel?.submitVote(id)
-                    }
-                }
-                pollWidgetModel?.voteResults?.subscribe(this) { result ->
-                    result?.choices?.let { options ->
-                        options.forEach { op ->
-                            adapter.optionIdCount[op.id] = op.vote_count ?: 0
-                        }
-                        adapter.notifyDataSetChanged()
-                    }
-                }
-                val timeMillis = liveLikeWidget.timeout?.parseDuration() ?: 5000
-                time_bar.startTimer(timeMillis)
 
-                (context as AppCompatActivity).lifecycleScope.async {
-                    delay(timeMillis)
-                    pollWidgetModel?.finish()
+                if (isTimeLine) {
+                    list.forEach { op ->
+                        op?.let {
+                            adapter.optionIdCount[op.id!!] = op.voteCount ?: 0
+                        }
+                    }
+                    adapter.notifyDataSetChanged()
+                    time_bar.visibility = View.INVISIBLE
+                } else {
+                    adapter.pollListener = object : PollListAdapter.PollListener {
+                        override fun onSelectOption(id: String) {
+                            pollWidgetModel?.submitVote(id)
+                        }
+                    }
+                    pollWidgetModel?.voteResults?.subscribe(this) { result ->
+                        result?.choices?.let { options ->
+                            options.forEach { op ->
+                                adapter.optionIdCount[op.id] = op.vote_count ?: 0
+                            }
+                            adapter.notifyDataSetChanged()
+                        }
+                    }
+                    val timeMillis = liveLikeWidget.timeout?.parseDuration() ?: 5000
+                    time_bar.startTimer(timeMillis)
+
+                    (context as AppCompatActivity).lifecycleScope.async {
+                        delay(timeMillis)
+                        pollWidgetModel?.finish()
+                    }
                 }
             }
         }
@@ -103,12 +121,14 @@ class CustomPollWidget : ConstraintLayout {
 class PollListAdapter(
     private val context: Context,
     private val isImage: Boolean,
-    private val list: ArrayList<OptionsItem>
+    private val list: ArrayList<OptionsItem>,
+    private val isTimeLine: Boolean
 ) :
     RecyclerView.Adapter<PollListAdapter.PollListItemViewHolder>() {
     var selectedIndex = -1
     val optionIdCount: HashMap<String, Int> = hashMapOf()
     var pollListener: PollListener? = null
+
 
     interface PollListener {
         fun onSelectOption(id: String)
@@ -138,7 +158,10 @@ class PollListAdapter(
                 holder.itemView.progressBar.visibility = View.VISIBLE
                 holder.itemView.textView2.visibility = View.VISIBLE
                 val total = optionIdCount.values.reduce { acc, i -> acc + i }
-                val percent = (optionIdCount[item.id!!]!!.toFloat() / total.toFloat()) * 100
+                val percent = when (total > 0) {
+                    true -> (optionIdCount[item.id!!]!!.toFloat() / total.toFloat()) * 100
+                    else -> 0F
+                }
                 holder.itemView.progressBar.progress = percent.toInt()
                 holder.itemView.textView2.text = "$percent %"
             } else {
@@ -158,22 +181,26 @@ class PollListAdapter(
                 holder.itemView.lay_poll_img_option.setBackgroundResource(R.drawable.image_option_background_stroke_drawable)
                 holder.itemView.progressBar.progressDrawable = ContextCompat.getDrawable(
                     context,
-                    R.drawable.custom_progress_color_options_selected
+                    R.drawable.custom_progress_color_options
                 )
                 holder.itemView.textView2.setTextColor(Color.BLACK)
                 holder.itemView.textView.setTextColor(Color.BLACK)
             }
-            holder.itemView.lay_poll_img_option.setOnClickListener {
-                selectedIndex = holder.adapterPosition
-                pollListener?.onSelectOption(item.id!!)
-                notifyDataSetChanged()
-            }
+            if (!isTimeLine)
+                holder.itemView.lay_poll_img_option.setOnClickListener {
+                    selectedIndex = holder.adapterPosition
+                    pollListener?.onSelectOption(item.id!!)
+                    notifyDataSetChanged()
+                }
         } else {
             if (optionIdCount.containsKey(item.id)) {
                 holder.itemView.txt_percent.visibility = View.VISIBLE
                 holder.itemView.progressBar_text.visibility = View.VISIBLE
                 val total = optionIdCount.values.reduce { acc, i -> acc + i }
-                val percent = (optionIdCount[item.id!!]!!.toFloat() / total.toFloat()) * 100
+                val percent = when (total > 0) {
+                    true -> (optionIdCount[item.id!!]!!.toFloat() / total.toFloat()) * 100
+                    else -> 0F
+                }
                 holder.itemView.txt_percent.text = "$percent %"
                 holder.itemView.progressBar_text.progress = percent.toInt()
             } else {
@@ -198,11 +225,12 @@ class PollListAdapter(
                     R.drawable.custom_progress_color_options
                 )
             }
-            holder.itemView.lay_poll_text_option.setOnClickListener {
-                selectedIndex = holder.adapterPosition
-                pollListener?.onSelectOption(item.id!!)
-                notifyDataSetChanged()
-            }
+            if (!isTimeLine)
+                holder.itemView.lay_poll_text_option.setOnClickListener {
+                    selectedIndex = holder.adapterPosition
+                    pollListener?.onSelectOption(item.id!!)
+                    notifyDataSetChanged()
+                }
         }
 
     }

@@ -233,7 +233,6 @@ class TimeLineAdapter(private val context: Context, private val engagementSDK: E
     }
 
     val list: ArrayList<LiveLikeWidget> = arrayListOf()
-    var widgetStates: WidgetStates = WidgetStates.READY
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): TimeLineViewHolder {
         return TimeLineViewHolder(
             LayoutInflater.from(p0.context).inflate(R.layout.time_line_item, p0, false)

@@ -103,7 +103,10 @@ class CustomImageQuizView :
                             item.second.description,
                             item.first?.isCorrect ?: false,
                             item.second.imageUrl,
-                            (((item.first?.answerCount ?: 0) * 100) / totalVotes)
+                            when (totalVotes > 0) {
+                                true -> (((item.first?.answerCount ?: 0) * 100) / totalVotes)
+                                else -> 0
+                            }
                         )
                     })
                     adapter.notifyDataSetChanged()

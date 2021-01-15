@@ -48,7 +48,7 @@
                 <FrameLayout
                     android:id="@+id/frame_cheer_team_1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/cheer_meter_btn_selector">
 
@@ -63,11 +63,11 @@
 
                     <ImageView
                         android:id="@+id/img_cheer_team_1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_gravity="center"
-                        android:layout_margin="5dp"
-                        android:scaleType="centerInside" />
+                        android:layout_margin="20dp"
+                        android:scaleType="fitXY" />
                 </FrameLayout>
 
                 <com.airbnb.lottie.LottieAnimationView
@@ -79,7 +79,7 @@
                 <FrameLayout
                     android:id="@+id/frame_cheer_team_2"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/cheer_meter_btn_selector">
 
@@ -94,11 +94,11 @@
 
                     <ImageView
                         android:id="@+id/img_cheer_team_2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_gravity="center"
-                        android:layout_margin="5dp"
-                        android:scaleType="centerInside" />
+                        android:layout_margin="20dp"
+                        android:scaleType="fitXY" />
                 </FrameLayout>
             </LinearLayout>
         </LinearLayout>
@@ -114,8 +114,8 @@
 
         <ImageView
             android:id="@+id/img_winner_team"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
             android:layout_gravity="center" />
 
         <com.airbnb.lottie.LottieAnimationView

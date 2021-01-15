@@ -63,11 +63,11 @@
 
                     <ImageView
                         android:id="@+id/img_cheer_team_1"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="20dp"
-                        android:scaleType="fitXY" />
+                        android:scaleType="centerInside" />
                 </FrameLayout>
 
                 <com.airbnb.lottie.LottieAnimationView
@@ -94,11 +94,11 @@
 
                     <ImageView
                         android:id="@+id/img_cheer_team_2"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="20dp"
-                        android:scaleType="fitXY" />
+                        android:scaleType="centerInside" />
                 </FrameLayout>
             </LinearLayout>
         </LinearLayout>

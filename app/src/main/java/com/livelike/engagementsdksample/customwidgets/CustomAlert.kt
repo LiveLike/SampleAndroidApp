@@ -68,6 +68,7 @@ class CustomAlert : ConstraintLayout {
                 btn_link.text = it
                 likeWidget.linkUrl?.let {
                     btn_link.setOnClickListener {
+                        alertModel.alertLinkClicked(url)
                         val universalLinkIntent =
                             Intent(Intent.ACTION_VIEW, Uri.parse(likeWidget.linkUrl)).setFlags(
                                 Intent.FLAG_ACTIVITY_NEW_TASK

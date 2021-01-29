@@ -65,7 +65,7 @@ class CustomPredictionFollowUpWidget : ConstraintLayout {
                 val totalVotes = it.sumBy { it?.voteCount ?: 0 }
                 imageOptionsWidgetAdapter =
                     ImageOptionsWidgetAdapter(
-                        context, ArrayList(it.map { item ->
+                        context, true, ArrayList(it.map { item ->
                             LiveLikeWidgetOption(
                                 item?.id!!,
                                 item.description ?: "",

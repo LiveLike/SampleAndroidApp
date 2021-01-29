@@ -66,7 +66,7 @@ class CustomAlert : ConstraintLayout {
             likeWidget.linkLabel?.let {
                 btn_link.visibility = View.VISIBLE
                 btn_link.text = it
-                likeWidget.linkUrl?.let {
+                likeWidget.linkUrl?.let { url ->
                     btn_link.setOnClickListener {
                         alertModel.alertLinkClicked(url)
                         val universalLinkIntent =

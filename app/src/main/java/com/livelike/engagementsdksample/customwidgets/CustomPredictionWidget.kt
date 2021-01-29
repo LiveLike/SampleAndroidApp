@@ -50,7 +50,7 @@ class CustomPredictionWidget : ConstraintLayout {
             liveLikeWidget.options?.let {
                 imageOptionsWidgetAdapter =
                     ImageOptionsWidgetAdapter(
-                        context,
+                        context, true,
                         ArrayList(it.map { item ->
                             LiveLikeWidgetOption(
                                 item?.id!!,

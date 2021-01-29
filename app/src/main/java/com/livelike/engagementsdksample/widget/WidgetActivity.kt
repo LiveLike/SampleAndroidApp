@@ -18,7 +18,6 @@ import com.livelike.engagementsdk.core.services.messaging.proxies.LiveLikeWidget
 import com.livelike.engagementsdk.core.services.messaging.proxies.WidgetInterceptor
 import com.livelike.engagementsdk.publicapis.LiveLikeCallback
 import com.livelike.engagementsdk.widget.LiveLikeWidgetViewFactory
-import com.livelike.engagementsdk.widget.viewModel.WidgetStates
 import com.livelike.engagementsdk.widget.widgetModel.*
 import com.livelike.engagementsdksample.R
 import com.livelike.engagementsdksample.customwidgets.*
@@ -111,12 +110,10 @@ class WidgetActivity : AppCompatActivity() {
                 quizWidgetModel: QuizWidgetModel,
                 isImage: Boolean
             ): View? {
-                if (isImage) {
-                    return CustomImageQuizView(this@WidgetActivity).apply {
-                        this.quizWidgetModel = quizWidgetModel
-                    }
-                } else {
-                    return null
+                return CustomQuizView(this@WidgetActivity).apply {
+                    this.quizWidgetModel = quizWidgetModel
+                    this.isImage = isImage
+                    this.isTimeLine = false
                 }
             }
 
@@ -313,13 +310,10 @@ class TimeLineAdapter(private val context: Context, private val engagementSDK: E
                 quizWidgetModel: QuizWidgetModel,
                 isImage: Boolean
             ): View? {
-                if (isImage) {
-                    return CustomImageQuizView(context).apply {
-                        this.quizWidgetModel = quizWidgetModel
-                        this.isTimeLine = true
-                    }
-                } else {
-                    return null
+                return CustomQuizView(context).apply {
+                    this.quizWidgetModel = quizWidgetModel
+                    this.isTimeLine = true
+                    this.isImage = isImage
                 }
             }
         }

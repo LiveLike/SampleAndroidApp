@@ -2,7 +2,7 @@ package com.livelike.engagementsdksample
 
 import android.util.Log
 import org.threeten.bp.Duration
-import java.time.format.DateTimeParseException
+import org.threeten.bp.format.DateTimeParseException
 
 
 fun String.parseDuration(): Long {

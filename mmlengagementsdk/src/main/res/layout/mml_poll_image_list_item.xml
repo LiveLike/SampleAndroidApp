@@ -5,7 +5,8 @@
     android:id="@+id/lay_poll_img_option"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:layout_margin="10dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginBottom="8dp"
     android:animateLayoutChanges="true"
     android:background="@drawable/mml_image_option_background_stroke_drawable">
 

@@ -10,7 +10,7 @@
         <item name="chatReactionMessageBackHighlightedBackground">#FFF</item>
         <item name="usernameColor">@color/mml_chat_text_color</item>
         <item name="stickerIconTintColor">#1675E7</item>
-        <item name="otherUsernameColor">#000</item>
+        <item name="otherUsernameColor">@color/mml_chat_text_color</item>
         <item name="messageColor">@color/mml_chat_text_color</item>
         <item name="chatInputViewBackground">#FFF</item>
         <item name="chatDisplayBackground">#fff</item>

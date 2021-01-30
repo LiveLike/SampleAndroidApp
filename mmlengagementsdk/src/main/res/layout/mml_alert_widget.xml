@@ -83,6 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/timer_margin_top"
+            android:letterSpacing="0.1"
             android:textAllCaps="true"
             android:textColor="@color/mml_widget_title_color"
             android:textSize="10sp"

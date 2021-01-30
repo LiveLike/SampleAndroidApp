@@ -64,6 +64,7 @@ class MMLAlertWidget(context: Context) : ConstraintLayout(context) {
             liveLikeWidget.linkLabel?.let {
                 btn_link.visibility = View.VISIBLE
                 btn_link.text = it
+                setCustomFontWithTextStyle(btn_link, "fonts/RingsideRegular-Book.otf")
                 liveLikeWidget.linkUrl?.let {
                     btn_link.setOnClickListener {
                         val universalLinkIntent =

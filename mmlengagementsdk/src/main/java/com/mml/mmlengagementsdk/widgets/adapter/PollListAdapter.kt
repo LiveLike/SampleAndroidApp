@@ -70,7 +70,7 @@ class PollListAdapter(
                     else -> 0F
                 }
                 holder.itemView.progressBar.progress = percent.toInt()
-                holder.itemView.textView2.text = "$percent %"
+                holder.itemView.textView2.text = "${percent.toInt()} %"
             } else {
                 holder.itemView.progressBar.visibility = View.INVISIBLE
                 holder.itemView.textView2.visibility = View.GONE
@@ -111,7 +111,7 @@ class PollListAdapter(
                     holder.itemView.txt_percent,
                     "fonts/RingsideCompressed-Bold.otf"
                 )
-                holder.itemView.txt_percent.text = "$percent %"
+                holder.itemView.txt_percent.text = "${percent.toInt()} %"
                 holder.itemView.progressBar_text.progress = percent.toInt()
             } else {
                 holder.itemView.txt_percent.visibility = View.INVISIBLE

@@ -19,7 +19,10 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:paddingLeft="16dp"
+        android:paddingTop="32dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="32dp">
 
         <TextView
             android:id="@+id/txt_title"
@@ -45,6 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/timer_margin_top"
             android:textAllCaps="true"
+            android:letterSpacing="0.1"
             android:textColor="@color/mml_widget_title_color"
             android:textSize="10sp"
             tools:text="Jan 19,10:10 AM" />

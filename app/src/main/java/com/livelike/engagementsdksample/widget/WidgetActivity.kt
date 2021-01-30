@@ -190,8 +190,9 @@ class WidgetActivity : AppCompatActivity() {
         progress_bar.visibility = View.VISIBLE
         mainViewModel?.getSession()?.getPublishedWidgets(
             liveLikePagination,
-            object : LiveLikeCallback<List<LiveLikeWidget?>>() {
-                override fun onResponse(result: List<LiveLikeWidget?>?, error: String?) {
+            object : LiveLikeCallback<List<LiveLikeWidget>>() {
+
+                override fun onResponse(result: List<LiveLikeWidget>?, error: String?) {
                     result?.let { list ->
                         if (liveLikePagination == LiveLikePagination.FIRST) {
                             adapter.list.clear()

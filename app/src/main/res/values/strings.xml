@@ -3,4 +3,7 @@
     <string name="win_animation">winAnimation</string>
     <string name="lose_animation">loseAnimation</string>
     <string name="prediction_follow_up">PREDICTION FOLLOW-UP</string>
+    <string name="title_activity_m_m_l">MMLActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
 </resources>

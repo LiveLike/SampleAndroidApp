@@ -1,2 +1,3 @@
+include ':mmlengagementsdk'
 rootProject.name = 'Sample'
 include ':app'

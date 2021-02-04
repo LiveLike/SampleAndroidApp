@@ -10,12 +10,12 @@ import com.livelike.engagementsdk.LiveLikeContentSession
 import com.livelike.engagementsdk.LiveLikeWidget
 import com.livelike.engagementsdk.chat.data.remote.LiveLikePagination
 import com.livelike.engagementsdk.publicapis.LiveLikeCallback
-import kotlinx.android.synthetic.main.mml_timeline_view.view.timeline_rv
+import kotlinx.android.synthetic.main.mml_timeline_view.view.*
 
 class WidgetsTimeLineView(
     context: Context,
-    val session: LiveLikeContentSession,
-    val sdk: EngagementSDK
+    private val session: LiveLikeContentSession,
+    sdk: EngagementSDK
 ) : FrameLayout(context) {
 
     private var adapter: TimeLineViewAdapter

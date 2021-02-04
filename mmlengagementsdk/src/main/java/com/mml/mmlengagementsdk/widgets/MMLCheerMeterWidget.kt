@@ -1,6 +1,7 @@
 package com.mml.mmlengagementsdk.widgets
 
 import android.content.Context
+import android.content.res.Configuration
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
@@ -11,26 +12,9 @@ import com.mml.mmlengagementsdk.widgets.timeline.TimelineWidgetResource
 import com.mml.mmlengagementsdk.widgets.utils.getFormattedTime
 import com.mml.mmlengagementsdk.widgets.utils.parseDuration
 import com.mml.mmlengagementsdk.widgets.utils.setCustomFontWithTextStyle
-import kotlinx.android.synthetic.main.mml_cheer_meter.view.cheer_result_team
-import kotlinx.android.synthetic.main.mml_cheer_meter.view.frame_cheer_team_1
-import kotlinx.android.synthetic.main.mml_cheer_meter.view.frame_cheer_team_2
-import kotlinx.android.synthetic.main.mml_cheer_meter.view.img_cheer_team_1
-import kotlinx.android.synthetic.main.mml_cheer_meter.view.img_cheer_team_2
-import kotlinx.android.synthetic.main.mml_cheer_meter.view.img_winner_anim
-import kotlinx.android.synthetic.main.mml_cheer_meter.view.img_winner_team
-import kotlinx.android.synthetic.main.mml_cheer_meter.view.prg_cheer_team_1
-import kotlinx.android.synthetic.main.mml_cheer_meter.view.prg_cheer_team_2
-import kotlinx.android.synthetic.main.mml_cheer_meter.view.time_bar
-import kotlinx.android.synthetic.main.mml_cheer_meter.view.txt_time
-import kotlinx.android.synthetic.main.mml_cheer_meter.view.txt_title
-import kotlinx.android.synthetic.main.mml_cheer_meter.view.vs_anim
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.async
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
-import java.util.Calendar
+import kotlinx.android.synthetic.main.mml_cheer_meter.view.*
+import kotlinx.coroutines.*
+import java.util.*
 import kotlin.math.max
 
 class MMLCheerMeterWidget(context: Context) : ConstraintLayout(context) {
@@ -102,7 +86,13 @@ class MMLCheerMeterWidget(context: Context) : ConstraintLayout(context) {
                 setCustomFontWithTextStyle(txt_time, "fonts/RingsideRegular-Book.otf")
                 txt_time.text = getFormattedTime(it)
             }
-            vs_anim.setAnimation("mml/vs-1-light.json")
+            val nightModeFlags = context.resources.configuration.uiMode and
+                    Configuration.UI_MODE_NIGHT_MASK
+            if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+                vs_anim.setAnimation("mml/white-vs.json")
+            } else {
+                vs_anim.setAnimation("mml/vs-1-light.json")
+            }
             vs_anim.playAnimation()
             liveLikeWidget.options?.let { options ->
                 if (options.size == 2) {

@@ -26,7 +26,7 @@ import kotlin.math.roundToInt
  */
 
 const val DEFAULT_WIDTH_DP: Int = 263
-const val DEFAULT_HEIGHT_DP: Int = 54
+const val DEFAULT_HEIGHT_DP: Int = 0
 
 internal class ImageSlider @JvmOverloads constructor(
     context: Context,

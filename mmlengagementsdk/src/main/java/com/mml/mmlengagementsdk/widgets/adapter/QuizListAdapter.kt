@@ -10,15 +10,12 @@ import com.bumptech.glide.Glide
 import com.example.mmlengagementsdk.R
 import com.mml.mmlengagementsdk.widgets.model.LiveLikeWidgetOption
 import com.mml.mmlengagementsdk.widgets.utils.setCustomFontWithTextStyle
-import kotlinx.android.synthetic.main.mml_quiz_image_option_list_item.view.option_iv
-import kotlinx.android.synthetic.main.mml_quiz_image_option_list_item.view.option_tv
-import kotlinx.android.synthetic.main.mml_quiz_image_option_list_item.view.result_bar
-import kotlinx.android.synthetic.main.mml_quiz_image_option_list_item.view.result_tv
+import kotlinx.android.synthetic.main.mml_quiz_image_option_list_item.view.*
 import kotlin.math.max
 
 class QuizListAdapter(
     private val context: Context,
-    private val isImage : Boolean,
+    private val isImage: Boolean,
     var list: ArrayList<LiveLikeWidgetOption>,
     private val optionSelectListener: (LiveLikeWidgetOption) -> Unit
 ) :
@@ -42,13 +39,13 @@ class QuizListAdapter(
         viewType: Int
     ): ImageOptionsListItemViewHolder {
         return ImageOptionsListItemViewHolder(
-                LayoutInflater.from(parent.context!!).inflate(
-                    when (isImage) {
-                        true -> R.layout.mml_quiz_image_option_list_item
-                        else -> R.layout.mml_quiz_text_option_list_item
-                    }, parent, false
-                )
+            LayoutInflater.from(parent.context!!).inflate(
+                when (isImage) {
+                    true -> R.layout.mml_quiz_image_option_list_item
+                    else -> R.layout.mml_quiz_text_option_list_item
+                }, parent, false
             )
+        )
     }
 
     override fun getItemCount(): Int {
@@ -62,7 +59,7 @@ class QuizListAdapter(
         val liveLikeWidgetOption = list[position]
         holder.view.option_tv.text = liveLikeWidgetOption.description
         setCustomFontWithTextStyle(holder.view.option_tv, "fonts/RingsideRegular-Book.otf")
-        if(isImage)
+        if (isImage)
             Glide.with(context).load(liveLikeWidgetOption.imageUrl).into(holder.view.option_iv)
 
         if (isResultState && isResultAvailable) {
@@ -116,7 +113,13 @@ class QuizListAdapter(
                 }
             }
             if (selectedOptionItem?.id == liveLikeWidgetOption.id) {
-                holder.selectOption()
+                if (!liveLikeWidgetOption.isCorrect) {
+                    holder.view.setBackgroundResource(R.drawable.mml_image_option_background_incorrect_drawable)
+                } else if (liveLikeWidgetOption.isCorrect) {
+                    holder.view.setBackgroundResource(R.drawable.mml_image_option_background_correct_drawable)
+                } else {
+                    holder.selectOption()
+                }
             } else {
                 holder.unSelectOption()
             }

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.livelike.engagementsdk.BuildConfig
 import com.livelike.engagementsdksample.chat.ChatActivity
+import com.livelike.engagementsdksample.mml.MMLActivity
 import com.livelike.engagementsdksample.widget.WidgetActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -64,6 +65,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
         finish()
-        startActivity(Intent(this, ListWidgetActivity::class.java))
+        startActivity(Intent(this, MMLActivity::class.java))
     }
 }

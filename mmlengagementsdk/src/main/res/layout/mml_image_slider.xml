@@ -35,7 +35,7 @@
         <com.mml.mmlengagementsdk.widgets.utils.imageslider.ImageSlider
             android:id="@+id/image_slider"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             app:allow_reselection="true"
             app:register_touches_outside_thumb="true" />
 

@@ -17,10 +17,10 @@
             <shape>
                 <gradient
                     android:angle="270"
-                    android:centerColor="#e6e6e6"
+                    android:centerColor="@color/progress_bar_color"
                     android:centerY="0.75"
-                    android:endColor="#e6e6e6"
-                    android:startColor="#e6e6e6" />
+                    android:endColor="@color/progress_bar_color"
+                    android:startColor="@color/progress_bar_color" />
             </shape>
         </clip>
     </item>
@@ -30,8 +30,8 @@
             <shape>
                 <gradient
                     android:angle="270"
-                    android:endColor="#e6e6e6"
-                    android:startColor="#e6e6e6" />
+                    android:endColor="@color/progress_bar_color"
+                    android:startColor="@color/progress_bar_color" />
             </shape>
         </clip>
     </item>

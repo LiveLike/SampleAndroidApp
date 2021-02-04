@@ -7,7 +7,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
         android:orientation="vertical">
 
         <com.mml.mmlengagementsdk.widgets.utils.TimeBar
@@ -41,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                tools:listitem="@layout/mml_image_option_list_item"
+                tools:listitem="@layout/mml_quiz_image_option_list_item"
                 tools:spanCount="2" />
 
             <TextView

@@ -6,38 +6,30 @@
         <item name="showMessageTime">true</item>
         <item name="chatBubbleWidth">match_parent</item>
         <item name="chatBackgroundWidth">0dp</item>
-        <item name="chatBackground">#FFF</item>
-        <item name="chatReactionMessageBackHighlightedBackground">#FFF</item>
+        <item name="chatBackground">@color/mml_chat_box_background_color</item>
+        <item name="chatReactionMessageBackHighlightedBackground">@color/mml_chat_message_highlighted_background_color</item>
         <item name="usernameColor">@color/mml_chat_text_color</item>
-        <item name="stickerIconTintColor">#1675E7</item>
         <item name="otherUsernameColor">@color/mml_chat_text_color</item>
         <item name="messageColor">@color/mml_chat_text_color</item>
-        <item name="chatInputViewBackground">#FFF</item>
-        <item name="chatDisplayBackground">#fff</item>
-        <item name="chatViewBackground">#FFF</item>
-        <item name="chatInputTextColor">#8e8e93</item>
-        <item name="chatInputTextSize">15sp</item>
-        <item name="chatInputTextHintColor">#8e8e93</item>
-        <item name="chatMarginBottom">3dp</item>
+        <item name="chatDisplayBackground">@color/mml_chat_list_background_color</item>
+        <item name="chatViewBackground">@color/mml_chat_view_background_color</item>
+        <item name="chatMarginBottom">4dp</item>
         <item name="chatMarginTop">10dp</item>
         <item name="chatMarginLeft">0dp</item>
         <item name="chatMarginRight">0dp</item>
-        <item name="chatReactionElevation">6dp</item>
+        <item name="chatReactionElevation">8dp</item>
         <item name="chatReactionRadius">20dp</item>
-        <item name="chatSelectedReactionRadius">14dp</item>
-        <item name="chatReactionPanelColor">@android:color/white</item>
-        <item name="chatInputBackground">@drawable/mml_rounded_color_input_background</item>
+        <item name="chatSelectedReactionRadius">16dp</item>
+        <item name="chatReactionPanelColor">@color/mml_chat_reaction_panel_color</item>
         <item name="chatReactionDisplayCountColor">@color/mml_chat_text_color</item>
         <item name="chatAvatarCircle">true</item>
-        <item name="chatAvatarHeight">40dp</item>
-        <item name="chatAvatarWidth">40dp</item>
+        <item name="chatAvatarHeight">@dimen/chat_avatar_height</item>
+        <item name="chatAvatarWidth">@dimen/chat_avatar_width</item>
         <item name="chatAvatarGravity">top</item>
         <item name="chatAvatarMarginLeft">16dp</item>
         <item name="chatAvatarMarginRight">8dp</item>
         <item name="chatAvatarMarginBottom">0dp</item>
         <item name="chatAvatarMarginTop">0dp</item>
-        <item name="sendButtonHeight">38dp</item>
-        <item name="sendButtonWidth">38dp</item>
 
         <item name="chatSendButtonPaddingLeft">2dp</item>
         <item name="chatSendButtonPaddingRight">2dp</item>
@@ -49,14 +41,8 @@
         <item name="chatBubblePaddingTop">0dp</item>
         <item name="chatBubblePaddingBottom">16dp</item>
 
-        <item name="textColor">#000</item>
-        <item name="rankValueTextColor">#000</item>
-        <item name="stickerSelectedTabIndicatorColor">@color/livelike_black</item>
-        <item name="stickerTabBackground">@color/livelike_white</item>
-        <item name="stickerBackground">@color/livelike_white</item>
-        <item name="stickerRecentEmptyTextColor">@color/livelike_black</item>
-        <item name="chatMessageBottomBorderHeight">1dp</item>
-        <item name="chatMessageBottomBorderColor">#efeff4</item>
+        <item name="chatMessageBottomBorderHeight">2dp</item>
+        <item name="chatMessageBottomBorderColor">@color/mml_chat_message_bottom_border_color</item>
         <item name="reaction_icon">@drawable/ic_mml_chat_reaction</item>
         <item name="reaction_hint_enable">true</item>
         <item name="reaction_icons_margin_top">0dp</item>
@@ -83,8 +69,11 @@
         <item name="chatReactionXPosition">0dp</item>
         <item name="chatReactionYPosition">-55dp</item>
         <item name="chatReactionPanelGravity">right|bottom</item>
-        <item name="chatReactionPanelCountColor">@color/mml_chat_text_color</item>
+        <item name="chatReactionPanelCountColor">@color/mml_chat_reaction_panel_count_color</item>
         <item name="chatReactionPanelCountCustomFontPath">fonts/RingsideExtraWide-Black.otf</item>
+        <item name="chatReactionFlagTintColor">@color/mml_chat_reaction_panel_flag_color</item>
     </style>
+
+
 
 </resources>

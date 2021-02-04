@@ -10,10 +10,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme.Base">
+        <activity android:name=".ListWidgetActivity"></activity>
         <activity
             android:name=".mml.MMLActivity"
             android:label="@string/title_activity_m_m_l"
-            android:theme="@style/MyMaterialTheme.Base.NoActionBar"></activity>
+            android:theme="@style/MyMaterialTheme.Base.NoActionBar" />
         <activity android:name=".widget.WidgetActivity" />
         <activity
             android:name=".chat.ChatActivity"

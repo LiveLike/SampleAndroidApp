@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Chat -->
-    <color name="mml_chat_text_color">#17171d</color>
-    <color name="livelike_chat_reaction_selected_background_color">#dfdfe7</color>
-    <color name="mml_chat_list_background_color">#fff</color>
-    <color name="mml_chat_view_background_color">#fff</color>
-    <color name="mml_chat_message_highlighted_background_color">#FFF</color>
-    <color name="mml_chat_box_background_color">#FFF</color>
-    <color name="mml_chat_message_bottom_border_color">#efeff4</color>
-    <color name="mml_empty_chat_text_color">#50000000</color>
-    <color name="mml_chat_reaction_panel_color">@android:color/white</color>
-    <color name="mml_chat_reaction_panel_count_color">#17171d</color>
-    <color name="mml_chat_reaction_panel_flag_color">#17171d</color>
+    <color name="mml_chat_text_color">#fdfdfd</color>
+    <color name="livelike_chat_reaction_selected_background_color">#767783</color>
+    <color name="mml_chat_list_background_color">#17171d</color>
+    <color name="mml_chat_view_background_color">#17171d</color>
+    <color name="mml_chat_message_highlighted_background_color">#17171d</color>
+    <color name="mml_chat_box_background_color">#17171d</color>
+    <color name="mml_chat_message_bottom_border_color">#5d5f6b</color>
+    <color name="mml_empty_chat_text_color">#50FFFFFF</color>
+    <color name="mml_chat_reaction_panel_color">#464750</color>
+    <color name="mml_chat_reaction_panel_count_color">#fdfdfd</color>
+    <color name="mml_chat_reaction_panel_flag_color">#FFF</color>
     <!-- Widget -->
     <color name="incorrect_result_bar_color">#e41e0c</color>
     <color name="correct_result_bar_color">#00c265</color>
@@ -23,17 +23,17 @@
     <color name="image_slider_gradient_end">#e84403</color>
     <color name="image_slider_bg">#e6e6e6</color>
     <color name="mml_time_bar_color">#fac83c</color>
-    <color name="mml_widget_title_color">#17171d</color>
+    <color name="mml_widget_title_color">#fdfdfd</color>
     <color name="poll_progress_bar_color">#0079c2</color>
     <color name="cheer_meter_team1_bg_color">#0079c2</color>
     <color name="mml_cheer_meter_team2_bg_color">#e41e0c</color>
-    <color name="mml_alert_link_btn_text_color">#fdfdfd</color>
+    <color name="mml_alert_link_btn_text_color">#17171d</color>
     <color name="mml_cheer_meter_background_stroke_color">#BFBDBD</color>
     <color name="progress_bar_color">#e6e6e6</color>
     <color name="mml_image_option_stroke_selected_color">#1da1f1</color>
     <color name="mml_image_option_stroke_color">#E6E6E6</color>
     <color name="mml_cheer_meter_background_color">#80FFFFFF</color>
-    <color name="mml_widget_background_color">#FFF</color>
-    <color name="mml_time_line_bg_color">#FFF</color>
+    <color name="mml_widget_background_color">#17171d</color>
+    <color name="mml_time_line_bg_color">#17171d</color>
 
 </resources>

@@ -24,6 +24,6 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="No Chat!!"
-        android:textColor="#50000000"
+        android:textColor="@color/mml_empty_chat_text_color"
         android:textSize="15sp" />
 </LinearLayout>

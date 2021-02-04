@@ -10,10 +10,10 @@ import com.bumptech.glide.Glide
 import com.example.mmlengagementsdk.R
 import com.mml.mmlengagementsdk.widgets.model.LiveLikeWidgetOption
 import com.mml.mmlengagementsdk.widgets.utils.setCustomFontWithTextStyle
-import kotlinx.android.synthetic.main.mml_image_option_list_item.view.option_iv
-import kotlinx.android.synthetic.main.mml_image_option_list_item.view.option_tv
-import kotlinx.android.synthetic.main.mml_image_option_list_item.view.result_bar
-import kotlinx.android.synthetic.main.mml_image_option_list_item.view.result_tv
+import kotlinx.android.synthetic.main.mml_quiz_image_option_list_item.view.option_iv
+import kotlinx.android.synthetic.main.mml_quiz_image_option_list_item.view.option_tv
+import kotlinx.android.synthetic.main.mml_quiz_image_option_list_item.view.result_bar
+import kotlinx.android.synthetic.main.mml_quiz_image_option_list_item.view.result_tv
 import kotlin.math.max
 
 class QuizListAdapter(
@@ -44,8 +44,8 @@ class QuizListAdapter(
         return ImageOptionsListItemViewHolder(
                 LayoutInflater.from(parent.context!!).inflate(
                     when (isImage) {
-                        true -> R.layout.mml_image_option_list_item
-                        else -> R.layout.mml_text_option_list_item
+                        true -> R.layout.mml_quiz_image_option_list_item
+                        else -> R.layout.mml_quiz_text_option_list_item
                     }, parent, false
                 )
             )

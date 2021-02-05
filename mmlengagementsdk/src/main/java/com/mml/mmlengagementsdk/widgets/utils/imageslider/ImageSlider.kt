@@ -26,7 +26,7 @@ import kotlin.math.roundToInt
  */
 
 const val DEFAULT_WIDTH_DP: Int = 263
-const val DEFAULT_HEIGHT_DP: Int = 0
+const val DEFAULT_HEIGHT_DP: Int = 42
 
 internal class ImageSlider @JvmOverloads constructor(
     context: Context,
@@ -326,11 +326,20 @@ internal class ImageSlider @JvmOverloads constructor(
         resultDrawable?.draw(canvas)
         drawThumb(canvas)
         resultDrawable?.let {
+            val lastCheck = when (averageProgress ?: 0f == 1.0f) {
+                true -> mThumbOffset
+                else -> 0
+            }
             canvas.translate(
                 (((averageProgress
-                    ?: 0f) * trackDrawable.bounds.width()) + trackDrawable.bounds.left), 0f
+                    ?: 0f) * trackDrawable.bounds.width()) + trackDrawable.bounds.left - (lastCheck)),
+                0f
             )
             it.mLottieDrawable.draw(canvas)
+            println(
+                "ImageSlider.onDraw-->${(((averageProgress
+                    ?: 0f) * trackDrawable.bounds.width()) + trackDrawable.bounds.left)} -->$averageProgress ->${trackDrawable.bounds.left} -->${trackDrawable.bounds.width()} ->${it.bounds.width()}"
+            )
         }
     }
 

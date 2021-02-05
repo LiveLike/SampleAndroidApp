@@ -14,20 +14,9 @@ import com.mml.mmlengagementsdk.widgets.utils.imageslider.ScaleDrawable
 import com.mml.mmlengagementsdk.widgets.utils.imageslider.ThumbDrawable
 import com.mml.mmlengagementsdk.widgets.utils.parseDuration
 import com.mml.mmlengagementsdk.widgets.utils.setCustomFontWithTextStyle
-import kotlinx.android.synthetic.main.mml_image_slider.view.image_slider
-import kotlinx.android.synthetic.main.mml_image_slider.view.slider_title
-import kotlinx.android.synthetic.main.mml_image_slider.view.time_bar
-import kotlinx.android.synthetic.main.mml_image_slider.view.txt_time
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.async
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.util.Calendar
+import kotlinx.android.synthetic.main.mml_image_slider.view.*
+import kotlinx.coroutines.*
+import java.util.*
 import kotlin.math.max
 
 class MMLImageSliderWidget(context: Context) : ConstraintLayout(context) {
@@ -99,12 +88,16 @@ class MMLImageSliderWidget(context: Context) : ConstraintLayout(context) {
                 val remainingTimeMillis = max(0, timeMillis - timeDiff)
                 time_bar.visibility = View.VISIBLE
                 time_bar.startTimer(timeMillis, remainingTimeMillis)
-
+                image_slider.positionListener = {
+                    println("MMLImageSliderWidget.onAttachedToWindow-->$it")
+                }
                 uiScope.async {
                     delay(remainingTimeMillis)
+                    println("MMLImageSliderWidget.onAttachedToWindow---->${image_slider.progress.toDouble()}")
                     imageSliderWidgetModel.lockInVote(image_slider.progress.toDouble())
                     imageSliderWidgetModel.voteResults.subscribe(this@MMLImageSliderWidget) {
                         it?.let {
+                            println("MMLImageSliderWidget.onAttachedToWindow-->>>${image_slider.averageProgress} ->${image_slider.progress}-->${it.averageMagnitude}")
                             if (image_slider.averageProgress != it.averageMagnitude) {
                                 image_slider.averageProgress = it.averageMagnitude
                             }

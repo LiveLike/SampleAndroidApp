@@ -1,7 +1,6 @@
 package com.mml.mmlengagementsdk.widgets
 
 import android.content.Context
-import android.content.res.Configuration
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
@@ -86,13 +85,7 @@ class MMLCheerMeterWidget(context: Context) : ConstraintLayout(context) {
                 setCustomFontWithTextStyle(txt_time, "fonts/RingsideRegular-Book.otf")
                 txt_time.text = getFormattedTime(it)
             }
-            val nightModeFlags = context.resources.configuration.uiMode and
-                    Configuration.UI_MODE_NIGHT_MASK
-            if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
-                vs_anim.setAnimation("mml/white-vs.json")
-            } else {
-                vs_anim.setAnimation("mml/vs-1-light.json")
-            }
+            vs_anim.setAnimation("mml/mml_cheermeter_vs.json")
             vs_anim.playAnimation()
             liveLikeWidget.options?.let { options ->
                 if (options.size == 2) {

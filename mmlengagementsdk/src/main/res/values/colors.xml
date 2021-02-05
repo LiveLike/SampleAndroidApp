@@ -12,6 +12,8 @@
     <color name="mml_chat_reaction_panel_color">@android:color/white</color>
     <color name="mml_chat_reaction_panel_count_color">#17171d</color>
     <color name="mml_chat_reaction_panel_flag_color">#17171d</color>
+    <color name="livelike_snap_live_color">#fdfdfd</color>
+    <color name="livelike_snap_live_icon_color">#17171d</color>
     <!-- Widget -->
     <color name="incorrect_result_bar_color">#e41e0c</color>
     <color name="correct_result_bar_color">#00c265</color>

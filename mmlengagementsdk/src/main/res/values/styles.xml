@@ -18,7 +18,7 @@
         <item name="chatMarginLeft">0dp</item>
         <item name="chatMarginRight">0dp</item>
         <item name="chatReactionElevation">8dp</item>
-        <item name="chatReactionRadius">20dp</item>
+        <item name="chatReactionRadius">12dp</item>
         <item name="chatSelectedReactionRadius">16dp</item>
         <item name="chatReactionPanelColor">@color/mml_chat_reaction_panel_color</item>
         <item name="chatReactionDisplayCountColor">@color/mml_chat_text_color</item>
@@ -31,10 +31,6 @@
         <item name="chatAvatarMarginBottom">0dp</item>
         <item name="chatAvatarMarginTop">0dp</item>
 
-        <item name="chatSendButtonPaddingLeft">2dp</item>
-        <item name="chatSendButtonPaddingRight">2dp</item>
-        <item name="chatSendButtonPaddingTop">0dp</item>
-        <item name="chatSendButtonPaddingBottom">0dp</item>
         <item name="userPicDrawable">@drawable/ic_user_pic</item>
         <item name="chatBubblePaddingLeft">0dp</item>
         <item name="chatBubblePaddingRight">16dp</item>
@@ -72,6 +68,11 @@
         <item name="chatReactionPanelCountColor">@color/mml_chat_reaction_panel_count_color</item>
         <item name="chatReactionPanelCountCustomFontPath">fonts/RingsideExtraWide-Black.otf</item>
         <item name="chatReactionFlagTintColor">@color/mml_chat_reaction_panel_flag_color</item>
+
+        <item name="chatReactionPanelCountVisibleIfZero">false</item>
+        <item name="chatMessageTimeTextLetterSpacing">0.1</item>
+        <item name="chatMessageTextLetterSpacing">0.0</item>
+        <item name="chatUserNameTextLetterSpacing">0.0</item>
     </style>
 
 

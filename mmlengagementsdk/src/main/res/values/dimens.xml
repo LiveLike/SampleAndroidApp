@@ -8,4 +8,9 @@
     <dimen name="timer_margin_top">16dp</dimen>
     <dimen name="chat_avatar_height">40dp</dimen>
     <dimen name="chat_avatar_width">40dp</dimen>
+    <dimen name="livelike_snap_live_width">32dp</dimen>
+    <dimen name="livelike_snap_live_height">32dp</dimen>
+    <item name="livelike_snap_live_horizontal_bias" format="float" type="dimen">0.5</item>
+    <dimen name="livelike_snap_live_margin_bottom">32dp</dimen>
+
 </resources>

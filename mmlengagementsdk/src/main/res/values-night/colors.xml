@@ -12,6 +12,8 @@
     <color name="mml_chat_reaction_panel_color">#464750</color>
     <color name="mml_chat_reaction_panel_count_color">#fdfdfd</color>
     <color name="mml_chat_reaction_panel_flag_color">#FFF</color>
+    <color name="livelike_snap_live_color">#464750</color>
+    <color name="livelike_snap_live_icon_color">#fdfdfd</color>
     <!-- Widget -->
     <color name="incorrect_result_bar_color">#e41e0c</color>
     <color name="correct_result_bar_color">#00c265</color>
@@ -32,7 +34,7 @@
     <color name="progress_bar_color">#e6e6e6</color>
     <color name="mml_image_option_stroke_selected_color">#1da1f1</color>
     <color name="mml_image_option_stroke_color">#E6E6E6</color>
-    <color name="mml_cheer_meter_background_color">#80FFFFFF</color>
+    <color name="mml_cheer_meter_background_color">#80000000</color>
     <color name="mml_widget_background_color">#17171d</color>
     <color name="mml_time_line_bg_color">#17171d</color>
 

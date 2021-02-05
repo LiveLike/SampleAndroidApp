@@ -14,19 +14,9 @@ import com.mml.mmlengagementsdk.widgets.timeline.TimelineWidgetResource
 import com.mml.mmlengagementsdk.widgets.utils.getFormattedTime
 import com.mml.mmlengagementsdk.widgets.utils.parseDuration
 import com.mml.mmlengagementsdk.widgets.utils.setCustomFontWithTextStyle
-import kotlinx.android.synthetic.main.mml_alert_widget.view.btn_link
-import kotlinx.android.synthetic.main.mml_alert_widget.view.img_alert
-import kotlinx.android.synthetic.main.mml_alert_widget.view.time_bar
-import kotlinx.android.synthetic.main.mml_alert_widget.view.txt_description
-import kotlinx.android.synthetic.main.mml_alert_widget.view.txt_time
-import kotlinx.android.synthetic.main.mml_alert_widget.view.txt_title
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.async
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
-import java.util.Calendar
+import kotlinx.android.synthetic.main.mml_alert_widget.view.*
+import kotlinx.coroutines.*
+import java.util.*
 import kotlin.math.max
 
 class MMLAlertWidget(context: Context) : ConstraintLayout(context) {
@@ -65,8 +55,9 @@ class MMLAlertWidget(context: Context) : ConstraintLayout(context) {
                 btn_link.visibility = View.VISIBLE
                 btn_link.text = it
                 setCustomFontWithTextStyle(btn_link, "fonts/RingsideRegular-Book.otf")
-                liveLikeWidget.linkUrl?.let {
+                liveLikeWidget.linkUrl?.let { url ->
                     btn_link.setOnClickListener {
+                        alertModel.alertLinkClicked(url)
                         val universalLinkIntent =
                             Intent(Intent.ACTION_VIEW, Uri.parse(liveLikeWidget.linkUrl)).setFlags(
                                 Intent.FLAG_ACTIVITY_NEW_TASK

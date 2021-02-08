@@ -13,20 +13,15 @@ import com.mml.mmlengagementsdk.widgets.timeline.TimelineWidgetResource
 import com.mml.mmlengagementsdk.widgets.utils.getFormattedTime
 import com.mml.mmlengagementsdk.widgets.utils.parseDuration
 import com.mml.mmlengagementsdk.widgets.utils.setCustomFontWithTextStyle
-import kotlinx.android.synthetic.main.mml_poll_widget.view.rcyl_poll_list
-import kotlinx.android.synthetic.main.mml_poll_widget.view.time_bar
-import kotlinx.android.synthetic.main.mml_poll_widget.view.txt_time
-import kotlinx.android.synthetic.main.mml_poll_widget.view.txt_title
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.async
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
-import java.util.Calendar
+import kotlinx.android.synthetic.main.mml_poll_widget.view.*
+import kotlinx.coroutines.*
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.set
 import kotlin.math.max
 
 class MMLPollWidget(context: Context) : ConstraintLayout(context) {
+    private var selectedOptionId: String? = null
     var pollWidgetModel: PollWidgetModel? = null
     var isImage = false
     private val job = SupervisorJob()
@@ -78,7 +73,10 @@ class MMLPollWidget(context: Context) : ConstraintLayout(context) {
                 } else {
                     adapter.pollListener = object : PollListAdapter.PollListener {
                         override fun onSelectOption(id: String) {
-                            pollWidgetModel?.submitVote(id)
+                            if (selectedOptionId != id) {
+                                selectedOptionId = id
+                                pollWidgetModel?.submitVote(id)
+                            }
                         }
                     }
                     pollWidgetModel?.voteResults?.subscribe(this@MMLPollWidget) { result ->

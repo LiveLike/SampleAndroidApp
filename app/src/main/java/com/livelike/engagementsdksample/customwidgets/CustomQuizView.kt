@@ -73,6 +73,7 @@ class CustomQuizView :
             } else {
                 txt_title.text = "TEXT QUIZ"
             }
+            quiz_title.text = liveLikeWidget.question
             liveLikeWidget.choices?.let {
                 adapter =
                     ImageOptionsWidgetAdapter(
@@ -106,6 +107,7 @@ class CustomQuizView :
             }
             // TODO  change sdk api for duration, it should passes duration in millis, parsing should be done at sdk side.
             if (isTimeLine) {
+
                 time_bar.visibility = View.INVISIBLE
                 val totalVotes = liveLikeWidget.choices?.sumBy { it?.answerCount ?: 0 } ?: 0
                 liveLikeWidget.choices?.zip(adapter.list)?.let { options ->
@@ -128,8 +130,6 @@ class CustomQuizView :
             } else {
                 val timeMillis = liveLikeWidget.timeout?.parseDuration() ?: 5000
                 time_bar.startTimer(timeMillis)
-                quiz_title.text = liveLikeWidget.question
-
                 (context as AppCompatActivity).lifecycleScope.async {
                     delay(timeMillis)
                     adapter.isResultState = true

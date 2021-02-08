@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.livelike.engagementsdk.chat.ChatView
+    <com.mml.mmlengagementsdk.chat.CustomChatView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/chat_view"

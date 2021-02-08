@@ -23,7 +23,7 @@ fun String.parseDuration(): Long {
 
 
 private val DEFAULT_WIDGET_DATE_TIME_FORMATTER = SimpleDateFormat(
-    "MMM d, h:mm a",
+    "MMM d, h:mma",
     Locale.getDefault()
 )
 

@@ -37,5 +37,6 @@
     <color name="mml_cheer_meter_background_color">#80FFFFFF</color>
     <color name="mml_widget_background_color">#FFF</color>
     <color name="mml_time_line_bg_color">#FFF</color>
-
+    <color name="cheer_meter_winner_bg_color">#fdfdfd</color>
+    <color name="cheer_meter_winner_bg_stroke_color">#e6e6e6</color>
 </resources>

@@ -15,7 +15,7 @@ class CustomChatView(context: Context, attributes: AttributeSet?) : ChatView(con
         val dateTime = Date()
         dateTime.time = messageTimeStamp
         return SimpleDateFormat(
-            "MMM d, h:mma",
+            "MMM d, hh:mma",
             Locale.getDefault()
         ).format(dateTime)
     }

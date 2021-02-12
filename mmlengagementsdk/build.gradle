@@ -66,7 +66,7 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
     testImplementation 'junit:junit:4.+'
     //sdk
-    implementation 'com.livelike.android-engagement-sdk:engagementsdk:2.13.2'
+    implementation 'com.livelike.android-engagement-sdk:engagementsdk:2.13.3'
 
     implementation "com.jakewharton.threetenabp:threetenabp:$threetenabpVersion"
     implementation "com.airbnb.android:lottie:$lottieVersion"

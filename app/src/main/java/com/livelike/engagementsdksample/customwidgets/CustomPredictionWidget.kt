@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.livelike.engagementsdk.widget.widgetModel.PredictionWidgetViewModel
 import com.livelike.engagementsdksample.R
 import com.livelike.engagementsdksample.parseDuration
@@ -38,6 +39,7 @@ class CustomPredictionWidget : ConstraintLayout {
 
     private lateinit var imageOptionsWidgetAdapter: ImageOptionsWidgetAdapter
     var isTimeLine = false
+    var isImage = false
 
     private fun init(attrs: AttributeSet?, defStyle: Int) {
         inflate(context, R.layout.custom_prediction_widget, this)
@@ -46,11 +48,16 @@ class CustomPredictionWidget : ConstraintLayout {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         predictionWidgetViewModel.widgetData.let { liveLikeWidget ->
+            widget_type_label.text = when (isImage) {
+                true -> "IMAGE PREDICTION"
+                else -> "TEXT PREDICTION"
+            }
+
             widget_title.text = liveLikeWidget.question
             liveLikeWidget.options?.let {
                 imageOptionsWidgetAdapter =
                     ImageOptionsWidgetAdapter(
-                        context, true,
+                        context, isImage,
                         ArrayList(it.map { item ->
                             LiveLikeWidgetOption(
                                 item?.id!!,
@@ -64,7 +71,11 @@ class CustomPredictionWidget : ConstraintLayout {
                         predictionWidgetViewModel.lockInVote(option.id ?: "")
                     }
                 imageOptionsWidgetAdapter.indicateRightAnswer = false
-                widget_rv.layoutManager = GridLayoutManager(context, 2)
+
+                widget_rv.layoutManager = when (isImage) {
+                    true -> GridLayoutManager(context, 2)
+                    else -> LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                }
                 widget_rv.adapter = imageOptionsWidgetAdapter
             }
 

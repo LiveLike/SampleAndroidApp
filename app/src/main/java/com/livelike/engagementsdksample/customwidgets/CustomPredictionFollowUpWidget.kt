@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.livelike.engagementsdk.widget.widgetModel.FollowUpWidgetViewModel
 import com.livelike.engagementsdksample.R
 import com.livelike.engagementsdksample.parseDuration
@@ -20,6 +21,7 @@ class CustomPredictionFollowUpWidget : ConstraintLayout {
     private lateinit var imageOptionsWidgetAdapter: ImageOptionsWidgetAdapter
     lateinit var followUpWidgetViewModel: FollowUpWidgetViewModel
     var isTimeLine = false
+    var isImage = false
 
     constructor(context: Context) : super(context) {
         init(null, 0)
@@ -48,6 +50,10 @@ class CustomPredictionFollowUpWidget : ConstraintLayout {
         widget_type_label.text = context.getString(R.string.prediction_follow_up)
         followUpWidgetViewModel.widgetData.let { liveLikeWidget ->
             widget_title.text = liveLikeWidget.question
+            widget_type_label.text = when (isImage) {
+                true -> "IMAGE PREDICTION"
+                else -> "TEXT PREDICTION"
+            }
             if (isTimeLine) {
                 time_bar.visibility = View.INVISIBLE
             } else {
@@ -61,11 +67,11 @@ class CustomPredictionFollowUpWidget : ConstraintLayout {
 
 
             followUpWidgetViewModel.claimRewards()
-            liveLikeWidget.options?.let {
-                val totalVotes = it.sumBy { it?.voteCount ?: 0 }
+            liveLikeWidget.options?.let { list ->
+                val totalVotes = list.sumBy { it?.voteCount ?: 0 }
                 imageOptionsWidgetAdapter =
                     ImageOptionsWidgetAdapter(
-                        context, true, ArrayList(it.map { item ->
+                        context, isImage, ArrayList(list.map { item ->
                             LiveLikeWidgetOption(
                                 item?.id!!,
                                 item.description ?: "",
@@ -78,7 +84,10 @@ class CustomPredictionFollowUpWidget : ConstraintLayout {
                             )
                         })
                     ) {}
-                widget_rv.layoutManager = GridLayoutManager(context, 2)
+                widget_rv.layoutManager = when (isImage) {
+                    true -> GridLayoutManager(context, 2)
+                    else -> LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                }
                 imageOptionsWidgetAdapter.isResultState = true
                 imageOptionsWidgetAdapter.isResultAvailable = true
                 imageOptionsWidgetAdapter.selectedOptionItem =

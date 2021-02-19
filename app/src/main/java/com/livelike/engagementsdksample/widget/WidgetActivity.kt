@@ -80,15 +80,12 @@ class WidgetActivity : AppCompatActivity() {
                 followUpWidgetViewModel: FollowUpWidgetViewModel,
                 isImage: Boolean
             ): View? {
-                if (isImage) {
-                    return CustomPredictionFollowUpWidget(
-                        this@WidgetActivity
-                    ).apply {
-                        this.isTimeLine = false
-                        this.followUpWidgetViewModel = followUpWidgetViewModel
-                    }
-                } else {
-                    return null
+                return CustomPredictionFollowUpWidget(
+                    this@WidgetActivity
+                ).apply {
+                    this.isTimeLine = false
+                    this.isImage = isImage
+                    this.followUpWidgetViewModel = followUpWidgetViewModel
                 }
             }
 
@@ -96,13 +93,10 @@ class WidgetActivity : AppCompatActivity() {
                 predictionViewModel: PredictionWidgetViewModel,
                 isImage: Boolean
             ): View? {
-                if (isImage) {
-                    return CustomPredictionWidget(this@WidgetActivity).apply {
-                        this.predictionWidgetViewModel = predictionViewModel
-                        this.isTimeLine = false
-                    }
-                } else {
-                    return null
+                return CustomPredictionWidget(this@WidgetActivity).apply {
+                    this.predictionWidgetViewModel = predictionViewModel
+                    this.isTimeLine = false
+                    this.isImage = isImage
                 }
             }
 
@@ -282,13 +276,10 @@ class TimeLineAdapter(private val context: Context, private val engagementSDK: E
                 followUpWidgetViewModel: FollowUpWidgetViewModel,
                 isImage: Boolean
             ): View? {
-                if (isImage) {
-                    return CustomPredictionFollowUpWidget(context).apply {
-                        this.followUpWidgetViewModel = followUpWidgetViewModel
-                        this.isTimeLine = true
-                    }
-                } else {
-                    return null
+                return CustomPredictionFollowUpWidget(context).apply {
+                    this.followUpWidgetViewModel = followUpWidgetViewModel
+                    this.isTimeLine = true
+                    this.isImage = isImage
                 }
             }
 
@@ -296,13 +287,10 @@ class TimeLineAdapter(private val context: Context, private val engagementSDK: E
                 predictionViewModel: PredictionWidgetViewModel,
                 isImage: Boolean
             ): View? {
-                if (isImage) {
-                    return CustomPredictionWidget(context).apply {
-                        this.predictionWidgetViewModel = predictionViewModel
-                        this.isTimeLine = true
-                    }
-                } else {
-                    return null
+                return CustomPredictionWidget(context).apply {
+                    this.predictionWidgetViewModel = predictionViewModel
+                    this.isTimeLine = true
+                    this.isImage = isImage
                 }
             }
 

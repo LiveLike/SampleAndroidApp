@@ -16,6 +16,8 @@ import com.livelike.engagementsdk.LiveLikeWidget
 import com.livelike.engagementsdk.chat.data.remote.LiveLikePagination
 import com.livelike.engagementsdk.core.services.messaging.proxies.LiveLikeWidgetEntity
 import com.livelike.engagementsdk.core.services.messaging.proxies.WidgetInterceptor
+import com.livelike.engagementsdk.core.utils.LogLevel
+import com.livelike.engagementsdk.core.utils.minimumLogLevel
 import com.livelike.engagementsdk.publicapis.LiveLikeCallback
 import com.livelike.engagementsdk.widget.LiveLikeWidgetViewFactory
 import com.livelike.engagementsdk.widget.widgetModel.*
@@ -36,7 +38,7 @@ class WidgetActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_widget)
-
+        minimumLogLevel = LogLevel.Verbose
         // to get intent received from MainActivity
 
         // This will create an instance of Engagement viewmodel which can be used to creating session and initialization

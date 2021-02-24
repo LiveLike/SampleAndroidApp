@@ -79,36 +79,47 @@ class MMLImageSliderWidget(context: Context) : ConstraintLayout(context) {
                 image_slider.isUserSeekable = false
             } else {
                 image_slider.isUserSeekable = true
-                if (timelineWidgetResource?.startTime == null) {
-                    timelineWidgetResource?.startTime = Calendar.getInstance().timeInMillis
-                }
+
                 val timeMillis = liveLikeWidget.timeout?.parseDuration() ?: 5000
-                val timeDiff =
-                    Calendar.getInstance().timeInMillis - (timelineWidgetResource?.startTime ?: 0L)
-                val remainingTimeMillis = max(0, timeMillis - timeDiff)
+                val remainingTimeMillis = when (timelineWidgetResource == null) {
+                    true -> timeMillis
+                    else -> {
+                        if (timelineWidgetResource?.startTime == null) {
+                            timelineWidgetResource?.startTime = Calendar.getInstance().timeInMillis
+                        }
+                        val timeDiff =
+                            Calendar.getInstance().timeInMillis - (timelineWidgetResource?.startTime
+                                ?: 0L)
+                        max(0, timeMillis - timeDiff)
+                    }
+                }
                 time_bar.visibility = View.VISIBLE
                 time_bar.startTimer(timeMillis, remainingTimeMillis)
-                image_slider.positionListener = {
-                    println("MMLImageSliderWidget.onAttachedToWindow-->$it")
-                }
                 uiScope.async {
                     delay(remainingTimeMillis)
-                    println("MMLImageSliderWidget.onAttachedToWindow---->${image_slider.progress.toDouble()}")
                     imageSliderWidgetModel.lockInVote(image_slider.progress.toDouble())
                     imageSliderWidgetModel.voteResults.subscribe(this@MMLImageSliderWidget) {
                         it?.let {
-                            println("MMLImageSliderWidget.onAttachedToWindow-->>>${image_slider.averageProgress} ->${image_slider.progress}-->${it.averageMagnitude}")
                             if (image_slider.averageProgress != it.averageMagnitude) {
                                 image_slider.averageProgress = it.averageMagnitude
                             }
                         }
                         timelineWidgetResource?.liveLikeWidgetResult = it
                     }
-                    time_bar.visibility = View.GONE
                     image_slider.isUserSeekable = false
-                    delay(2000)
+                    delay(
+                        when (timelineWidgetResource == null) {
+                            true -> 5000
+                            else -> 2000
+                        }
+                    )
                     timelineWidgetResource?.isActive = false
                     imageSliderWidgetModel.voteResults.unsubscribe(this@MMLImageSliderWidget)
+                    if (timelineWidgetResource == null) {
+                        imageSliderWidgetModel.finish()
+                    } else {
+                        time_bar.visibility = View.GONE
+                    }
                 }
             }
         }

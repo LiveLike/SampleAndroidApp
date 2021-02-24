@@ -336,17 +336,11 @@ internal class ImageSlider @JvmOverloads constructor(
                 0f
             )
             it.mLottieDrawable.draw(canvas)
-            println(
-                "ImageSlider.onDraw-->${(((averageProgress
-                    ?: 0f) * trackDrawable.bounds.width()) + trackDrawable.bounds.left)} -->$averageProgress ->${trackDrawable.bounds.left} -->${trackDrawable.bounds.width()} ->${it.bounds.width()}"
-            )
         }
     }
 
     private fun drawThumb(canvas: Canvas) {
-
         val widthPosition = progress * trackDrawable.bounds.width()
-
         canvas.save()
         canvas.translate(trackDrawable.bounds.left.toFloat(), trackDrawable.bounds.top.toFloat())
 

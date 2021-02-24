@@ -56,13 +56,20 @@ class MMLCheerMeterWidget(context: Context) : ConstraintLayout(context) {
                     showWinnerAnimation()
                 }
             } else {
-                if (timelineWidgetResource?.startTime == null) {
-                    timelineWidgetResource?.startTime = Calendar.getInstance().timeInMillis
-                }
+
                 val timeMillis = liveLikeWidget.timeout?.parseDuration() ?: 5000
-                val timeDiff =
-                    Calendar.getInstance().timeInMillis - (timelineWidgetResource?.startTime ?: 0L)
-                val remainingTimeMillis = max(0, timeMillis - timeDiff)
+                val remainingTimeMillis = when (timelineWidgetResource == null) {
+                    true -> timeMillis
+                    else -> {
+                        if (timelineWidgetResource?.startTime == null) {
+                            timelineWidgetResource?.startTime = Calendar.getInstance().timeInMillis
+                        }
+                        val timeDiff =
+                            Calendar.getInstance().timeInMillis - (timelineWidgetResource?.startTime
+                                ?: 0L)
+                        max(0, timeMillis - timeDiff)
+                    }
+                }
                 time_bar.visibility = View.VISIBLE
                 time_bar.startTimer(timeMillis, remainingTimeMillis)
 
@@ -75,7 +82,12 @@ class MMLCheerMeterWidget(context: Context) : ConstraintLayout(context) {
                     frame_cheer_team_2.setBackgroundResource(R.drawable.mml_cheer_meter_background_stroke_drawable)
                     timelineWidgetResource?.isActive = false
                     cheerMeterWidgetModel.voteResults.unsubscribe(this@MMLCheerMeterWidget)
-                    time_bar.visibility = View.GONE
+                    if (timelineWidgetResource == null) {
+                        delay(3000)
+                        cheerMeterWidgetModel.finish()
+                    } else {
+                        time_bar.visibility = View.GONE
+                    }
                 }
             }
 
@@ -93,7 +105,7 @@ class MMLCheerMeterWidget(context: Context) : ConstraintLayout(context) {
                         Glide.with(context)
                             .load(op.imageUrl)
                             .into(img_cheer_team_1)
-                        if (timelineWidgetResource?.isActive == true)
+                        if (timelineWidgetResource?.isActive == true || timelineWidgetResource == null)
                             frame_cheer_team_1.setOnClickListener {
                                 cheerMeterWidgetModel.submitVote(op.id!!)
                             }
@@ -102,12 +114,12 @@ class MMLCheerMeterWidget(context: Context) : ConstraintLayout(context) {
                         Glide.with(context)
                             .load(op.imageUrl)
                             .into(img_cheer_team_2)
-                        if (timelineWidgetResource?.isActive == true)
+                        if (timelineWidgetResource?.isActive == true || timelineWidgetResource == null)
                             frame_cheer_team_2.setOnClickListener {
                                 cheerMeterWidgetModel.submitVote(op.id!!)
                             }
                     }
-                    if (timelineWidgetResource?.isActive == true)
+                    if (timelineWidgetResource?.isActive == true || timelineWidgetResource == null)
                         cheerMeterWidgetModel.voteResults.subscribe(this@MMLCheerMeterWidget) {
                             it?.let {
                                 val op1 = it.choices?.get(0)

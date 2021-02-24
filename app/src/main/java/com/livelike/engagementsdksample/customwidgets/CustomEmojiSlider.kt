@@ -59,14 +59,16 @@ class CustomEmojiSlider : ConstraintLayout {
                 val list = mutableListOf<Deferred<Bitmap>>()
                 withContext(Dispatchers.IO) {
                     widget.options?.forEach {
-                        list.add(
-                            async {
-                                Glide.with(context)
-                                    .asBitmap()
-                                    .load(it?.imageUrl)
-                                    .centerCrop().submit(size, size).get()
-                            }
-                        )
+                        it?.imageUrl?.let {
+                            list.add(
+                                async {
+                                    Glide.with(context)
+                                        .asBitmap()
+                                        .load(it)
+                                        .centerCrop().submit(size, size).get()
+                                }
+                            )
+                        }
                     }
                     val drawableList = list.map { t ->
                         ScaleDrawable(

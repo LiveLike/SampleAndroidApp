@@ -48,22 +48,24 @@ class CustomCheerMeter : ConstraintLayout {
 
             if (isTimeLine) {
                 time_bar.visibility = View.INVISIBLE
-                val op1 = likeWidget.options?.get(0)
-                val op2 = likeWidget.options?.get(1)
-                val vt1 = op1?.voteCount ?: 0
-                val vt2 = op2?.voteCount ?: 0
-                val total = vt1 + vt2
-                if (total > 0) {
-                    val perVt1 = (vt1.toFloat() / total) * 100
-                    val perVt2 = (vt2.toFloat() / total) * 100
-                    prg_cheer_team_1.progress = perVt1.toInt()
-                    prg_cheer_team_2.progress = perVt2.toInt()
-                    winnerOptionItem = if (perVt1 > perVt2) {
-                        likeWidget.options?.get(0)
-                    } else {
-                        likeWidget.options?.get(1)
+                if (likeWidget.options?.size == 2) {
+                    val op1 = likeWidget.options?.get(0)
+                    val op2 = likeWidget.options?.get(1)
+                    val vt1 = op1?.voteCount ?: 0
+                    val vt2 = op2?.voteCount ?: 0
+                    val total = vt1 + vt2
+                    if (total > 0) {
+                        val perVt1 = (vt1.toFloat() / total) * 100
+                        val perVt2 = (vt2.toFloat() / total) * 100
+                        prg_cheer_team_1.progress = perVt1.toInt()
+                        prg_cheer_team_2.progress = perVt2.toInt()
+                        winnerOptionItem = if (perVt1 > perVt2) {
+                            likeWidget.options?.get(0)
+                        } else {
+                            likeWidget.options?.get(1)
+                        }
+                        showWinnerAnimation()
                     }
-                    showWinnerAnimation()
                 }
             } else {
                 val timeMillis = likeWidget.timeout?.parseDuration() ?: 5000

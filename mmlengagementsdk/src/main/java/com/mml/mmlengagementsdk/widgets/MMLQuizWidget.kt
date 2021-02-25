@@ -11,6 +11,7 @@ import com.livelike.engagementsdk.widget.widgetModel.QuizWidgetModel
 import com.mml.mmlengagementsdk.widgets.adapter.QuizListAdapter
 import com.mml.mmlengagementsdk.widgets.model.LiveLikeWidgetOption
 import com.mml.mmlengagementsdk.widgets.timeline.TimelineWidgetResource
+import com.mml.mmlengagementsdk.widgets.utils.DEFAULT_DELAY_TIME_FOR_RESULT
 import com.mml.mmlengagementsdk.widgets.utils.getFormattedTime
 import com.mml.mmlengagementsdk.widgets.utils.parseDuration
 import com.mml.mmlengagementsdk.widgets.utils.setCustomFontWithTextStyle
@@ -154,7 +155,7 @@ class MMLQuizWidget(context: Context) : ConstraintLayout(context) {
                     adapter.notifyDataSetChanged()
                     adapter.selectedOptionItem?.let {
                         showResultAnimation()
-                        delay(2000)
+                        delay(DEFAULT_DELAY_TIME_FOR_RESULT)
                         timelineWidgetResource?.isActive = false
                         quizWidgetModel.voteResults.unsubscribe(this@MMLQuizWidget)
                     }

@@ -71,7 +71,7 @@ class CustomCheerMeter : ConstraintLayout {
                 (context as AppCompatActivity).lifecycleScope.async {
                     delay(timeMillis)
                     showWinnerAnimation()
-                    delay(5000)
+                    delay(2500)
                     cheerMeterWidgetmodel.finish()
                 }
             }

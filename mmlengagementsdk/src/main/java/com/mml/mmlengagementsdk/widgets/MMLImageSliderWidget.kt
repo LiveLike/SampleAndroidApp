@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.mmlengagementsdk.R
 import com.livelike.engagementsdk.widget.widgetModel.ImageSliderWidgetModel
 import com.mml.mmlengagementsdk.widgets.timeline.TimelineWidgetResource
+import com.mml.mmlengagementsdk.widgets.utils.DEFAULT_DELAY_TIME_FOR_RESULT
 import com.mml.mmlengagementsdk.widgets.utils.getFormattedTime
 import com.mml.mmlengagementsdk.widgets.utils.imageslider.ScaleDrawable
 import com.mml.mmlengagementsdk.widgets.utils.imageslider.ThumbDrawable
@@ -107,12 +108,7 @@ class MMLImageSliderWidget(context: Context) : ConstraintLayout(context) {
                         timelineWidgetResource?.liveLikeWidgetResult = it
                     }
                     image_slider.isUserSeekable = false
-                    delay(
-                        when (timelineWidgetResource == null) {
-                            true -> 5000
-                            else -> 2000
-                        }
-                    )
+                    delay(DEFAULT_DELAY_TIME_FOR_RESULT)
                     timelineWidgetResource?.isActive = false
                     imageSliderWidgetModel.voteResults.unsubscribe(this@MMLImageSliderWidget)
                     if (timelineWidgetResource == null) {

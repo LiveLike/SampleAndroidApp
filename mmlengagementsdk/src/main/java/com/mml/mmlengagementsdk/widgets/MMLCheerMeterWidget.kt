@@ -8,6 +8,7 @@ import com.example.mmlengagementsdk.R
 import com.livelike.engagementsdk.OptionsItem
 import com.livelike.engagementsdk.widget.widgetModel.CheerMeterWidgetmodel
 import com.mml.mmlengagementsdk.widgets.timeline.TimelineWidgetResource
+import com.mml.mmlengagementsdk.widgets.utils.DEFAULT_DELAY_TIME_FOR_RESULT
 import com.mml.mmlengagementsdk.widgets.utils.getFormattedTime
 import com.mml.mmlengagementsdk.widgets.utils.parseDuration
 import com.mml.mmlengagementsdk.widgets.utils.setCustomFontWithTextStyle
@@ -83,7 +84,7 @@ class MMLCheerMeterWidget(context: Context) : ConstraintLayout(context) {
                     timelineWidgetResource?.isActive = false
                     cheerMeterWidgetModel.voteResults.unsubscribe(this@MMLCheerMeterWidget)
                     if (timelineWidgetResource == null) {
-                        delay(3000)
+                        delay(DEFAULT_DELAY_TIME_FOR_RESULT)
                         cheerMeterWidgetModel.finish()
                     } else {
                         time_bar.visibility = View.GONE

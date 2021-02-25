@@ -22,7 +22,6 @@ import kotlin.collections.set
 import kotlin.math.max
 
 class MMLPollWidget(context: Context) : ConstraintLayout(context) {
-    private var selectedOptionId: String? = null
     lateinit var pollWidgetModel: PollWidgetModel
     var isImage = false
     private val job = SupervisorJob()
@@ -78,15 +77,15 @@ class MMLPollWidget(context: Context) : ConstraintLayout(context) {
                 } else {
                     adapter.pollListener = object : PollListAdapter.PollListener {
                         override fun onSelectOption(optionsItem: OptionsItem) {
-                            if (selectedOptionId != optionsItem.id) {
+                            if (timelineWidgetResource?.selectedOptionitem == null || timelineWidgetResource?.selectedOptionitem?.id != optionsItem.id) {
                                 timelineWidgetResource?.selectedOptionitem = optionsItem
-                                selectedOptionId = optionsItem.id
                                 optionsItem.id?.let {
                                     pollWidgetModel.submitVote(it)
                                 }
                             }
                         }
                     }
+                    adapter.notifyDataSetChanged()
                     pollWidgetModel.voteResults.subscribe(this@MMLPollWidget) { result ->
                         result?.choices?.let { options ->
                             var change = false

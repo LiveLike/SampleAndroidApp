@@ -51,7 +51,7 @@ class WidgetsTimeLineView(
                 Handler(Looper.getMainLooper()).post {
                     adapter.list.add(0, TimelineWidgetResource(true, it))
                     adapter.notifyItemInserted(0)
-                    timeline_rv.smoothScrollToPosition(0)
+//                    timeline_rv.smoothScrollToPosition(0)
                 }
             }
         }

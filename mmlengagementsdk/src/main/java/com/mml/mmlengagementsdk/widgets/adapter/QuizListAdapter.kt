@@ -127,15 +127,20 @@ class QuizListAdapter(
         } else {
             holder.view.result_bar.visibility = View.GONE
             holder.view.result_tv.visibility = View.GONE
+            if (selectedOptionItem?.id == liveLikeWidgetOption.id) {
+                holder.selectOption()
+            } else {
+                holder.unSelectOption()
+            }
             holder.view.setOnClickListener {
                 currentlySelectedViewHolder?.unSelectOption()
                 currentlySelectedViewHolder = holder
                 holder.selectOption()
                 selectedOptionItem = liveLikeWidgetOption
                 optionSelectListener.invoke(liveLikeWidgetOption)
+                notifyDataSetChanged()
             }
         }
-
     }
 
 

@@ -25,7 +25,6 @@ class PollListAdapter(
     private val context: Context,
     private val isImage: Boolean,
     private val list: ArrayList<OptionsItem>
-
 ) :
     RecyclerView.Adapter<PollListAdapter.PollListItemViewHolder>() {
     var selectedIndex = -1

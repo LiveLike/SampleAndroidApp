@@ -53,7 +53,12 @@ class MMLPollWidget(context: Context) : ConstraintLayout(context) {
                         context,
                         isImage,
                         ArrayList(list.map { item -> item!! })
-                    )
+                    ).apply {
+                        selectedOptionId?.let {
+                            selectedIndex = list.indexOfFirst { it?.id == selectedOptionId }
+                        }
+                    }
+
                 rcyl_poll_list.adapter = adapter
 
                 if (timelineWidgetResource?.isActive == false) {
@@ -128,14 +133,4 @@ class MMLPollWidget(context: Context) : ConstraintLayout(context) {
         }
     }
 
-
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        if (timelineWidgetResource?.isActive == true) {
-            job.cancel()
-            uiScope.cancel()
-            pollWidgetModel.voteResults.unsubscribe(this)
-            pollWidgetModel.finish()
-        }
-    }
 }

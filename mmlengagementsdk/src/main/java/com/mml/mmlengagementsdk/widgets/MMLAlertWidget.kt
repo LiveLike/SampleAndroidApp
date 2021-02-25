@@ -99,12 +99,4 @@ class MMLAlertWidget(context: Context) : ConstraintLayout(context) {
             }
         }
     }
-
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        if (timelineWidgetResource?.isActive == true) {
-            job.cancel()
-            uiScope.cancel()
-        }
-    }
 }

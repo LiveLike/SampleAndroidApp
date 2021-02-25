@@ -158,13 +158,4 @@ class MMLCheerMeterWidget(context: Context) : ConstraintLayout(context) {
         }
     }
 
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        if (timelineWidgetResource?.isActive == true) {
-            job.cancel()
-            uiScope.cancel()
-            cheerMeterWidgetModel.voteResults.unsubscribe(this)
-            cheerMeterWidgetModel.finish()
-        }
-    }
 }

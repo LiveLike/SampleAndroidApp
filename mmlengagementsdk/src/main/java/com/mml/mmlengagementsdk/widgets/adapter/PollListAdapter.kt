@@ -33,7 +33,7 @@ class PollListAdapter(
     var isTimeLine: Boolean = false
 
     interface PollListener {
-        fun onSelectOption(id: String)
+        fun onSelectOption(optionsItem: OptionsItem)
     }
 
     class PollListItemViewHolder(view: View) : RecyclerView.ViewHolder(view)
@@ -92,7 +92,7 @@ class PollListAdapter(
             if (!isTimeLine)
                 holder.itemView.lay_poll_img_option.setOnClickListener {
                     selectedIndex = holder.adapterPosition
-                    pollListener?.onSelectOption(item.id!!)
+                    pollListener?.onSelectOption(item)
                     notifyDataSetChanged()
                 }
             else
@@ -137,7 +137,7 @@ class PollListAdapter(
             if (!isTimeLine)
                 holder.itemView.lay_poll_text_option.setOnClickListener {
                     selectedIndex = holder.adapterPosition
-                    pollListener?.onSelectOption(item.id!!)
+                    pollListener?.onSelectOption(item)
                     notifyDataSetChanged()
                 }
             else

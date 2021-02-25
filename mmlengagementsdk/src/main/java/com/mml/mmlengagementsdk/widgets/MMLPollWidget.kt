@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mmlengagementsdk.R
+import com.livelike.engagementsdk.OptionsItem
 import com.livelike.engagementsdk.widget.widgetModel.PollWidgetModel
 import com.mml.mmlengagementsdk.widgets.adapter.PollListAdapter
 import com.mml.mmlengagementsdk.widgets.timeline.TimelineWidgetResource
@@ -54,13 +55,12 @@ class MMLPollWidget(context: Context) : ConstraintLayout(context) {
                         isImage,
                         ArrayList(list.map { item -> item!! })
                     ).apply {
-                        selectedOptionId?.let {
-                            selectedIndex = list.indexOfFirst { it?.id == selectedOptionId }
+                        timelineWidgetResource?.selectedOptionitem?.let { op ->
+                            selectedIndex = list.indexOfFirst { it?.id == op.id }
                         }
                     }
 
                 rcyl_poll_list.adapter = adapter
-
                 if (timelineWidgetResource?.isActive == false) {
                     adapter.isTimeLine = true
                     list.forEach { op ->
@@ -77,10 +77,13 @@ class MMLPollWidget(context: Context) : ConstraintLayout(context) {
                     time_bar.visibility = View.INVISIBLE
                 } else {
                     adapter.pollListener = object : PollListAdapter.PollListener {
-                        override fun onSelectOption(id: String) {
-                            if (selectedOptionId != id) {
-                                selectedOptionId = id
-                                pollWidgetModel.submitVote(id)
+                        override fun onSelectOption(optionsItem: OptionsItem) {
+                            if (selectedOptionId != optionsItem.id) {
+                                timelineWidgetResource?.selectedOptionitem = optionsItem
+                                selectedOptionId = optionsItem.id
+                                optionsItem.id?.let {
+                                    pollWidgetModel.submitVote(it)
+                                }
                             }
                         }
                     }

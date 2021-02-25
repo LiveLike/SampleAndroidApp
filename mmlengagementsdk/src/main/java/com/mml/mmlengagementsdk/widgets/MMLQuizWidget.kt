@@ -22,7 +22,6 @@ import kotlin.collections.ArrayList
 import kotlin.math.max
 
 class MMLQuizWidget(context: Context) : ConstraintLayout(context) {
-    private var selectedOption: LiveLikeWidgetOption? = null
     lateinit var quizWidgetModel: QuizWidgetModel
     private lateinit var adapter: QuizListAdapter
     private var quizAnswerJob: Job? = null
@@ -80,14 +79,14 @@ class MMLQuizWidget(context: Context) : ConstraintLayout(context) {
                     ) { option ->
                         // TODO change sdk apis to have non-nullable option item ids
                         // 1000ms debounce added, TODO To discuss whether sdk should have inbuilt debounce to optimize sdk api calls
-                        selectedOption = option
+                        timelineWidgetResource?.selectedLiveLikeWidget = option
                         quizAnswerJob?.cancel()
                         quizAnswerJob = uiScope.launch {
                             delay(1000)
                             quizWidgetModel.lockInAnswer(option.id ?: "")
                         }
                     }.apply {
-                        selectedOptionItem = selectedOption
+                        selectedOptionItem = timelineWidgetResource?.selectedLiveLikeWidget
                     }
                 quiz_rv.adapter = adapter
             }

@@ -10,6 +10,7 @@ import com.livelike.engagementsdk.EngagementSDK
 import com.livelike.engagementsdk.LiveLikeWidget
 import com.livelike.engagementsdk.OptionsItem
 import com.livelike.engagementsdk.widget.model.LiveLikeWidgetResult
+import com.mml.mmlengagementsdk.widgets.model.LiveLikeWidgetOption
 import kotlinx.android.synthetic.main.mml_timeline_item.view.widget_view
 
 class TimeLineViewAdapter(private val context: Context, private val sdk: EngagementSDK) :
@@ -60,5 +61,6 @@ data class TimelineWidgetResource(
     val liveLikeWidget: LiveLikeWidget,
     var selectedOptionitem: OptionsItem? = null,
     var liveLikeWidgetResult: LiveLikeWidgetResult? = null,
-    var startTime : Long? = null
+    var startTime : Long? = null,
+    var selectedLiveLikeWidget: LiveLikeWidgetOption?=null
 )

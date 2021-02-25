@@ -11,23 +11,14 @@ import com.livelike.engagementsdk.widget.widgetModel.QuizWidgetModel
 import com.mml.mmlengagementsdk.widgets.adapter.QuizListAdapter
 import com.mml.mmlengagementsdk.widgets.model.LiveLikeWidgetOption
 import com.mml.mmlengagementsdk.widgets.timeline.TimelineWidgetResource
+import com.mml.mmlengagementsdk.widgets.utils.DEFAULT_DELAY_TIME_FOR_RESULT
 import com.mml.mmlengagementsdk.widgets.utils.getFormattedTime
 import com.mml.mmlengagementsdk.widgets.utils.parseDuration
 import com.mml.mmlengagementsdk.widgets.utils.setCustomFontWithTextStyle
-import kotlinx.android.synthetic.main.mml_quiz_widget.view.lottie_animation_view
-import kotlinx.android.synthetic.main.mml_quiz_widget.view.quiz_rv
-import kotlinx.android.synthetic.main.mml_quiz_widget.view.quiz_title
-import kotlinx.android.synthetic.main.mml_quiz_widget.view.time_bar
-import kotlinx.android.synthetic.main.mml_quiz_widget.view.txt_time
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.async
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import java.util.Calendar
+import kotlinx.android.synthetic.main.mml_quiz_widget.view.*
+import kotlinx.coroutines.*
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.max
 
 class MMLQuizWidget(context: Context) : ConstraintLayout(context) {
@@ -142,27 +133,36 @@ class MMLQuizWidget(context: Context) : ConstraintLayout(context) {
                     }
                 adapter.notifyDataSetChanged()
             } else {
-
-                if (timelineWidgetResource?.startTime == null) {
-                    timelineWidgetResource?.startTime = Calendar.getInstance().timeInMillis
-                }
                 val timeMillis = liveLikeWidget.timeout?.parseDuration() ?: 5000
-                val timeDiff =
-                    Calendar.getInstance().timeInMillis - (timelineWidgetResource?.startTime ?: 0L)
-                val remainingTimeMillis = max(0, timeMillis - timeDiff)
+                val remainingTimeMillis = when (timelineWidgetResource == null) {
+                    true -> timeMillis
+                    else -> {
+                        if (timelineWidgetResource?.startTime == null) {
+                            timelineWidgetResource?.startTime = Calendar.getInstance().timeInMillis
+                        }
+                        val timeDiff =
+                            Calendar.getInstance().timeInMillis - (timelineWidgetResource?.startTime
+                                ?: 0L)
+                        max(0, timeMillis - timeDiff)
+                    }
+                }
                 time_bar.visibility = View.VISIBLE
                 time_bar.startTimer(timeMillis, remainingTimeMillis)
                 subscribeToVoteResults()
                 uiScope.async {
                     delay(remainingTimeMillis)
-                    time_bar.visibility = View.GONE
                     adapter.isResultState = true
                     adapter.notifyDataSetChanged()
                     adapter.selectedOptionItem?.let {
                         showResultAnimation()
-                        delay(2000)
+                        delay(DEFAULT_DELAY_TIME_FOR_RESULT)
                         timelineWidgetResource?.isActive = false
                         quizWidgetModel.voteResults.unsubscribe(this@MMLQuizWidget)
+                    }
+                    if (timelineWidgetResource == null) {
+                        quizWidgetModel.finish()
+                    } else {
+                        time_bar.visibility = View.GONE
                     }
                 }
             }

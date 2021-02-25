@@ -71,19 +71,30 @@ class MMLAlertWidget(context: Context) : ConstraintLayout(context) {
             if (timelineWidgetResource?.isActive == false) {
                 time_bar.visibility = View.GONE
             } else {
-                if (timelineWidgetResource?.startTime == null) {
-                    timelineWidgetResource?.startTime = Calendar.getInstance().timeInMillis
-                }
                 val timeMillis = liveLikeWidget.timeout?.parseDuration() ?: 5000
-                val timeDiff =
-                    Calendar.getInstance().timeInMillis - (timelineWidgetResource?.startTime ?: 0L)
-                val remainingTimeMillis = max(0, timeMillis - timeDiff)
+                val remainingTimeMillis = when (timelineWidgetResource == null) {
+                    true -> timeMillis
+                    else -> {
+                        if (timelineWidgetResource?.startTime == null) {
+                            timelineWidgetResource?.startTime = Calendar.getInstance().timeInMillis
+                        }
+
+                        val timeDiff =
+                            Calendar.getInstance().timeInMillis - (timelineWidgetResource?.startTime
+                                ?: 0L)
+                        max(0, timeMillis - timeDiff)
+                    }
+                }
                 time_bar.visibility = View.VISIBLE
                 time_bar.startTimer(timeMillis, remainingTimeMillis)
                 uiScope.async {
                     delay(remainingTimeMillis)
                     timelineWidgetResource?.isActive = false
-                    time_bar.visibility = View.GONE
+                    if (timelineWidgetResource == null) {
+                        alertModel.finish()
+                    } else {
+                        time_bar.visibility = View.GONE
+                    }
                 }
             }
         }

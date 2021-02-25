@@ -22,7 +22,7 @@ import kotlin.math.max
 
 class MMLPollWidget(context: Context) : ConstraintLayout(context) {
     private var selectedOptionId: String? = null
-    var pollWidgetModel: PollWidgetModel? = null
+    lateinit var pollWidgetModel: PollWidgetModel
     var isImage = false
     private val job = SupervisorJob()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
@@ -34,7 +34,7 @@ class MMLPollWidget(context: Context) : ConstraintLayout(context) {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        pollWidgetModel?.widgetData?.let { liveLikeWidget ->
+        pollWidgetModel.widgetData.let { liveLikeWidget ->
             txt_title.text = liveLikeWidget.question
             setCustomFontWithTextStyle(txt_title, "fonts/RingsideExtraWide-Black.otf")
             liveLikeWidget.createdAt?.let {
@@ -75,11 +75,11 @@ class MMLPollWidget(context: Context) : ConstraintLayout(context) {
                         override fun onSelectOption(id: String) {
                             if (selectedOptionId != id) {
                                 selectedOptionId = id
-                                pollWidgetModel?.submitVote(id)
+                                pollWidgetModel.submitVote(id)
                             }
                         }
                     }
-                    pollWidgetModel?.voteResults?.subscribe(this@MMLPollWidget) { result ->
+                    pollWidgetModel.voteResults.subscribe(this@MMLPollWidget) { result ->
                         result?.choices?.let { options ->
                             var change = false
                             options.forEach { op ->
@@ -94,14 +94,20 @@ class MMLPollWidget(context: Context) : ConstraintLayout(context) {
                         timelineWidgetResource?.liveLikeWidgetResult = result
                     }
 
-                    if (timelineWidgetResource?.startTime == null) {
-                        timelineWidgetResource?.startTime = Calendar.getInstance().timeInMillis
-                    }
                     val timeMillis = liveLikeWidget.timeout?.parseDuration() ?: 5000
-                    val timeDiff =
-                        Calendar.getInstance().timeInMillis - (timelineWidgetResource?.startTime
-                            ?: 0L)
-                    val remainingTimeMillis = max(0, timeMillis - timeDiff)
+                    val remainingTimeMillis = when (timelineWidgetResource == null) {
+                        true -> timeMillis
+                        else -> {
+                            if (timelineWidgetResource?.startTime == null) {
+                                timelineWidgetResource?.startTime =
+                                    Calendar.getInstance().timeInMillis
+                            }
+                            val timeDiff =
+                                Calendar.getInstance().timeInMillis - (timelineWidgetResource?.startTime
+                                    ?: 0L)
+                            max(0, timeMillis - timeDiff)
+                        }
+                    }
                     time_bar.visibility = View.VISIBLE
                     time_bar.startTimer(timeMillis, remainingTimeMillis)
 
@@ -110,8 +116,12 @@ class MMLPollWidget(context: Context) : ConstraintLayout(context) {
                         timelineWidgetResource?.isActive = false
                         adapter.isTimeLine = true
                         adapter.notifyDataSetChanged()
-                        pollWidgetModel?.voteResults?.unsubscribe(this@MMLPollWidget)
-                        time_bar.visibility = View.GONE
+                        pollWidgetModel.voteResults.unsubscribe(this@MMLPollWidget)
+                        if (timelineWidgetResource == null) {
+                            pollWidgetModel.finish()
+                        } else {
+                            time_bar.visibility = View.GONE
+                        }
                     }
                 }
             }
@@ -124,8 +134,8 @@ class MMLPollWidget(context: Context) : ConstraintLayout(context) {
         if (timelineWidgetResource?.isActive == true) {
             job.cancel()
             uiScope.cancel()
-            pollWidgetModel?.voteResults?.unsubscribe(this)
-            pollWidgetModel?.finish()
+            pollWidgetModel.voteResults.unsubscribe(this)
+            pollWidgetModel.finish()
         }
     }
 }

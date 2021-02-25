@@ -94,7 +94,7 @@ class CustomEmojiSlider : ConstraintLayout {
                 (context as AppCompatActivity).lifecycleScope.async {
                     delay(timeMillis)
                     imageSliderWidgetModel.lockInVote(image_slider.progress.toDouble())
-                    delay(5000)
+                    delay(2500)
                     imageSliderWidgetModel.finish()
                 }
                 imageSliderWidgetModel.voteResults.subscribe(this) {

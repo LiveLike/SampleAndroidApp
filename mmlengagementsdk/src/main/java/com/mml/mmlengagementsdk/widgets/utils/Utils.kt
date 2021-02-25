@@ -7,8 +7,7 @@ import org.threeten.bp.Duration
 import org.threeten.bp.format.DateTimeParseException
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
 
 fun String.parseDuration(): Long {
@@ -21,6 +20,7 @@ fun String.parseDuration(): Long {
     return timeout
 }
 
+const val DEFAULT_DELAY_TIME_FOR_RESULT = 2500L
 
 private val DEFAULT_WIDGET_DATE_TIME_FORMATTER = SimpleDateFormat(
     "MMM d, hh:mma",

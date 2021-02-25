@@ -15,7 +15,8 @@ class MMLActivity : AppCompatActivity() {
         liveLikeSDKIntegrationManager = LiveLikeSDKIntegrationManager(
             applicationContext,
             "3WtkbrjmyPFUHTSckcVVUlikAAdHEy1P0zqqczF0",
-            "000301a4-34ca-4e8c-9e4d-da05499c0bf2"
+            "000301a4-34ca-4e8c-9e4d-da05499c0bf2",
+            "61ce5e0b-c7a9-4333-a5be-9a533e582747"
         )
         val mmlPagerAdapter = MMLPagerAdapter(this, liveLikeSDKIntegrationManager)
         val viewPager: ViewPager = findViewById(R.id.view_pager)

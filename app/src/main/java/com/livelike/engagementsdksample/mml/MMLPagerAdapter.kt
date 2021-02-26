@@ -12,6 +12,7 @@ class MMLPagerAdapter(
     val context: Context,
     private val liveLikeSDKIntegrationManager: LiveLikeSDKIntegrationManager
 ) : PagerAdapter() {
+    private val widgetView = liveLikeSDKIntegrationManager.getWidgetsView(context)
 
     override fun isViewFromObject(p0: View, p1: Any): Boolean {
         return p0 == p1
@@ -20,7 +21,7 @@ class MMLPagerAdapter(
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val view = when (position) {
             2 -> liveLikeSDKIntegrationManager.getChatView(context)
-            3 -> liveLikeSDKIntegrationManager.getWidgetsView(context)
+            3 -> widgetView
             else -> LayoutInflater.from(context).inflate(R.layout.mml_empty_chat_data_view, null)
         }
         container.addView(view)

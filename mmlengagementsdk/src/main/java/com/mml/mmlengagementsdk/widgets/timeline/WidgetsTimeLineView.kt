@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.widget.FrameLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mmlengagementsdk.R
 import com.livelike.engagementsdk.EngagementSDK
 import com.livelike.engagementsdk.LiveLikeContentSession
@@ -49,9 +50,16 @@ class WidgetsTimeLineView(
         session.widgetStream.subscribe(this) {
             it?.let {
                 Handler(Looper.getMainLooper()).post {
-                    adapter.list.add(0, TimelineWidgetResource(true, it))
-                    adapter.notifyItemInserted(0)
-//                    timeline_rv.smoothScrollToPosition(0)
+                    val layoutManager = (timeline_rv.layoutManager as? LinearLayoutManager)
+                    val allowScroll =
+                        (layoutManager?.findFirstCompletelyVisibleItemPosition() == 0 || layoutManager?.findFirstVisibleItemPosition() == 0)
+                    if (adapter.list.isEmpty() || !adapter.list.any { timeline -> timeline.liveLikeWidget.id == it.id }) {
+                        adapter.list.add(0, TimelineWidgetResource(true, it))
+                        adapter.notifyItemInserted(0)
+                        if (allowScroll) {
+                            timeline_rv.smoothScrollToPosition(0)
+                        }
+                    }
                 }
             }
         }

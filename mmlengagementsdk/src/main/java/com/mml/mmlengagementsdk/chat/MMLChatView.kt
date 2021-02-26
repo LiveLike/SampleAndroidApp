@@ -3,11 +3,12 @@ package com.mml.mmlengagementsdk.chat
 import android.content.Context
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
-import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.mmlengagementsdk.R
 import com.livelike.engagementsdk.LiveLikeContentSession
 import com.livelike.engagementsdk.chat.LiveLikeChatSession
+import com.livelike.engagementsdk.core.services.messaging.proxies.LiveLikeWidgetEntity
+import com.livelike.engagementsdk.core.services.messaging.proxies.WidgetInterceptor
 import com.mml.mmlengagementsdk.widgets.timeline.TimeLineWidgetFactory
 import kotlinx.android.synthetic.main.mml_chat_view.view.*
 
@@ -19,8 +20,7 @@ class MMLChatView(context: Context) : ConstraintLayout(context) {
     init {
         val contextThemeWrapper: Context =
             ContextThemeWrapper(context, R.style.MMLChatTheme)
-        val view = inflate(contextThemeWrapper, R.layout.mml_chat_view, this)
-        view.findViewById<ViewGroup>(R.id.custom_chat_view)?.findViewById<ViewGroup>(R.id.chat_view)?.layoutTransition?.setAnimateParentHierarchy(false)
+        inflate(contextThemeWrapper, R.layout.mml_chat_view, this)
     }
 
     override fun onAttachedToWindow() {

@@ -35,10 +35,7 @@ class LiveLikeSDKIntegrationManager(
 
 
     fun getChatView(context: Context): MMLChatView {
-        return MMLChatView(context).apply {
-            this.chatSession = session.chatSession
-            this.widgetSession = session
-        }
+        return MMLChatView(context, session.chatSession, session)
     }
 
     fun getWidgetsView(context: Context): WidgetsTimeLineView {

@@ -2,10 +2,10 @@ package com.livelike.engagementsdksample.mml
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.livelike.engagementsdksample.R
 import com.mml.mmlengagementsdk.LiveLikeSDKIntegrationManager
+import kotlinx.android.synthetic.main.activity_m_m_l.*
 
 class MMLActivity : AppCompatActivity() {
     lateinit var liveLikeSDKIntegrationManager: LiveLikeSDKIntegrationManager
@@ -19,9 +19,17 @@ class MMLActivity : AppCompatActivity() {
             "61ce5e0b-c7a9-4333-a5be-9a533e582747"
         )
         val mmlPagerAdapter = MMLPagerAdapter(this, liveLikeSDKIntegrationManager)
-        val viewPager: ViewPager = findViewById(R.id.view_pager)
-        viewPager.adapter = mmlPagerAdapter
-        val tabs: TabLayout = findViewById(R.id.tabs)
-        tabs.setupWithViewPager(viewPager)
+        view_pager.adapter = mmlPagerAdapter
+        TabLayoutMediator(tabs, view_pager) { tabs, position ->
+            tabs.text = when (position) {
+                0 -> "Chat 1"
+                1 -> "Widget1"
+                2 -> "Chat"
+                3 -> "Widget"
+                else -> ""
+            }
+            view_pager.setCurrentItem(tabs.position, true)
+        }.attach()
+
     }
 }

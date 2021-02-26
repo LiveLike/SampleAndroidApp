@@ -4,43 +4,56 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.viewpager.widget.PagerAdapter
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.RecyclerView
 import com.livelike.engagementsdksample.R
 import com.mml.mmlengagementsdk.LiveLikeSDKIntegrationManager
 
 class MMLPagerAdapter(
     val context: Context,
     private val liveLikeSDKIntegrationManager: LiveLikeSDKIntegrationManager
-) : PagerAdapter() {
-    private val widgetView = liveLikeSDKIntegrationManager.getWidgetsView(context)
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+//    private val widgetView = liveLikeSDKIntegrationManager.getWidgetsView(context)
 
-    override fun isViewFromObject(p0: View, p1: Any): Boolean {
-        return p0 == p1
-    }
-
-    override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val view = when (position) {
-            2 -> liveLikeSDKIntegrationManager.getChatView(context)
-            3 -> widgetView
-            else -> LayoutInflater.from(context).inflate(R.layout.mml_empty_chat_data_view, null)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            2 -> MMLChatViewHolder(context, liveLikeSDKIntegrationManager)
+            3 -> MMLTimeLineViewHolder(context, liveLikeSDKIntegrationManager)
+            else -> DefaultViewHolder(
+                LayoutInflater.from(context)
+                    .inflate(R.layout.mml_empty_chat_data_view, parent, false)
+            )
         }
-        container.addView(view)
-        return view
     }
 
-    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-        container.removeView(`object` as View)
+    override fun getItemCount(): Int = 4
+
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 
-    override fun getCount(): Int = 4
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-    override fun getPageTitle(position: Int): CharSequence? {
-        return when (position) {
-            0 -> "Chat 1"
-            1 -> "Widget1"
-            2 -> "Chat"
-            3 -> "Widget"
-            else -> ""
-        }
     }
 }
+
+class DefaultViewHolder(view: View) : RecyclerView.ViewHolder(view)
+class MMLChatViewHolder(
+    context: Context,
+    liveLikeSDKIntegrationManager: LiveLikeSDKIntegrationManager
+) : RecyclerView.ViewHolder(liveLikeSDKIntegrationManager.getChatView(context).apply {
+    this.layoutParams = ConstraintLayout.LayoutParams(
+        ConstraintLayout.LayoutParams.MATCH_PARENT,
+        ConstraintLayout.LayoutParams.MATCH_PARENT
+    )
+})
+
+class MMLTimeLineViewHolder(
+    context: Context,
+    liveLikeSDKIntegrationManager: LiveLikeSDKIntegrationManager
+) : RecyclerView.ViewHolder(liveLikeSDKIntegrationManager.getWidgetsView(context).apply {
+    this.layoutParams = ConstraintLayout.LayoutParams(
+        ConstraintLayout.LayoutParams.MATCH_PARENT,
+        ConstraintLayout.LayoutParams.MATCH_PARENT
+    )
+})

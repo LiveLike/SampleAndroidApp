@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <com.mml.mmlengagementsdk.chat.CustomChatView
-        android:id="@+id/chat_view"
+        android:id="@+id/custom_chat_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

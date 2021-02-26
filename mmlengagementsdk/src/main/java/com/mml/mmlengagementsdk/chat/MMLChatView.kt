@@ -3,6 +3,7 @@ package com.mml.mmlengagementsdk.chat
 import android.content.Context
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.mmlengagementsdk.R
 import com.livelike.engagementsdk.LiveLikeContentSession
@@ -18,18 +19,19 @@ class MMLChatView(context: Context) : ConstraintLayout(context) {
     init {
         val contextThemeWrapper: Context =
             ContextThemeWrapper(context, R.style.MMLChatTheme)
-        inflate(contextThemeWrapper, R.layout.mml_chat_view, this)
+        val view = inflate(contextThemeWrapper, R.layout.mml_chat_view, this)
+        view.findViewById<ViewGroup>(R.id.custom_chat_view)?.findViewById<ViewGroup>(R.id.chat_view)?.layoutTransition?.setAnimateParentHierarchy(false)
     }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         chatSession?.let {
-            chat_view.setSession(it)
-            chat_view.isChatInputVisible = false
+            custom_chat_view.setSession(it)
+            custom_chat_view.isChatInputVisible = false
             val emptyView =
                 LayoutInflater.from(context).inflate(R.layout.mml_empty_chat_data_view, null)
-            chat_view.emptyChatBackgroundView = emptyView
-            chat_view.allowMediaFromKeyboard = false
+            custom_chat_view.emptyChatBackgroundView = emptyView
+            custom_chat_view.allowMediaFromKeyboard = false
         }
         widgetSession?.let {
             widget_view.setSession(it)

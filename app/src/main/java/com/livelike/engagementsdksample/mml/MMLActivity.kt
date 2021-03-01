@@ -19,7 +19,7 @@ class MMLActivity : AppCompatActivity() {
             "61ce5e0b-c7a9-4333-a5be-9a533e582747"
         )
         val mmlPagerAdapter = MMLPagerAdapter(this, liveLikeSDKIntegrationManager)
-        view_pager.offscreenPageLimit = 4
+//        view_pager.offscreenPageLimit = 4
         view_pager.adapter = mmlPagerAdapter
         TabLayoutMediator(tabs, view_pager) { tabs, position ->
             tabs.text = when (position) {

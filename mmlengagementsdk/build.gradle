@@ -64,9 +64,10 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
+//    implementation files('/Users/shivansh/Documents/ll-projects/android-engagement-sdk/engagementsdk/build/outputs/aar/engagementsdk-production-release.aar')
     testImplementation 'junit:junit:4.+'
     //sdk
-    implementation 'com.livelike.android-engagement-sdk:engagementsdk:2.13.3'
+    implementation 'com.livelike.android-engagement-sdk:engagementsdk:2.14.1-alpha0'
 
     implementation "com.jakewharton.threetenabp:threetenabp:$threetenabpVersion"
     implementation "com.airbnb.android:lottie:$lottieVersion"

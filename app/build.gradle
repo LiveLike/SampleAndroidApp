@@ -63,7 +63,7 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
     implementation project(":mmlengagementsdk")
 //    implementation files('/Users/shivansh/Documents/ll-projects/android-engagement-sdk/engagementsdk/build/outputs/aar/engagementsdk-production-release.aar')
-    implementation 'com.livelike.android-engagement-sdk:engagementsdk:2.14.1-alpha0'
+    implementation 'com.livelike.android-engagement-sdk:engagementsdk:2.14.1'
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     testImplementation 'junit:junit:4.12'

@@ -4,13 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.gson.JsonParser
+import com.livelike.engagementsdk.LiveLikeEngagementTheme
+import com.livelike.engagementsdk.core.services.network.Result
 import com.livelike.engagementsdk.widget.timeline.WidgetTimeLineViewModel
 import com.livelike.engagementsdk.widget.timeline.WidgetsTimeLineView
 import com.livelike.engagementsdksample.R
 import com.livelike.engagementsdksample.yinzcam.YinzCamActivity
 import kotlinx.android.synthetic.main.widget_fragment.*
+import java.io.IOException
+import java.io.InputStream
 
 class WidgetFragment : Fragment() {
 
@@ -36,6 +42,26 @@ class WidgetFragment : Fragment() {
                 timeLineViewModel,
                 it.sdk
             )
+            try {
+                val inputStream: InputStream = it.assets.open("livelikeStyles.json")
+                val size: Int = inputStream.available()
+                val buffer = ByteArray(size)
+                inputStream.read(buffer)
+                val theme = String(buffer)
+                val result =
+                    LiveLikeEngagementTheme.instanceFrom(JsonParser.parseString(theme).asJsonObject)
+                if (result is Result.Success) {
+                    timeLineView.applyTheme(result.data)
+                } else {
+                    Toast.makeText(
+                        it,
+                        "Unable to get the theme json",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
             container_view.addView(timeLineView)
         }
     }

@@ -62,8 +62,10 @@ dependencies {
     implementation "com.airbnb.android:lottie:$lottieVersion"
 
     implementation "androidx.cardview:cardview:1.0.0"
-    implementation 'com.livelike.android-engagement-sdk:engagementsdk:2.15'
-    implementation 'com.livelike.android-engagement-sdk:pluginexoplayer:2.15'
+//    implementation 'com.livelike.android-engagement-sdk:engagementsdk:2.16'
+//    implementation files('/Users/livelike/Documents/android-engagement-sdk/engagementsdk/build/outputs/aar/engagementsdk-production-debug.aar')
+    implementation 'com.livelike.android-engagement-sdk:engagementsdk:e74091f0197e0e97c23282763210e2a2aaea945b'
+    implementation 'com.livelike.android-engagement-sdk:pluginexoplayer:2.16'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

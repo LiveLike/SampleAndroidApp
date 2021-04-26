@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.livelike.engagementsdk.widget.timeline.WidgetTimeLineViewModel
+import com.livelike.engagementsdk.widget.timeline.WidgetsTimeLineView
 import com.livelike.engagementsdksample.R
 import com.livelike.engagementsdksample.yinzcam.YinzCamActivity
 import kotlinx.android.synthetic.main.widget_fragment.*
@@ -31,7 +32,7 @@ class WidgetFragment : Fragment() {
         (activity as? YinzCamActivity)?.let {
             val timeLineViewModel = WidgetTimeLineViewModel(it.session)
             val timeLineView = WidgetsTimeLineView(
-                this,
+                it,
                 timeLineViewModel,
                 it.sdk
             )

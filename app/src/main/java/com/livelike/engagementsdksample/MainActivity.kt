@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.livelike.engagementsdk.BuildConfig
 import com.livelike.engagementsdksample.chat.ChatActivity
 import com.livelike.engagementsdksample.widget.WidgetActivity
+import com.livelike.engagementsdksample.yinzcam.YinzCamActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -63,5 +64,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Program id cannot be blank", Toast.LENGTH_LONG).show()
             }
         }
+        startActivity(Intent(this, YinzCamActivity::class.java))
+        finish()
     }
 }

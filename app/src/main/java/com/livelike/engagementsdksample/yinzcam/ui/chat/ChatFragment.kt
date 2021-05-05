@@ -34,6 +34,9 @@ class ChatFragment : Fragment() {
         (activity as? YinzCamActivity)?.let {
             chat_view.setSession(it.session.chatSession)
         }
+        (activity as? YinzCamActivity)?.let {
+            widget_view.setSession(it.session)
+        }
     }
 
     companion object {

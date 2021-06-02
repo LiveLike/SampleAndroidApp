@@ -2,6 +2,7 @@ package com.livelike.engagementsdksample.customwidgets
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +25,7 @@ class CustomQuizView :
     lateinit var quizWidgetModel: QuizWidgetModel
     private lateinit var adapter: ImageOptionsWidgetAdapter
     private var quizAnswerJob: Job? = null
-    var isTimeLine = false
+    var isTimeLine = true
     var isImage = false
 
     constructor(context: Context) : super(context) {
@@ -67,6 +68,11 @@ class CustomQuizView :
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
+        // user persistance check
+        var previousChoice = quizWidgetModel?.getUserInteraction()?.choiceId
+        if (previousChoice != null) {
+            Log.d("persistance-quiz", previousChoice)
+        }
         quizWidgetModel.widgetData.let { liveLikeWidget ->
             if (isImage) {
                 txt_title.text = "IMAGE QUIZ"

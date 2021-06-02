@@ -16,44 +16,57 @@ class TimeLineWidgetFactory(
 ) : LiveLikeWidgetViewFactory {
 
     override fun createCheerMeterView(cheerMeterWidgetModel: CheerMeterWidgetmodel): View? {
-        return null
-
+        return CustomCheerMeter(context).apply {
+            this.cheerMeterWidgetmodel = cheerMeterWidgetmodel
+        }
     }
 
     override fun createAlertWidgetView(alertWidgetModel: AlertWidgetModel): View? {
-        return CustomAlert(context)
+        return CustomAlert(context).apply {
+            this.alertModel = alertWidgetModel
+        }
     }
 
     override fun createQuizWidgetView(
         quizWidgetModel: QuizWidgetModel,
         isImage: Boolean
     ): View? {
-        return CustomQuizView(context)
+        return CustomQuizView(context).apply {
+            this.quizWidgetModel = quizWidgetModel
+        }
     }
 
     override fun createPredictionWidgetView(
         predictionViewModel: PredictionWidgetViewModel,
         isImage: Boolean
     ): View? {
-        return CustomPredictionWidget(context)
+        return CustomPredictionWidget(context).apply {
+            predictionWidgetViewModel = predictionViewModel
+        }
     }
 
     override fun createPredictionFollowupWidgetView(
         followUpWidgetViewModel: FollowUpWidgetViewModel,
         isImage: Boolean
     ): View? {
-        return CustomPredictionFollowUpWidget(context)
+        return CustomPredictionFollowUpWidget(context).apply {
+            this.followUpWidgetViewModel = followUpWidgetViewModel
+        }
     }
 
     override fun createPollWidgetView(
         pollWidgetModel: PollWidgetModel,
         isImage: Boolean
     ): View? {
-        return CustomPollWidget(context)
+        return CustomPollWidget(context).apply {
+            this.pollWidgetModel = pollWidgetModel
+        }
     }
 
     override fun createImageSliderWidgetView(imageSliderWidgetModel: ImageSliderWidgetModel): View? {
-        return CustomEmojiSlider(context)
+        return CustomEmojiSlider(context).apply {
+            this.imageSliderWidgetModel = imageSliderWidgetModel
+        }
     }
 
     private fun isWidgetActive(liveLikeWidgetMediator: LiveLikeWidgetMediator): Boolean {

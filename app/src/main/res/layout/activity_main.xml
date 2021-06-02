@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical"
         tools:context=".MainActivity">
 
@@ -168,6 +169,12 @@
 
         </androidx.cardview.widget.CardView>
 
+        <Button
+            android:id="@+id/timeline_btn"
+            android:layout_width="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content"
+            android:text="TimeLine" />
 
     </LinearLayout>
 </ScrollView>

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.livelike.engagementsdk.BuildConfig
 import com.livelike.engagementsdksample.chat.ChatActivity
+import com.livelike.engagementsdksample.timeline.TimeLineActivity
 import com.livelike.engagementsdksample.widget.WidgetActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -17,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        llTextView.text = "LL SDK [ ${BuildConfig.VERSION_CODE} ]"
+        llTextView.text = "LL SDK [ ${BuildConfig.SDK_VERSION} ]"
         clientTextFiled.setText("3WtkbrjmyPFUHTSckcVVUlikAAdHEy1P0zqqczF0")
 
         outlinedTextField.setText("719012f3-cf45-49cf-9407-c94fef0e3e80")
@@ -62,6 +63,10 @@ class MainActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Program id cannot be blank", Toast.LENGTH_LONG).show()
             }
+        }
+
+        timeline_btn.setOnClickListener {
+            startActivity(Intent(this, TimeLineActivity::class.java))
         }
     }
 }
